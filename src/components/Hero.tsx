@@ -91,7 +91,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onViewProjects }
           {/* Contact Details Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4 w-full md:w-auto text-left">
             <a
-              href="work@wrotx.in"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=work@wrotx.in"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center space-x-3 group cursor-pointer"
             >
               <span className="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">mail</span>

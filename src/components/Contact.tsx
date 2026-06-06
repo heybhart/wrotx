@@ -54,7 +54,12 @@ export const Contact: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-4 group cursor-pointer">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=work@wrotx.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-4 group cursor-pointer"
+          >
             <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-primary/10 transition-colors shrink-0">
               <span className="material-symbols-outlined text-primary">mail</span>
             </div>
@@ -62,7 +67,7 @@ export const Contact: React.FC = () => {
               <p className="font-label-caps text-[10px] text-on-surface-variant/50 uppercase tracking-widest">Email</p>
               <p className="font-body-md text-body-md text-primary">work@wrotx.in</p>
             </div>
-          </div>
+          </a>
 
           <div className="flex items-center space-x-4 group cursor-pointer">
             <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-primary/10 transition-colors shrink-0">
