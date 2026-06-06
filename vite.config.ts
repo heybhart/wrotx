@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/wrotx/',
+    base: process.env.VERCEL ? '/' : '/wrotx/',
 
     plugins: [react(), tailwindcss()],
 
