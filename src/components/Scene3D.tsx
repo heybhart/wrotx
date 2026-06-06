@@ -172,8 +172,17 @@ const HumanoidStatue: React.FC<{
       targetCamZ = THREE.MathUtils.lerp(6.6, 7.5, t);
     }
 
-    const isMobile = state.size.width < 1024;
-    const scaleMultiplier = isMobile ? 0.6 : 1.0;
+    // Dynamically scale the 3D model continuously based on the viewport width
+    const minWidth = 360;
+    const maxWidth = 1024;
+    const minScale = 0.55;
+    const maxScale = 1.0;
+
+    let scaleMultiplier = maxScale;
+    if (state.size.width < maxWidth) {
+      const t = Math.max(0, (state.size.width - minWidth) / (maxWidth - minWidth));
+      scaleMultiplier = minScale + t * (maxScale - minScale);
+    }
     targetScale *= scaleMultiplier;
 
     // 1. Lerp Scale

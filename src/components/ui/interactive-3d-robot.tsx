@@ -11,6 +11,30 @@ interface InteractiveRobotSplineProps {
 export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSplineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      // Dynamic continuous scale between 360px (0.5 scale) and 1200px (1.0 scale)
+      const minW = 360;
+      const maxW = 1200;
+      const minS = 0.5;
+      const maxS = 1.0;
+      
+      if (width >= maxW) {
+        setScale(maxS);
+      } else if (width <= minW) {
+        setScale(minS);
+      } else {
+        const t = (width - minW) / (maxW - minW);
+        setScale(minS + t * (maxS - minS));
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,9 +59,18 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
   return (
     <div
       ref={containerRef}
-      className="w-full h-full"
+      className="w-full h-full animate-none"
     >
-      <div style={{ display: isVisible ? 'block' : 'none', width: '100%', height: '100%' }}>
+      <div 
+        style={{ 
+          display: isVisible ? 'block' : 'none', 
+          width: '100%', 
+          height: '100%',
+          transform: `scale(${scale})`,
+          transformOrigin: 'right center',
+          transition: 'transform 0.15s ease-out'
+        }}
+      >
         <Suspense
         fallback={
           <div className={`w-full h-full flex items-center justify-center bg-gray-900/10 text-white ${className}`}>
