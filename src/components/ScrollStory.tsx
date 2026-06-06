@@ -145,7 +145,7 @@ export const ScrollStory: React.FC<ScrollStoryProps> = ({
     <div ref={containerRef} className="relative w-full bg-[#131313] z-10">
       
       {/* 3D Model Sticky Canvas Container (Centers model initially, then scrolls away at bottom) */}
-      <div className="sticky top-0 left-0 w-full h-screen pointer-events-none z-20 flex items-center justify-center overflow-hidden">
+      <div className="sticky top-0 left-0 w-full h-screen pointer-events-none z-20 flex items-center justify-center overflow-hidden opacity-25 lg:opacity-100 transition-opacity duration-500">
         {/* Subtle Backdrop Glow based on theme */}
         <div 
           className={`absolute w-[500px] h-[500px] rounded-full blur-[140px] transition-all duration-1000 opacity-50 ${

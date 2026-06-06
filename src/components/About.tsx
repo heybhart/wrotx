@@ -45,6 +45,7 @@ export const About: React.FC = () => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (window.innerWidth < 1024) return;
     if (latest < 0.25) {
       setActiveTab('mission');
     } else if (latest < 0.5) {
@@ -57,6 +58,10 @@ export const About: React.FC = () => {
   });
 
   const handleTabClick = (index: number) => {
+    if (window.innerWidth < 1024) {
+      setActiveTab(tabs[index].id as any);
+      return;
+    }
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -78,9 +83,9 @@ export const About: React.FC = () => {
   const currentTab = tabs.find(t => t.id === activeTab) || tabs[0];
 
   return (
-    <div ref={containerRef} id="about" className="relative h-[350vh] bg-[#0b0b0b]">
+    <div ref={containerRef} id="about" className="relative h-auto lg:h-[350vh] bg-[#0b0b0b]">
       {/* Sticky Content Wrapper */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden border-t border-white/5 select-none">
+      <div className="relative lg:sticky lg:top-0 h-auto lg:h-screen w-full flex items-center justify-center overflow-visible lg:overflow-hidden border-t border-white/5 select-none py-12 lg:py-0">
         
         {/* Subtle Background Glows */}
         <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-blue-500/3 blur-[120px] pointer-events-none" />
@@ -121,7 +126,7 @@ export const About: React.FC = () => {
                         // @ts-ignore - CSS custom properties are valid
                         "--theme-color": tab.themeColor,
                       } as React.CSSProperties}
-                      className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden group cursor-pointer ${
+                      className={`p-3.5 sm:p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between h-24 sm:h-28 relative overflow-hidden group cursor-pointer ${
                         isActive 
                           ? 'border-white bg-white/[0.04] shadow-[0_0_30px_-10px_hsl(var(--theme-color)/0.4)]' 
                           : 'bg-zinc-950/20 border-white/5 hover:border-white/15 hover:bg-white/[0.01]'

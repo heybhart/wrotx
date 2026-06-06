@@ -172,6 +172,10 @@ const HumanoidStatue: React.FC<{
       targetCamZ = THREE.MathUtils.lerp(6.6, 7.5, t);
     }
 
+    const isMobile = state.size.width < 1024;
+    const scaleMultiplier = isMobile ? 0.6 : 1.0;
+    targetScale *= scaleMultiplier;
+
     // 1. Lerp Scale
     const currentScale = modelGroup.current.scale.x;
     const newScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.08);
