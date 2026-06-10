@@ -99,6 +99,10 @@ export const Projects: React.FC = () => {
                 imgUrl = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800";
               } else if (project.id === 'inventory-system') {
                 imgUrl = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800";
+              } else if (project.id === 'triplio') {
+                imgUrl = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800";
+              } else if (project.id === 'saaryana') {
+                imgUrl = "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800";
               }
 
               const isWebsite = project.category === 'web' || project.filterCategories.includes('website');

@@ -273,6 +273,50 @@ export const projectsData: Project[] = [
     githubUrl: '#',
     demoUrl: '#',
     featured: false
+  },
+  {
+    id: 'triplio',
+    title: 'Triplio - AI Travel Planner',
+    category: 'web',
+    filterCategories: ['website', 'ai', 'application'],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Vite', 'Gemini APIs'],
+    problemSolved: 'Time-consuming manual travel itinerary planning and destination research.',
+    features: [
+      'Generates custom personalized travel itineraries.',
+      'Suggests optimal travel routes and coordinates.',
+      'Tracks budgets and offers real-time expense calculations.'
+    ],
+    results: [
+      'Travel itinerary planning times reduced by 75%.',
+      'Over 10,000 itineraries generated programmatically.',
+      'High client satisfaction scores.'
+    ],
+    imageMockupColor: 'from-zinc-800 via-zinc-900 to-transparent',
+    githubUrl: '#',
+    demoUrl: 'https://triplio-topaz.vercel.app/',
+    featured: true
+  },
+  {
+    id: 'saaryana',
+    title: 'Saaryana - Luxury Travel & Tours',
+    category: 'web',
+    filterCategories: ['website'],
+    techStack: ['React', 'Vite', 'Tailwind CSS', 'TypeScript', 'Framer Motion'],
+    problemSolved: 'Outdated, slow travel booking portals with uninspiring visual search capabilities.',
+    features: [
+      'Interactive travel itineraries and curated destination guides.',
+      'High-performance dynamic search and filtering interfaces.',
+      'Smooth scroll animations and premium visual styling.'
+    ],
+    results: [
+      'Page load speed optimized under 380ms.',
+      'User booking inquiry engagement increased by 45%.',
+      'Flawless responsive design optimized for mobile and desktop travel bookings.'
+    ],
+    imageMockupColor: 'from-zinc-800 via-zinc-900 to-transparent',
+    githubUrl: '#',
+    demoUrl: 'https://saaryana-qxff0bbvm-rohanxkumawat-4420s-projects.vercel.app/',
+    featured: true
   }
 ];
 
