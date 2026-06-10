@@ -94,7 +94,7 @@ export const Projects: React.FC = () => {
               } else if (project.id === 'voice-support') {
                 imgUrl = "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800";
               } else if (project.id === 'ecommerce-platform') {
-                imgUrl = "https://images.unsplash.com/photo-1472851294608-062f824d296e?q=80&w=800";
+                imgUrl = "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800";
               } else if (project.id === 'crm-dashboard') {
                 imgUrl = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800";
               } else if (project.id === 'inventory-system') {
