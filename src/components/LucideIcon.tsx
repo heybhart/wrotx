@@ -32,7 +32,9 @@ import {
   ArrowUpRight,
   Calculator,
   TrendingUp,
-  Database
+  Database,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 const icons: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
@@ -68,7 +70,9 @@ const icons: Record<string, React.ComponentType<{ className?: string; size?: num
   ArrowUpRight,
   Calculator,
   TrendingUp,
-  Database
+  Database,
+  ChevronLeft,
+  ChevronRight
 };
 
 interface LucideIconProps {

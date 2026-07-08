@@ -10,52 +10,140 @@ interface ConsultationModalProps {
 export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1); // 1: Date & Time, 2: Info, 3: Success
 
-  // Calendar states
-  const [selectedDate, setSelectedDate] = useState<number>(25); // Default to tomorrow
+  // Dynamic Calendar Date Picker states
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('10:00 AM');
+
+  const handlePrevMonth = () => {
+    setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
+
+  const getDaysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
+  const getFirstDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
+
+  const calendarDays = React.useMemo(() => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDayIndex = getFirstDayOfMonth(year, month);
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const daysList = [];
+    
+    // Trailing days from previous month
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevYear = month === 0 ? year - 1 : year;
+    const daysInPrevMonth = getDaysInMonth(prevYear, prevMonth);
+    
+    for (let i = firstDayIndex - 1; i >= 0; i--) {
+      const dayNum = daysInPrevMonth - i;
+      const dateObj = new Date(prevYear, prevMonth, dayNum);
+      daysList.push({
+        num: dayNum,
+        date: dateObj,
+        isCurrentMonth: false,
+        disabled: dateObj < today
+      });
+    }
+    
+    // Current month days
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dateObj = new Date(year, month, i);
+      daysList.push({
+        num: i,
+        date: dateObj,
+        isCurrentMonth: true,
+        disabled: dateObj < today
+      });
+    }
+    
+    // Leading days from next month
+    const remainingSlots = 42 - daysList.length; // 6 rows * 7 days
+    const nextMonth = month === 11 ? 0 : month + 1;
+    const nextYear = month === 11 ? year + 1 : year;
+    for (let i = 1; i <= remainingSlots; i++) {
+      const dateObj = new Date(nextYear, nextMonth, i);
+      daysList.push({
+        num: i,
+        date: dateObj,
+        isCurrentMonth: false,
+        disabled: dateObj < today
+      });
+    }
+    
+    return daysList;
+  }, [currentMonth]);
+
+  const selectedDateStr = React.useMemo(() => {
+    return selectedDate.toLocaleDateString('default', { month: 'long', day: 'numeric', year: 'numeric' });
+  }, [selectedDate]);
+
+  const currentMonthYearLabel = React.useMemo(() => {
+    return currentMonth.toLocaleDateString('default', { month: 'long', year: 'numeric' });
+  }, [currentMonth]);
 
   // Contact form details
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
-    projectType: 'saas',
-    budgetRange: '$15,000 - $30,000',
+    projectType: '',
     requirements: ''
   });
 
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Time slots
   const timeSlots = ['10:00 AM', '11:30 AM', '02:00 PM', '03:30 PM', '05:00 PM'];
-
-  // Days list (May 2026)
-  const calendarDays = [
-    { num: 24, label: 'Sun', disabled: true },
-    { num: 25, label: 'Mon', disabled: false },
-    { num: 26, label: 'Tue', disabled: false },
-    { num: 27, label: 'Wed', disabled: false },
-    { num: 28, label: 'Thu', disabled: false },
-    { num: 29, label: 'Fri', disabled: false },
-    { num: 30, label: 'Sat', disabled: true },
-    { num: 31, label: 'Sun', disabled: true },
-  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
 
     setLoading(true);
-    // Simulate server side sync delay
-    setTimeout(() => {
+    setErrorMsg(null);
+    try {
+      const response = await fetch('/api/book', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          projectType: formData.projectType,
+          requirements: formData.requirements,
+          dateStr: selectedDateStr,
+          timeSlot: selectedTimeSlot
+        })
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setStep(3);
+      } else {
+        setErrorMsg(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch (err: any) {
+      setErrorMsg('Failed to connect to the booking server. Please try again.');
+      console.error(err);
+    } finally {
       setLoading(false);
-      setStep(3);
-    }, 1200);
+    }
   };
 
   if (!isOpen) return null;
@@ -78,7 +166,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
         transition={{ type: 'spring', damping: 25, stiffness: 180 }}
         id="booking_consultation_modal"
-        className="relative w-full max-w-2xl bg-[#131313] border border-white/5 rounded-lg overflow-hidden shadow-2xl p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto font-sans text-xs text-zinc-350"
+        className="relative w-full max-w-2xl bg-[#131313] border border-white/5 rounded-lg overflow-hidden shadow-2xl p-7 sm:p-10 space-y-8 max-h-[92vh] overflow-y-auto font-sans text-xs text-zinc-350"
       >
         {/* Dismiss trigger */}
         <button
@@ -90,58 +178,90 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
         </button>
 
         {/* Modal Title */}
-        <div className="space-y-1.5 pr-10 border-b border-zinc-900/60 pb-4">
-          <span className="font-mono text-[9px] tracking-wider text-zinc-500 uppercase font-semibold block">
+        <div className="space-y-2.5 pr-10 border-b border-zinc-900/60 pb-6">
+          <span className="font-mono text-[9px] tracking-wider text-[#d4a843] uppercase font-semibold block">
             CALENDAR SCHEDULER
           </span>
           <h3 className="font-sans font-bold text-xl text-white">
             Schedule an Alignment Call
           </h3>
-          <p className="text-zinc-500 font-normal leading-normal text-xs pr-4">
+          <p className="text-zinc-550 font-normal leading-normal text-xs pr-4">
             Meet 1-on-1 with a WrotX systems architect to outline your custom product roadmap, tech stack blueprints, and cost estimates.
           </p>
         </div>
 
         {/* STEP 1: Date & Time selector */}
         {step === 1 && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
               {/* Date Column */}
-              <div className="space-y-3">
-                <label className="block text-[10px] font-semibold text-zinc-450 uppercase tracking-wider">
-                  1. Choose Date (May 2026)
-                </label>
-                <div className="grid grid-cols-4 gap-2">
-                  {calendarDays.map((day) => {
-                    const isSelected = selectedDate === day.num;
-                    return (
-                      <button
-                        key={day.num}
-                        id={`calendar_day_${day.num}`}
-                        disabled={day.disabled}
-                        onClick={() => setSelectedDate(day.num)}
-                        className={`p-3 rounded-lg border flex flex-col items-center justify-center space-y-1 transition-all ${
-                          day.disabled
-                            ? 'bg-transparent border-zinc-900/10 text-zinc-800 cursor-not-allowed'
-                            : isSelected
-                              ? 'bg-rose-600 border-rose-500 text-white'
-                              : 'bg-zinc-950 border-zinc-900 text-zinc-500 hover:border-rose-500/20 hover:text-zinc-350'
-                        }`}
-                      >
-                        <span className={`text-[9px] font-mono uppercase font-semibold ${isSelected ? 'text-rose-100' : 'text-zinc-650'}`}>{day.label}</span>
-                        <span className="text-xs font-bold font-mono">{day.num}</span>
-                      </button>
-                    );
-                  })}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center bg-zinc-950/40 border border-white/5 rounded-lg px-3 py-2 font-mono text-xs">
+                  <button
+                    type="button"
+                    onClick={handlePrevMonth}
+                    className="p-1 text-zinc-500 hover:text-white hover:bg-zinc-900 rounded-md transition-colors cursor-pointer"
+                    aria-label="Previous Month"
+                  >
+                    <LucideIcon name="ChevronLeft" size={14} />
+                  </button>
+                  <span className="text-white font-semibold uppercase text-[10px] tracking-widest">{currentMonthYearLabel}</span>
+                  <button
+                    type="button"
+                    onClick={handleNextMonth}
+                    className="p-1 text-zinc-500 hover:text-white hover:bg-zinc-900 rounded-md transition-colors cursor-pointer"
+                    aria-label="Next Month"
+                  >
+                    <LucideIcon name="ChevronRight" size={14} />
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="grid grid-cols-7 text-center text-zinc-650 font-mono text-[9px] font-bold uppercase tracking-wider">
+                    <span>Su</span>
+                    <span>Mo</span>
+                    <span>Tu</span>
+                    <span>We</span>
+                    <span>Th</span>
+                    <span>Fr</span>
+                    <span>Sa</span>
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-y-2 gap-x-2">
+                    {calendarDays.map((day, index) => {
+                      const isSelected = selectedDate.toDateString() === day.date.toDateString();
+                      return (
+                        <button
+                          key={index}
+                          type="button"
+                          disabled={day.disabled}
+                          onClick={() => setSelectedDate(day.date)}
+                          className={`h-8 w-8 mx-auto rounded-full flex items-center justify-center font-mono text-[10px] transition-all cursor-pointer ${
+                            day.disabled
+                              ? 'text-zinc-800 cursor-not-allowed line-through'
+                              : !day.isCurrentMonth
+                                ? isSelected
+                                  ? 'bg-[#d4a843] text-black font-bold'
+                                  : 'text-zinc-600 hover:bg-[#d4a843]/10 hover:text-zinc-350'
+                                : isSelected
+                                  ? 'bg-[#d4a843] text-black font-bold shadow-md shadow-[#d4a843]/20'
+                                  : 'bg-zinc-950 border border-zinc-900 text-zinc-350 hover:border-[#d4a843]/30'
+                          }`}
+                        >
+                          {day.num}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
               {/* Time Column */}
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <label className="block text-[10px] font-semibold text-zinc-455 uppercase tracking-wider">
                   2. Choose Preferred Hour (UTC)
                 </label>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {timeSlots.map((slot) => {
                     const isSelected = selectedTimeSlot === slot;
                     return (
@@ -151,13 +271,13 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                         onClick={() => setSelectedTimeSlot(slot)}
                         className={`w-full p-2.5 rounded-lg border text-left font-semibold transition-all flex items-center justify-between ${
                           isSelected
-                            ? 'bg-rose-950/20 border-rose-500/30 text-white'
-                            : 'bg-zinc-950 border-zinc-900 text-zinc-500 hover:border-rose-500/20 hover:text-zinc-350'
+                            ? 'bg-[#d4a843]/10 border-[#d4a843]/30 text-white'
+                            : 'bg-zinc-950 border-zinc-900 text-zinc-500 hover:border-[#d4a843]/20 hover:text-zinc-350'
                         }`}
                       >
                         <span className="text-[11px] font-mono leading-none">{slot}</span>
                         {isSelected ? (
-                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#d4a843]" />
                         ) : (
                           <LucideIcon name="Clock" size={11} className="opacity-30" />
                         )}
@@ -169,14 +289,14 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
             </div>
 
             {/* Bottom Nav */}
-            <div className="flex justify-between items-center pt-4 border-t border-zinc-900">
+            <div className="flex justify-between items-center pt-6 mt-3 border-t border-zinc-900">
               <span className="text-zinc-550 font-mono text-[10px]">
                 Duration: 30 minutes via Google Meet
               </span>
               <button
                 id="booking_goto_step2"
                 onClick={() => setStep(2)}
-                className="px-5 py-2.5 bg-rose-600 text-white hover:bg-rose-500 font-semibold text-xs rounded-lg flex items-center space-x-1.5 transition-all cursor-pointer shadow-md shadow-rose-950/10"
+                className="px-5 py-2.5 bg-white text-black hover:bg-zinc-200 font-semibold text-xs rounded-lg flex items-center space-x-1.5 transition-all cursor-pointer shadow-md shadow-white/5"
               >
                 <span>Continue</span>
                 <LucideIcon name="ArrowRight" size={12} />
@@ -187,10 +307,10 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
 
         {/* STEP 2: Detail Discovery Form */}
         {step === 2 && (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7">
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 <label className="block text-zinc-405 font-bold tracking-wide uppercase text-[9px]">Your Full Name *</label>
                 <input
                   type="text"
@@ -200,11 +320,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="e.g. Kenneth Thor"
-                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/40 focus:outline-none text-xs text-white transition-colors"
+                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-[#d4a843]/40 focus:ring-1 focus:ring-[#d4a843]/40 focus:outline-none text-xs text-white transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <label className="block text-zinc-405 font-bold tracking-wide uppercase text-[9px]">Work Email *</label>
                 <input
                   type="email"
@@ -214,13 +334,13 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="e.g. k.thor@company.com"
-                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/40 focus:outline-none text-xs text-white transition-colors"
+                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-[#d4a843]/40 focus:ring-1 focus:ring-[#d4a843]/40 focus:outline-none text-xs text-white transition-colors"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 <label className="block text-zinc-405 font-bold tracking-wide uppercase text-[9px]">Company Name</label>
                 <input
                   type="text"
@@ -229,45 +349,26 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                   value={formData.company}
                   onChange={handleInputChange}
                   placeholder="e.g. Biotech Inc."
-                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/40 focus:outline-none text-xs text-white transition-colors"
+                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-[#d4a843]/40 focus:ring-1 focus:ring-[#d4a843]/40 focus:outline-none text-xs text-white transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <label className="block text-zinc-405 font-bold tracking-wide uppercase text-[9px]">Project Category</label>
-                <select
+                <input
+                  type="text"
                   name="projectType"
-                  id="booking_select_type"
+                  id="booking_input_type"
+                  required
                   value={formData.projectType}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/40 focus:outline-none text-xs text-white transition-colors cursor-pointer"
-                >
-                  <option value="saas">SaaS Multi-tenant Platforms</option>
-                  <option value="web">Websites &amp; Client Portals</option>
-                  <option value="mobile">Mobile Applications</option>
-                  <option value="ai">AI Automations &amp; Voice Agents</option>
-                  <option value="custom">Enterprise CRM / Custom Software</option>
-                </select>
+                  placeholder="e.g. SaaS Platform, Mobile App"
+                  className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-855 focus:border-[#d4a843]/40 focus:ring-1 focus:ring-[#d4a843]/40 focus:outline-none text-xs text-white transition-colors"
+                />
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label className="block text-zinc-405 font-bold tracking-wide uppercase text-[9px]">Target Budget Range</label>
-              <select
-                name="budgetRange"
-                id="booking_select_budget"
-                value={formData.budgetRange}
-                onChange={handleInputChange}
-                className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/40 focus:outline-none text-xs text-white transition-colors cursor-pointer"
-              >
-                <option value="<$10k">Sandbox development (&lt;$10k)</option>
-                <option value="$10k-$25k">Standard Growth ($10k - $25k)</option>
-                <option value="$25k-$50k">Premium Mid-Scale ($25k - $50k)</option>
-                <option value=">$50k">Enterprise Scope (&gt;$50k)</option>
-              </select>
-            </div>
-
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label className="block text-zinc-405 font-bold tracking-wide uppercase text-[9px]">Scope Brief</label>
               <textarea
                 name="requirements"
@@ -276,12 +377,18 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                 value={formData.requirements}
                 onChange={handleInputChange}
                 placeholder="Share any key feature requirements, integrations, or deadline details..."
-                className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/40 focus:outline-none text-xs text-white transition-colors resize-none"
+                className="w-full p-3 rounded-lg bg-zinc-950 border border-zinc-850 focus:border-[#d4a843]/40 focus:ring-1 focus:ring-[#d4a843]/40 focus:outline-none text-xs text-white transition-colors resize-none"
               />
             </div>
 
+            {errorMsg && (
+              <p className="text-red-500 font-mono text-[11px] bg-red-950/20 border border-red-900/30 rounded-lg p-3 text-left">
+                {errorMsg}
+              </p>
+            )}
+
             {/* Nav */}
-            <div className="flex justify-between items-center pt-4 border-t border-zinc-900">
+            <div className="flex justify-between items-center pt-6 mt-3 border-t border-zinc-900">
               <button
                 type="button"
                 id="booking_back_to_step1"
@@ -294,11 +401,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                 type="submit"
                 id="booking_submit_confirmation"
                 disabled={loading}
-                className="px-5 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold flex items-center space-x-1.5 transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-rose-950/10"
+                className="px-5 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-semibold flex items-center space-x-1.5 transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-white/5"
               >
                 {loading ? (
                   <>
-                    <span className="w-4 h-4 rounded-full border-2 border-rose-400 border-t-white animate-spin inline-block mr-1" />
+                    <span className="w-4 h-4 rounded-full border-2 border-zinc-400 border-t-black animate-spin inline-block mr-1" />
                     <span>Processing...</span>
                   </>
                 ) : (
@@ -320,7 +427,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-6 space-y-6 flex flex-col items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-rose-950/20 border border-rose-900/40 flex items-center justify-center text-rose-500 shadow-md">
+            <div className="w-14 h-14 rounded-full bg-[#d4a843]/10 border border-[#d4a843]/30 flex items-center justify-center text-[#d4a843] shadow-md">
               <LucideIcon name="Check" size={24} className="stroke-[2.5px]" />
             </div>
 
@@ -329,7 +436,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                 Appointment Secured
               </h4>
               <p className="text-zinc-550 text-[9px] font-mono tracking-wider uppercase">
-                Confirmation ID: WXT-{Math.floor(100000 + Math.random() * 900000)}
+                Confirmation ID: WRX-{Math.floor(100000 + Math.random() * 900000)}
               </p>
             </div>
 
@@ -341,11 +448,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
               </div>
               <div className="flex justify-between border-b border-zinc-900 pb-2">
                 <span>DATE</span>
-                <span className="text-white font-bold">May {selectedDate}, 2026</span>
+                <span className="text-white font-bold">{selectedDateStr}</span>
               </div>
               <div className="flex justify-between border-b border-zinc-900 pb-2">
-                <span>TIMEOVER</span>
-                <span className="text-zinc-350 font-bold">{selectedTimeSlot} (UTC)</span>
+                <span>TIME SLOT</span>
+                <span className="text-[#d4a843] font-bold">{selectedTimeSlot} (UTC)</span>
               </div>
               <div className="flex justify-between border-b border-zinc-900 pb-2">
                 <span>VENUE</span>
@@ -354,7 +461,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                   <LucideIcon name="ExternalLink" size={9} />
                 </a>
               </div>
-              <p className="text-[9.5px] text-zinc-500 font-sans italic text-center pt-1 leading-relaxed">
+              <p style={{ textAlign: 'center' }} className="text-[9.5px] text-zinc-500 font-sans italic pt-1 leading-relaxed">
                 Confirmation details and agenda links have been forwarded to <strong>{formData.email}</strong>.
               </p>
             </div>
@@ -377,7 +484,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                   onClose();
                   setTimeout(() => setStep(1), 300);
                 }}
-                className="px-5 py-3 rounded-lg bg-rose-600 text-xs font-bold text-white hover:bg-rose-500 transition-colors flex items-center space-x-1.5 cursor-pointer shadow-md shadow-rose-950/10"
+                className="px-5 py-3 rounded-lg bg-white text-xs font-bold text-black hover:bg-zinc-200 transition-colors flex items-center space-x-1.5 cursor-pointer shadow-md shadow-white/5"
               >
                 <span>Complete</span>
                 <LucideIcon name="ArrowRight" size={12} />
