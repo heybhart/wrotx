@@ -132,7 +132,7 @@ export const Capabilities: React.FC<CapabilitiesProps> = ({ onOpenConsultation }
                 onClick={() => setSelectedService(service)}
                 className="service-card py-10 flex justify-between items-center group cursor-pointer"
               >
-                <div>
+                <div className="service-content">
                   <span className="font-label-caps text-[10px] text-accent-gold mb-2 block">
                     {indexNumber}
                   </span>
@@ -140,7 +140,7 @@ export const Capabilities: React.FC<CapabilitiesProps> = ({ onOpenConsultation }
                     {service.title}
                   </h3>
                 </div>
-                <span className="material-symbols-outlined service-arrow text-primary transition-all duration-500">
+                <span className="material-symbols-outlined service-arrow text-primary">
                   north_east
                 </span>
               </div>

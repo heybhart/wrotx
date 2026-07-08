@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
@@ -13,6 +13,25 @@ import { ConsultationModal } from './components/ConsultationModal';
 
 export default function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+
+  useEffect(() => {
+    let timer: number;
+    const handleScroll = () => {
+      if (!document.body.classList.contains('disable-hover')) {
+        document.body.classList.add('disable-hover');
+      }
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        document.body.classList.remove('disable-hover');
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const handleOpenConsultation = () => {
     setIsConsultationOpen(true);
