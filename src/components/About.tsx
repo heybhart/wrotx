@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Rocket, Compass, Layers, Cpu, Users } from 'lucide-react';
 
 export const About: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<'mission' | 'vision' | 'experience' | 'tech'>('mission');
 
   const tabs = [
@@ -38,60 +37,33 @@ export const About: React.FC = () => {
     }
   ];
 
-  // Map scroll progress (0 to 1) of the 350vh container to active sections
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+  // Auto-play timer for tabs
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTab((prevTab) => {
+        const currentIndex = tabs.findIndex(t => t.id === prevTab);
+        const nextIndex = (currentIndex + 1) % tabs.length;
+        return tabs[nextIndex].id as any;
+      });
+    }, 4000);
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (window.innerWidth < 1024) return;
-    if (latest < 0.25) {
-      setActiveTab('mission');
-    } else if (latest < 0.5) {
-      setActiveTab('vision');
-    } else if (latest < 0.75) {
-      setActiveTab('experience');
-    } else {
-      setActiveTab('tech');
-    }
-  });
+    return () => clearInterval(timer);
+  }, [activeTab]);
 
   const handleTabClick = (index: number) => {
-    if (window.innerWidth < 1024) {
-      setActiveTab(tabs[index].id as any);
-      return;
-    }
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const containerTop = rect.top + scrollTop;
-      const containerHeight = rect.height;
-      const viewportHeight = window.innerHeight;
-      
-      // Calculate scroll offset corresponding to the midpoint of the tab's progress range
-      const progressMidpoint = (index * 0.25) + 0.125;
-      const targetScroll = containerTop + progressMidpoint * (containerHeight - viewportHeight);
-      
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth'
-      });
-    }
+    setActiveTab(tabs[index].id as any);
   };
 
   const currentTab = tabs.find(t => t.id === activeTab) || tabs[0];
 
   return (
-    <div ref={containerRef} id="about" className="relative h-auto lg:h-[350vh] bg-[#0b0b0b]">
-      {/* Sticky Content Wrapper */}
-      <div className="relative lg:sticky lg:top-0 h-auto lg:h-screen w-full flex items-center justify-center overflow-visible lg:overflow-hidden border-t border-white/5 select-none py-12 lg:py-0">
-        
-        {/* Subtle Background Glows */}
-        <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-blue-500/3 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-purple-500/3 blur-[150px] pointer-events-none" />
+    <div id="about" className="relative bg-[#0b0b0b] py-20 lg:py-32 border-t border-white/5 overflow-hidden select-none">
+      
+      {/* Subtle Background Glows */}
+      <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-blue-500/3 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-purple-500/3 blur-[150px] pointer-events-none" />
 
-        <div className="max-w-[1440px] mx-auto px-5 md:px-16 relative z-10 w-full">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-16 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* Column 1: Core Title & Tab triggers */}
@@ -211,7 +183,6 @@ export const About: React.FC = () => {
             </div>
 
           </div>
-        </div>
       </div>
     </div>
   );
