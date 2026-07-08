@@ -145,7 +145,7 @@ export const About: React.FC = () => {
                         }`} />
                       </div>
 
-                      <span className={`text-xs font-bold font-headline-md tracking-tight transition-colors block mt-3 text-left ${
+                      <span className={`text-[11px] font-bold font-sans tracking-wider uppercase transition-colors block mt-3 text-left ${
                         isActive ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'
                       }`}>
                         {tab.label}
@@ -186,7 +186,7 @@ export const About: React.FC = () => {
                         <span className="font-mono text-[9px] tracking-widest text-zinc-500 uppercase font-semibold">
                           WXT COMPANY BLUEPRINT
                         </span>
-                        <h3 className="font-bold text-lg text-white uppercase tracking-tight font-headline-md">
+                        <h3 className="font-extrabold text-[17px] text-white uppercase tracking-wider font-sans">
                           {currentTab.label}
                         </h3>
                       </div>
