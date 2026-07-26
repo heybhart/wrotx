@@ -443,17 +443,22 @@ html.lenis-scrolling * {
 #spline-logo,
 a[href*="spline.design"],
 a[href*="spline"],
-div[class*="spline-logo"],
+div[class*="spline"],
 .spline-watermark,
 a[aria-label*="Spline"],
+a[aria-label*="spline"],
 canvas + a,
-div:has(> a[href*="spline"]) {
+canvas ~ a,
+div:has(> a[href*="spline"]),
+spline-viewer::shadow #spline-logo {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   width: 0px !important;
   height: 0px !important;
+  max-width: 0px !important;
+  max-height: 0px !important;
   position: absolute !important;
   overflow: hidden !important;
   top: -9999px !important;

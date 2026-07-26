@@ -63,24 +63,79 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
     };
   }, []);
 
-  // One-time cleanup for Spline logo watermark elements (CSS handles display: none)
+  // Comprehensive DOM, Shadow DOM, and link scrubber for Spline watermark
   useEffect(() => {
-    const removeSplineLogo = () => {
+    const purgeSplineBadge = () => {
       const selectors = [
         '#spline-logo',
         'a[href*="spline.design"]',
         'a[href*="spline"]',
         'a[aria-label*="Spline"]',
-        '.spline-watermark'
+        'a[aria-label*="spline"]',
+        '.spline-watermark',
+        '[class*="spline-logo"]'
       ];
+
+      // Clean Light DOM
       selectors.forEach((selector) => {
         document.querySelectorAll(selector).forEach((el) => el.remove());
       });
+
+      // Clean any anchor tag containing spline in text or href
+      document.querySelectorAll('a').forEach((a) => {
+        const text = (a.textContent || '').toLowerCase();
+        const href = (a.href || '').toLowerCase();
+        if (text.includes('spline') || text.includes('built with') || href.includes('spline')) {
+          a.remove();
+        }
+      });
+
+      // Clean Shadow DOMs across container and document
+      const allHosts = containerRef.current
+        ? containerRef.current.querySelectorAll('*')
+        : document.querySelectorAll('*');
+
+      allHosts.forEach((host) => {
+        if (host.shadowRoot) {
+          if (!host.shadowRoot.querySelector('#purge-spline-styles')) {
+            const style = document.createElement('style');
+            style.id = 'purge-spline-styles';
+            style.textContent = `
+              #spline-logo, a[href*="spline"], a[aria-label*="Spline"], .spline-watermark, a {
+                display: none !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+              }
+            `;
+            host.shadowRoot.appendChild(style);
+          }
+          selectors.forEach((sel) => {
+            host.shadowRoot?.querySelectorAll(sel).forEach((el) => el.remove());
+          });
+          host.shadowRoot?.querySelectorAll('a').forEach((a) => {
+            const text = (a.textContent || '').toLowerCase();
+            const href = (a.href || '').toLowerCase();
+            if (text.includes('spline') || text.includes('built with') || href.includes('spline')) {
+              a.remove();
+            }
+          });
+        }
+      });
     };
 
-    removeSplineLogo();
-    const timeout = setTimeout(removeSplineLogo, 1000);
-    return () => clearTimeout(timeout);
+    purgeSplineBadge();
+    const t1 = setTimeout(purgeSplineBadge, 200);
+    const t2 = setTimeout(purgeSplineBadge, 600);
+    const t3 = setTimeout(purgeSplineBadge, 1500);
+    const t4 = setTimeout(purgeSplineBadge, 3000);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
   }, []);
 
   return (
@@ -114,20 +169,36 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
             className={className} 
             onLoad={(splineApp: any) => {
               try {
-                // Remove logo element once loaded
+                // DOM & Shadow DOM Scrape on Load
                 const selectors = ['#spline-logo', 'a[href*="spline.design"]', 'a[href*="spline"]'];
                 selectors.forEach(sel => {
                   document.querySelectorAll(sel).forEach(el => el.remove());
                 });
 
                 const sceneObj = splineApp._scene;
-                if (sceneObj && sceneObj.children) {
-                  // Single Pass Traversal for Ground hiding & Matte Black material application
+                if (sceneObj) {
+                  // Traverse entire 3D Scene Graph (Three.js object tree)
                   const processNode = (obj: any) => {
                     if (!obj) return;
                     const nameLower = (obj.name || '').toLowerCase();
 
-                    // Hide floor/ground/plane objects
+                    // 1. Hide any 3D scene objects related to Spline logo / watermark / badge / credit / text
+                    if (
+                      nameLower.includes("spline") ||
+                      nameLower.includes("logo") ||
+                      nameLower.includes("watermark") ||
+                      nameLower.includes("badge") ||
+                      nameLower.includes("built") ||
+                      nameLower.includes("credit") ||
+                      nameLower.includes("brand") ||
+                      nameLower.includes("tag")
+                    ) {
+                      obj.visible = false;
+                      if (obj.scale && typeof obj.scale.set === 'function') obj.scale.set(0, 0, 0);
+                      if (obj.position && typeof obj.position.set === 'function') obj.position.set(-9999, -9999, -9999);
+                    }
+
+                    // 2. Hide floor/ground/plane objects
                     if (
                       nameLower.includes("floor") || 
                       nameLower.includes("plane") || 
@@ -139,7 +210,7 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
                       obj.visible = false;
                     }
 
-                    // Apply matte black to body parts except eyes/lights/cameras
+                    // 3. Apply matte black to body parts except eyes/lights/cameras
                     const isExempt = 
                       nameLower.includes("camera") || 
                       nameLower.includes("light") || 
@@ -163,13 +234,19 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
                         }
                       });
                     }
-
-                    if (obj.children && obj.children.length > 0) {
-                      obj.children.forEach(processNode);
-                    }
                   };
 
-                  sceneObj.children.forEach(processNode);
+                  if (typeof sceneObj.traverse === 'function') {
+                    sceneObj.traverse(processNode);
+                  } else if (sceneObj.children) {
+                    const walk = (nodes: any[]) => {
+                      nodes.forEach((node) => {
+                        processNode(node);
+                        if (node.children) walk(node.children);
+                      });
+                    };
+                    walk(sceneObj.children);
+                  }
                 }
               } catch (err) {
                 console.error("Error in Spline onLoad:", err);
