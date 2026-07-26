@@ -17,16 +17,33 @@ export const Contact: React.FC = () => {
     { value: 'other', label: 'Other' },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name) return;
     setIsSubmitting(true);
 
-    // Simulate server side pipeline sync / form submission
-    setTimeout(() => {
+    try {
+      const selectedLabel = serviceOptions.find(o => o.value === service)?.label || service || 'General Inquiry';
+      const response = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email: phone ? `Phone: ${phone}` : 'Not provided',
+          company: 'Contact Form Submission',
+          projectType: selectedLabel === 'Other' ? (otherService || 'Other') : selectedLabel,
+          requirements: `Phone Contact: ${phone || 'N/A'}\nService Requested: ${selectedLabel}${otherService ? ` (${otherService})` : ''}`,
+          dateStr: new Date().toLocaleDateString('default', { month: 'long', day: 'numeric', year: 'numeric' }),
+          timeSlot: 'Direct Form Inquiry'
+        })
+      });
+      await response.json();
+    } catch (err) {
+      console.error('Contact form submission error:', err);
+    } finally {
       setIsSubmitting(false);
       setSubmitSuccess(true);
-    }, 1200);
+    }
   };
 
   return (

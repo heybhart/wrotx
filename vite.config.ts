@@ -16,7 +16,8 @@ const apiPlugin = () => ({
         req.on('end', async () => {
           try {
             const data = JSON.parse(body);
-            const result = await sendBookingEmails(data);
+            const emailModule = await server.ssrLoadModule('/src/lib/email.ts');
+            const result = await emailModule.sendBookingEmails(data);
             res.writeHead(result.success ? 200 : 500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(result));
           } catch (err: any) {
