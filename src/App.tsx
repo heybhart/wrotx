@@ -16,14 +16,22 @@ export default function App() {
 
   useEffect(() => {
     let timer: number;
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!document.body.classList.contains('disable-hover')) {
-        document.body.classList.add('disable-hover');
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (!document.body.classList.contains('disable-hover')) {
+            document.body.classList.add('disable-hover');
+          }
+          clearTimeout(timer);
+          timer = window.setTimeout(() => {
+            document.body.classList.remove('disable-hover');
+          }, 150);
+          ticking = false;
+        });
+        ticking = true;
       }
-      clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        document.body.classList.remove('disable-hover');
-      }, 150);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

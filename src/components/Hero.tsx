@@ -46,13 +46,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onViewProjects }
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-30 w-[92%] max-w-[1100px] aspect-auto min-h-[580px] md:min-h-0 md:aspect-[21/9] lg:aspect-[16/8] glass-panel p-6 md:p-12 lg:p-16 flex flex-col justify-between overflow-hidden"
+        className="relative z-30 w-[92%] max-w-[1100px] aspect-auto min-h-[580px] md:min-h-0 md:aspect-[21/9] lg:aspect-[16/8] glass-panel p-6 md:p-12 lg:p-16 flex flex-col justify-between overflow-hidden transform-gpu"
       >
         {/* 3D Robot model inside the card on the right */}
         <div
-          className="absolute right-[-20%] sm:right-[-2%] md:right-[2%] lg:right-[6%] bottom-[-8%] top-[-8%] w-[110%] sm:w-[85%] md:w-[48%] lg:w-[44%] h-[120%] pointer-events-none z-10 opacity-20 sm:opacity-100 transition-opacity duration-300"
+          className="absolute right-[-20%] sm:right-[-2%] md:right-[2%] lg:right-[6%] bottom-[-8%] top-[-8%] w-[110%] sm:w-[85%] md:w-[48%] lg:w-[44%] h-[120%] pointer-events-none z-10 opacity-20 sm:opacity-100 transition-opacity duration-300 transform-gpu"
         >
-          <div className="w-full h-full pointer-events-none">
+          <div className="w-full h-full pointer-events-none transform-gpu">
             <InteractiveRobotSpline
               scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
               className="w-full h-full"

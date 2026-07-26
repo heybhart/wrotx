@@ -12,8 +12,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
   const [activeSection, setActiveSection] = useState('work');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let ticking = false;
+
+    const updateHeaderState = () => {
+      const scrolled = window.scrollY > 20;
+      setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
 
       const sections = ['portfolio', 'capabilities', 'process', 'about', 'contact'];
       for (const section of sections) {
@@ -21,15 +24,24 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
         if (element) {
           const rect = element.getBoundingClientRect();
           if (rect.top >= -200 && rect.top <= 400) {
-            setActiveSection(section);
+            setActiveSection((prev) => (prev !== section ? section : prev));
             break;
           }
         }
       }
+      ticking = false;
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateHeaderState);
+        ticking = true;
+      }
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const navLinks = [
