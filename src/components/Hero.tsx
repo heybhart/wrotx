@@ -50,9 +50,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onViewProjects }
       >
         {/* 3D Robot model inside the card on the right */}
         <div
-          className="absolute right-[-20%] sm:right-[-2%] md:right-[2%] lg:right-[6%] bottom-[-8%] top-[-8%] w-[110%] sm:w-[85%] md:w-[48%] lg:w-[44%] h-[120%] pointer-events-none z-10 opacity-20 sm:opacity-100 transition-opacity duration-300 transform-gpu"
+          className="absolute right-[-20%] sm:right-[-2%] md:right-[2%] lg:right-[6%] bottom-[-8%] top-[-8%] w-[110%] sm:w-[85%] md:w-[48%] lg:w-[44%] h-[120%] pointer-events-none z-10 opacity-20 sm:opacity-100 transition-opacity duration-300 transform-gpu overflow-hidden"
         >
-          <div className="w-full h-full pointer-events-none transform-gpu">
+          <div className="w-full h-full pointer-events-none transform-gpu relative overflow-hidden">
             <InteractiveRobotSpline
               scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
               className="w-full h-full"
