@@ -56,6 +56,43 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
     };
   }, []);
 
+  // Remove "Built with Spline" watermark logo from DOM
+  useEffect(() => {
+    const removeSplineLogo = () => {
+      const selectors = [
+        '#spline-logo',
+        'a[href*="spline.design"]',
+        'a[href*="spline"]',
+        'a[aria-label*="Spline"]',
+        '.spline-watermark'
+      ];
+      selectors.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((el) => el.remove());
+      });
+      if (containerRef.current) {
+        selectors.forEach((selector) => {
+          containerRef.current?.querySelectorAll(selector).forEach((el) => el.remove());
+        });
+      }
+    };
+
+    removeSplineLogo();
+    const interval = setInterval(removeSplineLogo, 100);
+
+    const observer = new MutationObserver(() => {
+      removeSplineLogo();
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current, { childList: true, subtree: true });
+    }
+
+    return () => {
+      clearInterval(interval);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div
       ref={containerRef}
@@ -87,6 +124,16 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
         onLoad={(splineApp: any) => {
           console.log("Spline onLoad fired.");
           try {
+            const removeSplineLogo = () => {
+              const selectors = ['#spline-logo', 'a[href*="spline.design"]', 'a[href*="spline"]', 'a[aria-label*="Spline"]', '.spline-watermark'];
+              selectors.forEach(sel => {
+                document.querySelectorAll(sel).forEach(el => el.remove());
+                containerRef.current?.querySelectorAll(sel).forEach(el => el.remove());
+              });
+            };
+            removeSplineLogo();
+            setTimeout(removeSplineLogo, 100);
+            setTimeout(removeSplineLogo, 500);
             const sceneObj = splineApp._scene;
             if (sceneObj && sceneObj.children) {
               const listNames = (children: any[]) => {
