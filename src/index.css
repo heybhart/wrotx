@@ -787,18 +787,29 @@ a, button {
   stroke-linejoin: round;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1024px) {
   .svc-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 768px) {
+  .svc-grid {
+    gap: 18px;
+  }
+  .svc-item {
+    min-width: 0;
+  }
   .svc-card {
     grid-template-columns: 1fr;
+    padding: 8px;
+    border-radius: 28px;
+    min-width: 0;
   }
   .svc-tile {
-    min-height: 132px;
+    min-height: 140px;
+    border-radius: 22px;
   }
   .svc-lens {
     top: 50%;
@@ -806,12 +817,54 @@ a, button {
     height: 68px;
     margin: -34px 0 0 -34px;
   }
+  .svc-lens svg {
+    width: 30px;
+    height: 30px;
+  }
   .svc-c1 {
     bottom: auto;
     top: 12px;
   }
   .svc-c2 {
     bottom: 12px;
+  }
+  .svc-body {
+    padding: 14px 10px 8px 10px;
+    min-width: 0;
+  }
+  .svc-title {
+    font-size: 22px;
+  }
+  .svc-desc {
+    font-size: 14px;
+    margin: 6px 0 12px;
+  }
+  .svc-price {
+    padding: 10px 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .svc-price strong {
+    font-size: 24px;
+  }
+  .svc-price strong.q {
+    font-size: 19px;
+  }
+  .svc-time {
+    font-size: 11px;
+    padding: 6px 9px;
+  }
+  .svc-list {
+    margin: 12px 0 16px;
+    gap: 7px;
+  }
+  .svc-ck {
+    font-size: 13.5px;
+    gap: 8px;
+  }
+  .svc-btn {
+    height: 44px;
+    font-size: 14px;
   }
 }
 
@@ -1047,10 +1100,16 @@ a, button {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .work-bento {
     grid-template-columns: 1fr;
     grid-template-areas: "web" "apps" "ai" "voice";
+    gap: 20px;
+  }
+  .work-card {
+    padding: 18px 16px;
+    border-radius: 26px;
+    min-width: 0;
   }
   .work-web .work-list {
     grid-template-columns: 1fr;
@@ -1061,12 +1120,81 @@ a, button {
   }
   .work-split .work-list {
     margin-top: 18px;
-    padding: 18px 0 0;
+    padding: 16px 0 0;
     border-left: 0;
     border-top: 1.5px dashed var(--work-hair);
   }
+  .work-well {
+    padding: 14px 16px;
+    border-radius: 20px;
+    gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .work-stat {
+    min-width: 0;
+  }
+  .work-stat strong {
+    font-size: clamp(34px, 9vw, 48px);
+  }
   .work-web .work-stat strong {
-    font-size: 64px;
+    font-size: clamp(38px, 10vw, 52px);
+  }
+  .work-stat span {
+    font-size: 11.5px;
+    margin-top: 4px;
+    line-height: 1.25;
+  }
+  .work-card h3 {
+    font-size: 20px;
+    margin: 16px 0 6px;
+  }
+  .work-card p {
+    font-size: 14px;
+  }
+  .work-item {
+    font-size: 13.5px;
+    gap: 8px;
+    line-height: 1.35;
+  }
+  .work-item span {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .work-templates {
+    margin-top: 18px;
+    padding-top: 16px;
+    gap: 8px;
+  }
+  .work-template-link {
+    padding: 9px 12px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+  .work-template-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+  .work-template-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+  .work-template-name {
+    font-size: 12.5px;
+    white-space: normal;
+  }
+  .work-template-desc {
+    font-size: 10.5px;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .work-template-arrow {
+    width: 22px;
+    height: 22px;
   }
 }
 
@@ -1120,6 +1248,8 @@ a, button {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
+  width: 100%;
 }
 
 .work-template-link {
@@ -1134,6 +1264,8 @@ a, button {
   border: 1px solid rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 4px 12px -4px rgba(17, 26, 46, 0.06);
   transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  min-width: 0;
+  width: 100%;
 }
 
 .dark .work-template-link {
@@ -1160,6 +1292,7 @@ a, button {
   align-items: center;
   gap: 11px;
   min-width: 0;
+  flex: 1;
 }
 
 .work-template-icon {
@@ -1194,6 +1327,7 @@ a, button {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1;
 }
 
 .work-template-name {
