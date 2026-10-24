@@ -1,164 +1,162 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { InteractiveRobotSpline } from './ui/interactive-3d-robot';
+import { ArrowUpRight, MessageCircle, Play, CheckCircle2 } from 'lucide-react';
+import { FadeUp } from './FadeUp';
+import logoImg from '../assets/logo.webp';
 
 interface HeroProps {
-  onOpenConsultation: () => void;
-  onViewProjects: () => void;
+  onQuoteClick: () => void;
+  onWorkClick: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onViewProjects }) => {
-  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
-    if (targetId === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const element = document.getElementById(targetId);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
-  };
+export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
+  const whatsappUrl = `https://wa.me/919322208664?text=${encodeURIComponent(
+    "Hi WrotX! We would like to get a free quote on WhatsApp for our project."
+  )}`;
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-12 overflow-hidden bg-black select-none"
-    >
-      {/* Grayscale Background Portrait */}
-      <div className="absolute inset-0 z-0">
-        <img
-          alt="Cinematic Portrait of Tyrone Brooks"
-          className="w-full h-full object-cover grayscale opacity-50 contrast-125"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnda3ykf3T6F5twI3nPx6V4w-HUl-TSPPxe6jrT3elPI4UmAMUdqIh_ufN1vfauV6OsBuDmY2zHFVU6TxTNnKze0DeNFrmYSOxOcW7An8b-L6UVvN_RwmJfFJTHBojBKQstQmyHW52G3bV-KNQY_bN7uRz2JQQuD4QSF19MoeM0If7YbucpD9YG4ZB6d4eVu3bNPbq-1cImqbLEtgGo1Zfhb9c91sEOSdZqANtG_MjEd71KwbEDbssczdPWdO1WHyp7AbpYs9tGRQ"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-80"></div>
+    <section id="hero" className="pt-32 sm:pt-36 pb-12 sm:pb-16 relative select-none">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-5 sm:px-8 flex flex-col gap-10 sm:gap-14 pt-4 sm:pt-6">
+
+        {/* Hero Asymmetric Headline & Pitch */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end">
+
+          {/* Left Column (col-span-8): Headline */}
+          <div className="lg:col-span-8 flex flex-col gap-4">
+            <FadeUp delay={60}>
+              <h1 className="font-display text-[36px] sm:text-[52px] md:text-[60px] lg:text-[66px] text-slate-900 dark:text-white tracking-tight uppercase leading-[0.98] font-bold">
+                Get more customers online. <br />
+                <span className="relative inline-block px-2.5 sm:px-3 py-1 mt-1.5 -rotate-1 bg-[#ffe600] text-[#131b2e] dark:bg-[#D9480F] dark:text-white shadow-[3px_3px_0px_#131b2e] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.4)] rounded-sm transition-transform hover:rotate-0">
+                  Do less manual work.
+                </span>
+              </h1>
+            </FadeUp>
+          </div>
+
+          {/* Right Column (col-span-4): Subcopy & CTA Cluster */}
+          <div className="lg:col-span-4 flex flex-col gap-5 lg:pl-4">
+            <FadeUp delay={90}>
+              <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                Fast websites, custom software and AI assistants for businesses in Mumbai and across India. No hidden cost. You own everything.
+              </p>
+            </FadeUp>
+
+            {/* CTA Cluster */}
+            <FadeUp delay={120}>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#ffe600] text-[#131b2e] dark:bg-[#D9480F] dark:text-white font-mono text-xs sm:text-sm uppercase font-bold px-5 py-3 rounded shadow-[3px_3px_0px_#131b2e] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.3)] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_#131b2e] active:translate-y-[0px] active:shadow-[1px_1px_0px_#131b2e] transition-all cursor-pointer"
+                >
+                  <MessageCircle size={16} strokeWidth={2} />
+                  <span>Get a free quote</span>
+                  <ArrowUpRight size={16} strokeWidth={2} />
+                </a>
+
+                <button
+                  onClick={onWorkClick}
+                  className="inline-flex items-center gap-2 bg-white/50 dark:bg-white/10 backdrop-blur-[24px] text-slate-900 dark:text-white font-mono text-xs sm:text-sm uppercase font-semibold px-5 py-3 rounded-full shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),0_4px_12px_rgba(0,0,0,0.04)] hover:bg-white/80 dark:hover:bg-white/20 border-[1.5px] border-white/90 dark:border-white/15 transition-all cursor-pointer"
+                >
+                  <Play size={15} strokeWidth={2} className="text-[#006e27] dark:text-[#00fe66] fill-[#006e27] dark:fill-[#00fe66]" />
+                  <span>See our work</span>
+                </button>
+              </div>
+            </FadeUp>
+          </div>
+
+        </div>
+
+        {/* WrotX gives strip at bottom of hero */}
+        <FadeUp delay={160}>
+          <div className="glass-panel w-full p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+            <div className="flex items-center gap-3.5 w-full md:w-auto justify-between md:justify-start">
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={logoImg}
+                  alt="WrotX - Mumbai Website, Software and AI Agent Development Studio"
+                  width={140}
+                  height={32}
+                  fetchPriority="high"
+                  className="h-7 sm:h-8 w-auto object-contain"
+                />
+                <span className="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-tight">
+                  Gives
+                </span>
+              </div>
+              <span className="h-4 w-[1px] bg-slate-300 dark:bg-white/20 hidden md:inline-block"></span>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full md:w-auto flex-1 md:pl-6">
+              {/* Metric 1 */}
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-display text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    ₹0
+                  </span>
+                </div>
+                <span className="font-mono text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
+                  Surprise fees
+                </span>
+              </div>
+
+              {/* Metric 2 */}
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-display text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    60
+                  </span>
+                  <span className="font-display text-lg text-[#006e27] dark:text-[#00fe66] font-bold">Days</span>
+                </div>
+                <span className="font-mono text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
+                  Free support after launch
+                </span>
+              </div>
+
+              {/* Metric 3 */}
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-display text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    100
+                  </span>
+                  <span className="font-display text-lg text-slate-900 dark:text-white font-bold">%</span>
+                </div>
+                <span className="font-mono text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
+                  Yours, we hand over everything
+                </span>
+              </div>
+
+              {/* Metric 4 */}
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-display text-lg text-[#D9480F] dark:text-[#F97316] font-bold">&lt;</span>
+                  <span className="font-display text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    1
+                  </span>
+                  <span className="font-display text-lg text-slate-900 dark:text-white font-bold uppercase ml-0.5">s</span>
+                </div>
+                <span className="font-mono text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
+                  Opens on mobile 4G
+                </span>
+              </div>
+            </div>
+
+            {/* Verification Stamp */}
+            <div className="hidden xl:flex items-center gap-3 pl-6 border-l border-slate-200/80 dark:border-white/10">
+              <div className="w-8 h-8 rounded-full bg-[#00fe66] flex items-center justify-center text-[#002107] shadow-sm">
+                <CheckCircle2 size={18} strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-xs font-bold text-slate-900 dark:text-white">Mumbai Based</span>
+                <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">GST Invoices Provided</span>
+              </div>
+            </div>
+
+          </div>
+        </FadeUp>
+
       </div>
-
-      {/* Central Obsidian Glass Panel */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-30 w-[92%] max-w-[1100px] aspect-auto min-h-[580px] md:min-h-0 md:aspect-[21/9] lg:aspect-[16/8] glass-panel p-6 md:p-12 lg:p-16 flex flex-col justify-between overflow-hidden transform-gpu"
-      >
-        {/* 3D Robot model inside the card on the right */}
-        <div
-          className="absolute right-[-20%] sm:right-[-2%] md:right-[2%] lg:right-[6%] bottom-[-8%] top-[-8%] w-[110%] sm:w-[85%] md:w-[48%] lg:w-[44%] h-[120%] pointer-events-none z-10 opacity-20 sm:opacity-100 transition-opacity duration-300 transform-gpu overflow-hidden"
-        >
-          <div className="w-full h-full pointer-events-none transform-gpu relative overflow-hidden">
-            <InteractiveRobotSpline
-              scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
-              className="w-full h-full"
-            />
-          </div>
-        </div>
-
-        {/* Top Section: Status & CTA */}
-        <div className="relative z-20 flex justify-between items-start">
-          {/* Status Glow */}
-          <div className="flex items-center space-x-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 status-glow animate-pulse"></span>
-            <span className="font-label-caps text-[12px] text-white tracking-widest uppercase">Available for projects</span>
-          </div>
-
-          {/* Initiate Project button */}
-          <button
-            onClick={onOpenConsultation}
-            className="hidden md:flex items-center space-x-2 border border-white/20 bg-transparent px-5 py-2 group hover:bg-white hover:text-black transition-all duration-500 active:scale-95 cursor-pointer"
-          >
-            <span className="font-label-caps text-[12px] uppercase tracking-[0.2em] text-white group-hover:text-black transition-colors">Initiate Project</span>
-            <span className="material-symbols-outlined text-[16px] text-white group-hover:text-black transition-colors group-hover:translate-x-1 transition-transform">arrow_outward</span>
-          </button>
-        </div>
-
-        {/* Middle Section: Visual Anchor */}
-        <div className="relative z-20 flex flex-col space-y-2">
-          <h3 className="font-label-caps text-[12px] text-zinc-400 tracking-[0.4em] uppercase opacity-60">Product Architect</h3>
-          <h1 className="font-display-xl text-5xl sm:text-6xl md:text-7xl lg:text-[100px] uppercase leading-none tracking-tighter text-white">
-            WROTX
-          </h1>
-        </div>
-
-        {/* Bottom Section: Info */}
-        <div className="relative z-20 flex justify-between items-end w-full mt-4">
-          {/* Contact Details Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4 w-full md:w-auto text-left">
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=work@wrotx.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-3 group cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">mail</span>
-              <span className="font-body-md text-[14px] text-zinc-400 group-hover:text-white transition-colors">work@wrotx.in</span>
-            </a>
-
-            <a
-              href="tel:+919322208664"
-              className="flex items-center space-x-3 group cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">call</span>
-              <span className="font-body-md text-[14px] text-zinc-400 group-hover:text-white transition-colors">+91 9322208664</span>
-            </a>
-
-            <div className="flex items-center space-x-3 group cursor-pointer">
-              <span className="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">schedule</span>
-              <span className="font-body-md text-[14px] text-zinc-400 group-hover:text-white transition-colors">Response Time: &lt; 24h</span>
-            </div>
-
-            <div className="flex items-center space-x-3 group cursor-pointer">
-              <span className="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">location_on</span>
-              <span className="font-body-md text-[14px] text-zinc-400 group-hover:text-white transition-colors">Mumbai, India</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Subtle Decorative Gradient Elements */}
-        <div className="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none"></div>
-      </motion.div>
-
-      {/* Centered Navigation Pill centered below the card */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-        className="relative z-10 mt-8 flex justify-center w-full"
-      >
-        <nav className="nav-pill flex items-center p-1.5 rounded-full">
-          <a
-            onClick={(e) => handleScrollTo(e, 'top')}
-            className="bg-white text-black px-6 py-2 rounded-full font-label-caps text-[12px] tracking-widest flex items-center space-x-2 hover:bg-zinc-200 transition-all cursor-pointer font-semibold animate-none"
-            href="#"
-          >
-            <span className="material-symbols-outlined text-[14px]">home</span>
-            <span>Home</span>
-          </a>
-          <a
-            onClick={(e) => handleScrollTo(e, 'portfolio')}
-            className="px-5 py-2 text-zinc-400 hover:text-white transition-all font-label-caps text-[12px] tracking-widest flex items-center space-x-2 cursor-pointer"
-            href="#portfolio"
-          >
-            <span className="material-symbols-outlined text-[14px]">work_history</span>
-            <span>Works</span>
-          </a>
-          <a
-            onClick={(e) => handleScrollTo(e, 'capabilities')}
-            className="px-5 py-2 text-zinc-400 hover:text-white transition-all font-label-caps text-[12px] tracking-widest flex items-center space-x-2 cursor-pointer"
-            href="#capabilities"
-          >
-            <span className="material-symbols-outlined text-[14px]">bolt</span>
-            <span>Capabilities</span>
-          </a>
-        </nav>
-      </motion.div>
     </section>
   );
 };

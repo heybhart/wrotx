@@ -1,17 +1,272 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WrotX - Personal Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Hanken+Grotesk:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <title>WrotX | Website, Software &amp; AI Agent Development in Mumbai</title>
+    <meta
+      name="description"
+      content="Mumbai studio building websites, custom software &amp; AI agents for Indian businesses. Sites from ₹24,999 in 5-7 days. 60-day support, you own everything."
+    />
+    <meta name="keywords" content="website development Mumbai, custom software development Mumbai, AI agent development India, WhatsApp automation India, web design Mumbai, AI calling agents Mumbai, GST invoicing software" />
+    <meta name="author" content="WrotX" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#FFFFFF" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://wrotx.in/" />
+
+    <!-- Google Search Console Verification (TODO: Replace with your actual GSC verification token) -->
+    <meta name="google-site-verification" content="TODO_GOOGLE_SEARCH_CONSOLE_VERIFICATION_KEY" />
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="WrotX" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content="https://wrotx.in/" />
+    <meta property="og:title" content="WrotX | Website, Software &amp; AI Agent Development in Mumbai" />
+    <meta property="og:description" content="Mumbai studio building websites, custom software &amp; AI agents for Indian businesses. Sites from ₹24,999 in 5-7 days. 60-day support, you own everything." />
+    <meta property="og:image" content="https://wrotx.in/og-image.png" />
+    <meta property="og:image:secure_url" content="https://wrotx.in/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="WrotX - Website, Software &amp; AI Agent Development Studio in Mumbai" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://wrotx.in/" />
+    <meta name="twitter:title" content="WrotX | Website, Software &amp; AI Agent Development in Mumbai" />
+    <meta name="twitter:description" content="Mumbai studio building websites, custom software &amp; AI agents for Indian businesses. Sites from ₹24,999 in 5-7 days. 60-day support, you own everything." />
+    <meta name="twitter:image" content="https://wrotx.in/og-image.png" />
+    <meta name="twitter:image:alt" content="WrotX - Website, Software &amp; AI Agent Development Studio in Mumbai" />
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Structured Data: Organization & ProfessionalService -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "https://wrotx.in/#organization",
+      "name": "WrotX",
+      "legalName": "WrotX Technologies",
+      "url": "https://wrotx.in/",
+      "logo": "https://wrotx.in/logo.png",
+      "image": "https://wrotx.in/og-image.png",
+      "description": "Mumbai studio building websites, custom software & AI agents for Indian businesses. Sites from ₹24,999 in 5-7 days. 60-day support, you own everything.",
+      "email": "work@wrotx.in",
+      "telephone": ["+91-9322208664", "+91-9967478623"],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400001",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 19.0760,
+        "longitude": 72.8777
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "India"
+      },
+      "priceRange": "₹₹",
+      "currenciesAccepted": "INR",
+      "paymentAccepted": "UPI, NEFT, RTGS, Credit Card, Razorpay",
+      "openingHours": "Mo-Sa 09:00-20:00",
+      "sameAs": [
+        "https://www.linkedin.com/company/TODO-wrotx",
+        "https://www.instagram.com/TODO-wrotx"
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: WebSite Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://wrotx.in/#website",
+      "url": "https://wrotx.in/",
+      "name": "WrotX",
+      "description": "Mumbai studio building websites, custom software & AI agents for Indian businesses.",
+      "publisher": {
+        "@id": "https://wrotx.in/#organization"
+      },
+      "inLanguage": "en-IN"
+    }
+    </script>
+
+    <!-- Structured Data: Services Schema (Websites, Custom Software, AI Agents) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "@id": "https://wrotx.in/#service-websites",
+          "name": "Website Design & Development",
+          "serviceType": "Web Development",
+          "provider": {
+            "@id": "https://wrotx.in/#organization"
+          },
+          "areaServed": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "description": "Fast business websites engineered to load in sub-seconds on mobile phones, with direct WhatsApp integration, Google SEO, and full code handover.",
+          "offers": {
+            "@type": "Offer",
+            "price": "24999",
+            "priceCurrency": "INR",
+            "priceValidUntil": "2027-12-31",
+            "availability": "https://schema.org/InStock",
+            "url": "https://wrotx.in/#services"
+          }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://wrotx.in/#service-software",
+          "name": "Custom Software & Web Application Development",
+          "serviceType": "Software Development",
+          "provider": {
+            "@id": "https://wrotx.in/#organization"
+          },
+          "areaServed": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "description": "Tailored software systems, ERPs, CRM workflows, and portals with zero monthly licensing fees, role-based access, and GST invoice generation.",
+          "offers": {
+            "@type": "Offer",
+            "price": "69999",
+            "priceCurrency": "INR",
+            "priceValidUntil": "2027-12-31",
+            "availability": "https://schema.org/InStock",
+            "url": "https://wrotx.in/#services"
+          }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://wrotx.in/#service-ai",
+          "name": "AI Agents & WhatsApp Automation",
+          "serviceType": "AI Automation",
+          "provider": {
+            "@id": "https://wrotx.in/#organization"
+          },
+          "areaServed": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "description": "24/7 intelligent voice calling agents and WhatsApp conversational bots supporting English and Hindi to qualify leads and book appointments.",
+          "offers": {
+            "@type": "Offer",
+            "price": "39999",
+            "priceCurrency": "INR",
+            "priceValidUntil": "2027-12-31",
+            "availability": "https://schema.org/InStock",
+            "url": "https://wrotx.in/#services"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: FAQPage Schema (Matches visible text exactly) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "https://wrotx.in/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does a website, custom software, or AI agent cost at WrotX?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our business websites start from ₹24,999, custom software and web applications start from ₹69,999, and AI calling agents & WhatsApp automation solutions start from ₹39,999. All pricing is transparent with zero hidden charges."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the delivery timeline for projects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fast websites launch in 5–7 days. AI assistants and WhatsApp automation workflows are delivered in 10–14 days. Custom software applications typically take 3–5 weeks depending on scope and team size."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I own the code, design, and domain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100%. Upon final delivery, you receive full source code handover, admin credentials, and complete intellectual property ownership. You only pay for your own domain and cloud hosting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of post-launch support and training is included?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every project comes with 60 days of free post-launch technical support, maintenance, and comprehensive staff training so your team can confidently use and update your system."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide official GST invoices and accept Indian payment methods?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We issue official GST tax invoices for all projects and accept secure milestone payments via UPI, NEFT, RTGS, Razorpay, and direct bank transfer."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Inline script for instant theme restore (prevents theme flashing) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('wrotx_theme');
+          if (saved === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* Immediate FOUC prevention & no-JS crawler visibility */
+      html, body {
+        background-color: #FFFFFF;
+        color: #0F172A;
+        margin: 0;
+        padding: 0;
+      }
+      html.dark, html.dark body {
+        background-color: #090D16;
+        color: #F8FAFC;
+      }
+      @media (scripting: none) {
+        .fade-up {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+    </style>
   </head>
-  <body class="bg-background text-on-background selection:bg-primary selection:text-black">
+  <body class="bg-white dark:bg-[#090D16] text-[#0F172A] dark:text-[#F8FAFC] antialiased selection:bg-[#D9480F]/20 selection:text-[#D9480F] transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

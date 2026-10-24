@@ -1,67 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { LucideIcon } from './LucideIcon';
+import { Menu, X, Mail, MessageCircle, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import logoImg from '../assets/logo.webp';
 
 interface HeaderProps {
-  onOpenConsultation: () => void;
+  onQuoteClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
+export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('work');
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    let ticking = false;
-
-    const updateHeaderState = () => {
-      const scrolled = window.scrollY > 20;
-      setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
-
-      const sections = ['portfolio', 'capabilities', 'process', 'about', 'contact'];
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top >= -200 && rect.top <= 400) {
-            setActiveSection((prev) => (prev !== section ? section : prev));
-            break;
-          }
-        }
-      }
-      ticking = false;
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
     };
-
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(updateHeaderState);
-        ticking = true;
-      }
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { label: 'Work', href: '#portfolio', id: 'portfolio' },
-    { label: 'Services', href: '#capabilities', id: 'capabilities' },
-    { label: 'Philosophy', href: '#process', id: 'process' },
-    { label: 'Studio', href: '#about', id: 'about' },
-    { label: 'Contact', href: '#contact', id: 'contact' },
+    { label: 'Services', href: '#services' },
+    { label: 'Problems', href: '#problems' },
+    { label: 'Our Work', href: '#work' },
+    // { label: 'AI Voice', href: '#ai-voice' },
+    { label: 'How It Works', href: '#how-it-works' },
+    { label: 'FAQ', href: '#faq' }
   ];
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    const id = href.replace('#', '');
-    const element = document.getElementById(id);
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
     if (element) {
-      const headerOffset = 80;
+      const headerOffset = 90;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
@@ -69,121 +45,165 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
     }
   };
 
+  const whatsappUrl = `https://wa.me/919322208664?text=${encodeURIComponent(
+    "Hi WrotX! We would like to get a free quote for our project."
+  )}`;
+
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-500 border-b ${
-          isScrolled 
-            ? 'bg-[#131313]/90 border-white/10 backdrop-blur-md py-4 shadow-xl' 
-            : 'bg-transparent border-transparent py-6'
-        }`}
-      >
-        <div className="flex justify-between items-center h-20 px-5 md:px-16 max-w-[1440px] mx-auto w-full">
-          {/* Brand Logo in Bebas Neue */}
-          <a
-            href="#"
-            className="font-display-xl text-[48px] leading-none tracking-tighter text-white uppercase select-none transition-opacity hover:opacity-90"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          >
-            WrotX
-          </a>
+    <header className="fixed top-3 sm:top-4 inset-x-0 z-50 px-4 sm:px-8 pointer-events-none select-none">
+      <div className="max-w-[1440px] mx-auto pointer-events-auto">
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
-              return (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`font-label-caps text-[12px] uppercase tracking-widest transition-all duration-300 pb-1 ${
-                    isActive
-                      ? 'text-white border-b border-white hover:tracking-widest'
-                      : 'text-zinc-400 hover:text-white hover:tracking-widest border-b border-transparent'
-                  }`}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
-          </nav>
-
-          {/* CTA Action Button */}
-          <div className="hidden md:flex items-center">
-            <button
-              onClick={onOpenConsultation}
-              className="font-label-caps text-[12px] px-6 py-3 bg-white text-black uppercase tracking-widest hover:bg-zinc-200 transition-all active:scale-95 font-semibold cursor-pointer"
+        {/* Rectangular Glassmorphism Navbar */}
+        <div
+          className={`w-full rounded-2xl transition-all duration-300 px-5 sm:px-7 py-2.5 sm:py-3 flex items-center justify-between ${
+            isScrolled
+              ? 'bg-white/45 dark:bg-[#090D16]/65 backdrop-blur-[28px] border border-slate-300/90 dark:border-white/20 shadow-[0_14px_36px_-6px_rgba(15,23,42,0.1),inset_0_1.5px_2px_rgba(255,255,255,0.95)]'
+              : 'bg-white/35 dark:bg-white/5 backdrop-blur-[24px] border border-slate-300/80 dark:border-white/15 shadow-[0_8px_28px_-4px_rgba(15,23,42,0.06),inset_0_1.5px_2px_rgba(255,255,255,0.9)]'
+          }`}
+        >
+          {/* Left: Brand Logo */}
+          <div className="flex items-center">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="group flex items-center cursor-pointer select-none"
             >
-              Start Project
-            </button>
+              <img
+                src={logoImg}
+                alt="WrotX - Mumbai Website, Software and AI Agent Development Studio"
+                width={140}
+                height={36}
+                className="h-8 sm:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
+              />
+            </a>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex md:hidden items-center">
+          {/* Center: Nav Links (Pricing and FAQ removed) */}
+          <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 hover:border-slate-300/70 dark:hover:border-white/15 border border-transparent transition-all font-semibold"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Right Actions: Theme Toggle, Mail & WhatsApp */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <button
+              onClick={toggleTheme}
+              type="button"
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-300/80 bg-white/70 dark:border-white/15 dark:bg-white/10 text-slate-700 dark:text-amber-300 backdrop-blur-md transition-all cursor-pointer shadow-2xs hover:bg-white dark:hover:bg-white/20 active:scale-95"
+            >
+              {theme === 'dark' ? (
+                <Sun size={15} strokeWidth={2} className="text-amber-400" />
+              ) : (
+                <Moon size={15} strokeWidth={2} className="text-slate-700" />
+              )}
+            </button>
+
+            <a
+              href="mailto:work@wrotx.in"
+              aria-label="Send email to work@wrotx.in"
+              className="hidden sm:flex bg-[#ffe600] text-[#131b2e] dark:bg-[#ffe600] dark:text-[#131b2e] font-mono text-xs uppercase font-bold px-3.5 py-2 rounded-lg shadow-[2px_2px_0px_#131b2e] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.3)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#131b2e] active:translate-y-[0px] active:shadow-[1px_1px_0px_#131b2e] transition-all items-center gap-1.5 cursor-pointer"
+            >
+              <Mail size={14} strokeWidth={2} />
+              <span>Mail</span>
+            </a>
+
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Get Free Quote on WhatsApp"
+              className="bg-[#00fe66] text-[#00280b] dark:bg-[#00fe66] dark:text-[#00280b] font-mono text-xs uppercase font-bold px-4 py-2 rounded-lg shadow-[2px_2px_0px_#00280b] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.3)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#00280b] active:translate-y-[0px] active:shadow-[1px_1px_0px_#00280b] transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <MessageCircle size={14} strokeWidth={2} />
+              <span>Get Free Quote</span>
+            </a>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg text-zinc-450 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-              aria-label="Toggle menu"
+              aria-label="Toggle Navigation Menu"
+              className="lg:hidden w-9 h-9 rounded-xl flex items-center justify-center text-slate-800 dark:text-white border border-slate-300/80 bg-white/70 dark:border-white/15 dark:bg-white/10 cursor-pointer shadow-2xs hover:bg-white dark:hover:bg-white/20 transition-all"
             >
-              <LucideIcon name={isMobileMenuOpen ? 'X' : 'Menu'} size={24} />
+              {isMobileMenuOpen ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Mobile Drawer Overlay */}
-      <AnimatePresence>
+        {/* Mobile Drawer Menu */}
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="fixed inset-x-0 top-[80px] z-45 md:hidden"
-          >
-            <div className="border border-t-0 border-white/10 p-6 shadow-2xl flex flex-col space-y-4 max-h-[85vh] overflow-y-auto bg-[#131313]">
-              <div className="space-y-1">
-                {navLinks.map((link) => {
-                  const isActive = activeSection === link.id;
-                  return (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      onClick={(e) => {
-                        handleLinkClick(e, link.href);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors font-label-caps uppercase tracking-wider ${
-                        isActive 
-                          ? 'bg-white/5 text-white border-l-2 border-white pl-3' 
-                          : 'text-zinc-400 hover:bg-white/5 hover:text-white'
-                      }`}
-                    >
-                      <span>{link.label}</span>
-                      <LucideIcon name="ArrowRight" size={14} className="opacity-40" />
-                    </a>
-                  );
-                })}
-              </div>
-
-              <div className="pt-4 border-t border-white/10 space-y-3">
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenConsultation();
-                  }}
-                  className="w-full py-3 bg-white text-black font-semibold text-xs flex items-center justify-center space-x-2 font-label-caps uppercase tracking-widest hover:bg-zinc-200 transition-all cursor-pointer"
-                >
-                  <LucideIcon name="Calendar" size={14} />
-                  <span>Start Project</span>
-                </button>
-              </div>
+          <div className="lg:hidden mt-2.5 w-full rounded-2xl bg-white/95 dark:bg-[#090D16]/95 backdrop-blur-2xl border border-slate-300/90 dark:border-white/15 p-5 space-y-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200/60 dark:border-white/10">
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Appearance
+              </span>
+              <button
+                onClick={toggleTheme}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/15 bg-slate-50 dark:bg-white/10 text-xs font-mono text-slate-800 dark:text-slate-200"
+              >
+                {theme === 'dark' ? (
+                  <>
+                    <Sun size={13} className="text-amber-400" />
+                    <span>Dark Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon size={13} className="text-slate-700" />
+                    <span>Light Mode</span>
+                  </>
+                )}
+              </button>
             </div>
-          </motion.div>
+
+            <nav className="flex flex-col space-y-1.5 text-xs font-mono uppercase tracking-wider text-slate-800 dark:text-slate-200">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="pt-2 flex flex-col gap-2.5 text-xs font-mono border-t border-slate-200/60 dark:border-white/10">
+              <a
+                href="mailto:work@wrotx.in"
+                className="w-full bg-[#ffe600] text-[#131b2e] dark:bg-[#ffe600] dark:text-[#131b2e] font-mono text-xs uppercase font-bold px-4 py-2.5 rounded-lg shadow-[2px_2px_0px_#131b2e] flex items-center justify-center gap-2"
+              >
+                <Mail size={14} strokeWidth={2} />
+                <span>work@wrotx.in</span>
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#00fe66] text-[#00280b] dark:bg-[#00fe66] dark:text-[#00280b] font-mono text-xs uppercase font-bold px-4 py-2.5 rounded-lg shadow-[2px_2px_0px_#00280b] flex items-center justify-center gap-2"
+              >
+                <MessageCircle size={14} strokeWidth={2} />
+                <span>WhatsApp: Get Free Quote</span>
+              </a>
+              <p className="text-[11px] text-slate-500 dark:text-slate-500 text-center pt-1">
+                Mumbai, India · Fixed Pricing · GST Invoices Provided
+              </p>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
-    </>
+
+      </div>
+    </header>
   );
 };

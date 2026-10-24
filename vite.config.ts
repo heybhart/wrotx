@@ -2,13 +2,13 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
-import { sendBookingEmails } from './src/lib/email';
 
 const apiPlugin = () => ({
   name: 'api-plugin',
   configureServer(server: any) {
     server.middlewares.use(async (req: any, res: any, next: any) => {
-      if (req.url === '/api/book' && req.method === 'POST') {
+      const pathname = req.url?.split('?')[0];
+      if ((pathname === '/api/book' || pathname === '/api/contact' || pathname?.endsWith('/api/book') || pathname?.endsWith('/api/contact')) && req.method === 'POST') {
         let body = '';
         req.on('data', (chunk: any) => {
           body += chunk;
@@ -32,15 +32,36 @@ const apiPlugin = () => ({
   }
 });
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
   return {
-    base: (typeof process !== 'undefined' && process.env && process.env.VERCEL) ? '/' : '/wrotx/',
+    base: command === 'build' ? '/' : '/wrotx/',
 
     plugins: [react(), tailwindcss(), apiPlugin()],
 
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
+      },
+    },
+
+    build: {
+      target: 'es2020',
+      minify: 'esbuild',
+      cssMinify: true,
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('scheduler')) {
+                return 'vendor-react';
+              }
+              if (id.includes('lucide-react')) {
+                return 'vendor-icons';
+              }
+            }
+          },
+        },
       },
     },
 
