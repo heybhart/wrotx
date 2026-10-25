@@ -100,15 +100,12 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
             <button
               onClick={toggleTheme}
               type="button"
-              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              aria-label="Toggle theme"
+              title="Toggle theme"
               className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-300/80 bg-white/70 dark:border-white/15 dark:bg-white/10 text-slate-700 dark:text-amber-300 backdrop-blur-md transition-all cursor-pointer shadow-2xs hover:bg-white dark:hover:bg-white/20 active:scale-95"
             >
-              {theme === 'dark' ? (
-                <Sun size={15} strokeWidth={2} className="text-amber-400" />
-              ) : (
-                <Moon size={15} strokeWidth={2} className="text-slate-700" />
-              )}
+              <Sun size={15} strokeWidth={2} className="hidden dark:block text-amber-400" />
+              <Moon size={15} strokeWidth={2} className="block dark:hidden text-slate-700" />
             </button>
 
             <a
@@ -150,19 +147,18 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
               </span>
               <button
                 onClick={toggleTheme}
+                type="button"
+                aria-label="Toggle theme"
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/15 bg-slate-50 dark:bg-white/10 text-xs font-mono text-slate-800 dark:text-slate-200"
               >
-                {theme === 'dark' ? (
-                  <>
-                    <Sun size={13} className="text-amber-400" />
-                    <span>Dark Mode</span>
-                  </>
-                ) : (
-                  <>
-                    <Moon size={13} className="text-slate-700" />
-                    <span>Light Mode</span>
-                  </>
-                )}
+                <span className="hidden dark:inline-flex items-center gap-2">
+                  <Sun size={13} className="text-amber-400" />
+                  <span>Dark Mode</span>
+                </span>
+                <span className="inline-flex dark:hidden items-center gap-2">
+                  <Moon size={13} className="text-slate-700" />
+                  <span>Light Mode</span>
+                </span>
               </button>
             </div>
 

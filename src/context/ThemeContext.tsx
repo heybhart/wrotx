@@ -13,22 +13,25 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const THEME_STORAGE_KEY = 'wrotx_theme';
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved === 'dark' || saved === 'light') {
-        return saved;
-      }
-    }
-    // Default to 'light' (white theme) as requested
-    return 'light';
-  });
+  const [theme, setThemeState] = useState<Theme>('light');
 
+  // Sync state on client mount with DOM and localStorage
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved === 'dark' || (saved !== 'light' && document.documentElement.classList.contains('dark'))) {
+        setThemeState('dark');
+      }
+    } catch {
+      // Ignore localStorage read errors
+    }
+  }, []);
+
+  const applyTheme = (newTheme: Theme) => {
     const root = document.documentElement;
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 
-    if (theme === 'dark') {
+    if (newTheme === 'dark') {
       root.classList.add('dark');
       root.style.colorScheme = 'dark';
       if (metaThemeColor) {
@@ -43,17 +46,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
 
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      localStorage.setItem(THEME_STORAGE_KEY, newTheme);
     } catch {
       // Ignore localStorage write errors (e.g. incognito)
     }
-  }, [theme]);
+  };
 
   const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'light' ? 'dark' : 'light'));
+    const isDark = document.documentElement.classList.contains('dark');
+    const nextTheme: Theme = isDark ? 'light' : 'dark';
+    applyTheme(nextTheme);
+    setThemeState(nextTheme);
   };
 
   const setTheme = (newTheme: Theme) => {
+    applyTheme(newTheme);
     setThemeState(newTheme);
   };
 
