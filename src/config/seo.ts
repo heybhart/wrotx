@@ -42,6 +42,35 @@ export function getOrganizationSchema(): Record<string, unknown> {
   };
 }
 
+export function getBreadcrumbSchema(items: { name: string; path: string }[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: item.name,
+      item: getCanonicalUrl(item.path),
+    })),
+  };
+}
+
+export function getFaqSchema(id: string, faqs: { question: string; answer: string }[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': id,
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+}
+
 export function getHomeSchemas(): Record<string, unknown>[] {
   const { domain, brandName, prices } = SITE_CONFIG;
   return [
@@ -72,7 +101,7 @@ export function getHomeSchemas(): Record<string, unknown>[] {
             price: String(prices.websites.amount),
             priceCurrency: 'INR',
             availability: 'https://schema.org/InStock',
-            url: `${domain}/#services`,
+            url: `${domain}/website-development-mumbai`,
           },
         },
         {
@@ -88,7 +117,7 @@ export function getHomeSchemas(): Record<string, unknown>[] {
             price: String(prices.software.amount),
             priceCurrency: 'INR',
             availability: 'https://schema.org/InStock',
-            url: `${domain}/#services`,
+            url: `${domain}/custom-software-development`,
           },
         },
         {
@@ -104,7 +133,7 @@ export function getHomeSchemas(): Record<string, unknown>[] {
             price: String(prices.aiAssistants.amount),
             priceCurrency: 'INR',
             availability: 'https://schema.org/InStock',
-            url: `${domain}/#services`,
+            url: `${domain}/whatsapp-automation`,
           },
         },
         {
@@ -120,24 +149,12 @@ export function getHomeSchemas(): Record<string, unknown>[] {
             price: String(prices.aiCalling.amount),
             priceCurrency: 'INR',
             availability: 'https://schema.org/InStock',
-            url: `${domain}/#services`,
+            url: `${domain}/ai-calling-agents`,
           },
         },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      '@id': `${domain}/#faq`,
-      mainEntity: HOME_FAQS_DATA.map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.answer,
-        },
-      })),
-    },
+    getFaqSchema(`${domain}/#faq`, HOME_FAQS_DATA),
   ];
 }
 
@@ -162,6 +179,12 @@ export const WORK_META: RouteSeoMeta = {
   title: `Our Work & Live Demos | ${SITE_CONFIG.brandName} Mumbai`,
   description: `Live website, app, and AI agent projects built by ${SITE_CONFIG.brandName} in Mumbai for real estate, retail, and Indian service businesses.`,
   ogType: 'website',
+  schemas: [
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Our Work', path: '/work' },
+    ]),
+  ],
 };
 
 export const ABOUT_META: RouteSeoMeta = {
@@ -169,6 +192,12 @@ export const ABOUT_META: RouteSeoMeta = {
   title: `About ${SITE_CONFIG.brandName} | Mumbai Engineering Studio`,
   description: `Meet the Mumbai engineering team behind ${SITE_CONFIG.brandName}. Direct engineer access, 100% source code ownership, and ${SITE_CONFIG.support.days}-day free support.`,
   ogType: 'website',
+  schemas: [
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'About', path: '/about' },
+    ]),
+  ],
 };
 
 export const PRICING_META: RouteSeoMeta = {
@@ -176,6 +205,12 @@ export const PRICING_META: RouteSeoMeta = {
   title: `Pricing & Timelines | ${SITE_CONFIG.brandName} Mumbai`,
   description: `Websites from ${SITE_CONFIG.prices.websites.formatted}, software from ${SITE_CONFIG.prices.software.formatted}, WhatsApp AI from ${SITE_CONFIG.prices.aiAssistants.formatted}, calling agents from ${SITE_CONFIG.prices.aiCalling.formatted}.`,
   ogType: 'website',
+  schemas: [
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Pricing', path: '/pricing' },
+    ]),
+  ],
 };
 
 export const CONTACT_META: RouteSeoMeta = {
@@ -183,6 +218,12 @@ export const CONTACT_META: RouteSeoMeta = {
   title: `Contact ${SITE_CONFIG.brandName} | Talk to a Mumbai Engineer`,
   description: `Request a fixed project quote from ${SITE_CONFIG.brandName} in Mumbai. Reach us via form, WhatsApp, phone, or email for websites, software, and AI.`,
   ogType: 'website',
+  schemas: [
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Contact', path: '/contact' },
+    ]),
+  ],
 };
 
 export const BLOG_META: RouteSeoMeta = {
@@ -190,23 +231,110 @@ export const BLOG_META: RouteSeoMeta = {
   title: `Blog & Guides for Indian Businesses | ${SITE_CONFIG.brandName}`,
   description: `Practical guides on website pricing in India, WhatsApp automation API rules, and custom software ownership from ${SITE_CONFIG.brandName}.`,
   ogType: 'website',
+  schemas: [
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+    ]),
+  ],
 };
 
 export function getServicePageMeta(page: ServicePageData): RouteSeoMeta {
+  const { domain, brandName } = SITE_CONFIG;
+  const canonicalUrl = getCanonicalUrl(page.slug);
+  const serviceSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${canonicalUrl}#service`,
+    name: page.title,
+    serviceType: page.title,
+    url: canonicalUrl,
+    description: page.metaDescription,
+    provider: {
+      '@type': 'Organization',
+      '@id': `${domain}/#organization`,
+      name: brandName,
+      url: `${domain}/`,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Mumbai' },
+      { '@type': 'Country', name: 'India' },
+    ],
+    ...(page.priceAmount !== null
+      ? {
+          offers: {
+            '@type': 'Offer',
+            price: String(page.priceAmount),
+            priceCurrency: 'INR',
+            availability: 'https://schema.org/InStock',
+            url: canonicalUrl,
+          },
+        }
+      : {}),
+  };
+
   return {
     path: page.slug,
     title: page.metaTitle,
     description: page.metaDescription,
     ogType: 'website',
+    schemas: [
+      getBreadcrumbSchema([
+        { name: 'Home', path: '/' },
+        { name: page.title, path: page.slug },
+      ]),
+      serviceSchema,
+      getFaqSchema(`${canonicalUrl}#faq`, page.faqs),
+    ],
   };
 }
 
 export function getBlogPostMeta(post: BlogPost): RouteSeoMeta {
+  const { domain, brandName } = SITE_CONFIG;
+  const canonicalUrl = getCanonicalUrl(post.path);
   return {
     path: post.path,
     title: post.metaTitle,
     description: post.metaDescription,
     ogType: 'article',
+    schemas: [
+      getBreadcrumbSchema([
+        { name: 'Home', path: '/' },
+        { name: 'Blog', path: '/blog' },
+        { name: post.title, path: post.path },
+      ]),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        '@id': `${canonicalUrl}#article`,
+        headline: post.title,
+        description: post.metaDescription,
+        image: `${domain}/og-image.png`,
+        datePublished: post.publishedAt,
+        dateModified: post.updatedAt,
+        inLanguage: 'en-IN',
+        author: {
+          '@type': 'Organization',
+          '@id': `${domain}/#organization`,
+          name: post.author,
+          url: `${domain}/about`,
+        },
+        publisher: {
+          '@type': 'Organization',
+          '@id': `${domain}/#organization`,
+          name: brandName,
+          url: `${domain}/`,
+          logo: {
+            '@type': 'ImageObject',
+            url: `${domain}/logo.png`,
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl,
+        },
+      },
+    ],
   };
 }
 
@@ -217,6 +345,13 @@ export function getCaseStudyMeta(slug: string): RouteSeoMeta {
     description: `Unpublished case study template on ${SITE_CONFIG.brandName}.`,
     ogType: 'website',
     robots: 'noindex, nofollow',
+    schemas: [
+      getBreadcrumbSchema([
+        { name: 'Home', path: '/' },
+        { name: 'Our Work', path: '/work' },
+        { name: slug, path: `/work/${slug}` },
+      ]),
+    ],
   };
 }
 
