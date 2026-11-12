@@ -7,7 +7,22 @@ import { renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { build } from 'vite';
 import { INDEXABLE_ROUTES, getCanonicalUrl } from '../src/config/routes';
-import { buildHeadHtml, HOME_META, NOT_FOUND_META, type RouteSeoMeta } from '../src/config/seo';
+import {
+  ABOUT_META,
+  BLOG_META,
+  CONTACT_META,
+  HOME_META,
+  NOT_FOUND_META,
+  PRICING_META,
+  WORK_META,
+  buildHeadHtml,
+  getBlogPostMeta,
+  getCaseStudyMeta,
+  getServicePageMeta,
+  type RouteSeoMeta,
+} from '../src/config/seo';
+import { SERVICE_PAGE_LIST } from '../src/data/servicePagesData';
+import { BLOG_POSTS } from '../src/data/blogPostsData';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -91,7 +106,18 @@ async function prerender() {
   const templateHtml = fs.readFileSync(templatePath, 'utf-8');
 
   // 4. Prerender every route with its unique head meta + schema
-  const targets: RouteSeoMeta[] = [HOME_META, NOT_FOUND_META];
+  const targets: RouteSeoMeta[] = [
+    HOME_META,
+    WORK_META,
+    ABOUT_META,
+    PRICING_META,
+    CONTACT_META,
+    BLOG_META,
+    ...SERVICE_PAGE_LIST.map(getServicePageMeta),
+    ...BLOG_POSTS.map(getBlogPostMeta),
+    getCaseStudyMeta('sample-case-study'),
+    NOT_FOUND_META,
+  ];
   for (const meta of targets) {
     const renderedAppHtml = await renderRouteHtml(App, meta.path);
     const outHtml = templateHtml

@@ -89,23 +89,38 @@ export const Footer: React.FC = () => {
             </span>
             <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
               <li>
-                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                  Websites
+                <Link to="/website-development-mumbai" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  Websites (Mumbai)
                 </Link>
               </li>
               <li>
-                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                <Link to="/custom-software-development" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                   Software &amp; Apps
                 </Link>
               </li>
               <li>
-                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                  AI Assistants
+                <Link to="/ai-agent-development" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  AI Agents
                 </Link>
               </li>
               <li>
-                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                  Automation
+                <Link to="/whatsapp-automation" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  WhatsApp Automation
+                </Link>
+              </li>
+              <li>
+                <Link to="/ai-calling-agents" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  AI Calling Agents
+                </Link>
+              </li>
+              <li>
+                <Link to="/real-estate-websites" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  Real Estate Websites
+                </Link>
+              </li>
+              <li>
+                <Link to="/banking-fintech-solutions" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  Banking &amp; FinTech
                 </Link>
               </li>
             </ul>
@@ -117,20 +132,20 @@ export const Footer: React.FC = () => {
               Quick Links
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              <Link to="/#problems" onClick={(e) => handleHashScroll(e, 'problems')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                Problems We Fix
-              </Link>
-              <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                What We Build
-              </Link>
-              <Link to="/#work" onClick={(e) => handleHashScroll(e, 'work')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              <Link to="/work" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 Our Work
               </Link>
-              <Link to="/#how-it-works" onClick={(e) => handleHashScroll(e, 'how-it-works')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                How It Works
+              <Link to="/pricing" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                Pricing
               </Link>
-              <Link to="/#why-wrotx" onClick={(e) => handleHashScroll(e, 'why-wrotx')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                Why Us
+              <Link to="/about" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                About WrotX
+              </Link>
+              <Link to="/blog" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                Blog
+              </Link>
+              <Link to="/contact" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                Contact Us
               </Link>
               <Link to="/#faq" onClick={(e) => handleHashScroll(e, 'faq')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 FAQ

@@ -1,6 +1,8 @@
 import { SITE_CONFIG, getHomeMetaDescription } from './site';
 import { getCanonicalUrl } from './routes';
 import { HOME_FAQS_DATA } from '../data/faqsData';
+import type { ServicePageData } from '../data/servicePagesData';
+import type { BlogPost } from '../data/blogPostsData';
 
 export interface RouteSeoMeta {
   path: string;
@@ -154,6 +156,69 @@ export const NOT_FOUND_META: RouteSeoMeta = {
   ogType: 'website',
   robots: 'noindex, nofollow',
 };
+
+export const WORK_META: RouteSeoMeta = {
+  path: '/work',
+  title: `Our Work & Live Demos | ${SITE_CONFIG.brandName} Mumbai`,
+  description: `Live website, app, and AI agent projects built by ${SITE_CONFIG.brandName} in Mumbai for real estate, retail, and Indian service businesses.`,
+  ogType: 'website',
+};
+
+export const ABOUT_META: RouteSeoMeta = {
+  path: '/about',
+  title: `About ${SITE_CONFIG.brandName} | Mumbai Engineering Studio`,
+  description: `Meet the Mumbai engineering team behind ${SITE_CONFIG.brandName}. Direct engineer access, 100% source code ownership, and ${SITE_CONFIG.support.days}-day free support.`,
+  ogType: 'website',
+};
+
+export const PRICING_META: RouteSeoMeta = {
+  path: '/pricing',
+  title: `Pricing & Timelines | ${SITE_CONFIG.brandName} Mumbai`,
+  description: `Websites from ${SITE_CONFIG.prices.websites.formatted}, software from ${SITE_CONFIG.prices.software.formatted}, WhatsApp AI from ${SITE_CONFIG.prices.aiAssistants.formatted}, calling agents from ${SITE_CONFIG.prices.aiCalling.formatted}.`,
+  ogType: 'website',
+};
+
+export const CONTACT_META: RouteSeoMeta = {
+  path: '/contact',
+  title: `Contact ${SITE_CONFIG.brandName} | Talk to a Mumbai Engineer`,
+  description: `Request a fixed project quote from ${SITE_CONFIG.brandName} in Mumbai. Reach us via form, WhatsApp, phone, or email for websites, software, and AI.`,
+  ogType: 'website',
+};
+
+export const BLOG_META: RouteSeoMeta = {
+  path: '/blog',
+  title: `Blog & Guides for Indian Businesses | ${SITE_CONFIG.brandName}`,
+  description: `Practical guides on website pricing in India, WhatsApp automation API rules, and custom software ownership from ${SITE_CONFIG.brandName}.`,
+  ogType: 'website',
+};
+
+export function getServicePageMeta(page: ServicePageData): RouteSeoMeta {
+  return {
+    path: page.slug,
+    title: page.metaTitle,
+    description: page.metaDescription,
+    ogType: 'website',
+  };
+}
+
+export function getBlogPostMeta(post: BlogPost): RouteSeoMeta {
+  return {
+    path: post.path,
+    title: post.metaTitle,
+    description: post.metaDescription,
+    ogType: 'article',
+  };
+}
+
+export function getCaseStudyMeta(slug: string): RouteSeoMeta {
+  return {
+    path: `/work/${slug}`,
+    title: `Case Study Template | ${SITE_CONFIG.brandName}`,
+    description: `Unpublished case study template on ${SITE_CONFIG.brandName}.`,
+    ogType: 'website',
+    robots: 'noindex, nofollow',
+  };
+}
 
 export function buildHeadHtml(meta: RouteSeoMeta): string {
   const { domain, brandName } = SITE_CONFIG;

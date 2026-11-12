@@ -20,24 +20,16 @@ export const Header: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { label: 'Services', href: '/#services' },
-    { label: 'Problems', href: '/#problems' },
-    { label: 'Our Work', href: '/#work' },
-    { label: 'How It Works', href: '/#how-it-works' },
-    { label: 'FAQ', href: '/#faq' },
+    { label: 'Websites', href: '/website-development-mumbai' },
+    { label: 'AI Agents', href: '/ai-agent-development' },
+    { label: 'Software', href: '/custom-software-development' },
+    { label: 'Our Work', href: '/work' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Contact', href: '/contact' },
   ];
 
-  const handleHashScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = () => {
     setIsMobileMenuOpen(false);
-    if (pathname === '/' && href.startsWith('/#')) {
-      e.preventDefault();
-      const targetId = href.slice(2);
-      const element = document.getElementById(targetId);
-      if (element) {
-        const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 90;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-      }
-    }
   };
 
   const whatsappUrl = getWhatsappUrl();
@@ -74,13 +66,17 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Center: Nav Links */}
-          <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.href}
-                onClick={(e) => handleHashScroll(e, link.href)}
-                className="px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 hover:border-slate-300/70 dark:hover:border-white/15 border border-transparent transition-all font-semibold"
+                onClick={handleNavClick}
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider border transition-all font-semibold ${
+                  pathname === link.href
+                    ? 'text-[#D9480F] dark:text-[#F97316] bg-white/80 dark:bg-white/10 border-slate-300/70 dark:border-white/15'
+                    : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 hover:border-slate-300/70 dark:hover:border-white/15 border-transparent'
+                }`}
               >
                 {link.label}
               </Link>
@@ -159,12 +155,26 @@ export const Header: React.FC = () => {
                 <Link
                   key={link.label}
                   to={link.href}
-                  onClick={(e) => handleHashScroll(e, link.href)}
+                  onClick={handleNavClick}
                   className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
                 >
                   {link.label}
                 </Link>
               ))}
+              <Link
+                to="/about"
+                onClick={handleNavClick}
+                className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                to="/blog"
+                onClick={handleNavClick}
+                className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+              >
+                Blog
+              </Link>
             </nav>
 
             <div className="pt-2 flex flex-col gap-2.5 text-xs font-mono border-t border-slate-200/60 dark:border-white/10">

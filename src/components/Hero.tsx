@@ -23,23 +23,23 @@ export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
 
           {/* Left Column (col-span-8): Headline */}
           <div className="lg:col-span-8 flex flex-col gap-4">
-            <FadeUp delay={60}>
-              <h1 className="font-display text-[36px] sm:text-[52px] md:text-[60px] lg:text-[66px] text-slate-900 dark:text-white tracking-tight uppercase leading-[0.98] font-bold">
-                Get more customers online. <br />
-                <span className="relative inline-block px-2.5 sm:px-3 py-1 mt-1.5 -rotate-1 bg-[#ffe600] text-[#131b2e] dark:bg-[#D9480F] dark:text-white shadow-[3px_3px_0px_#131b2e] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.4)] rounded-sm transition-transform hover:rotate-0">
-                  Do less manual work.
-                </span>
-              </h1>
-            </FadeUp>
+            <h1 className="font-display text-[32px] sm:text-[48px] md:text-[56px] lg:text-[60px] text-slate-900 dark:text-white tracking-tight uppercase leading-[1.02] font-bold">
+              Website, Software &amp;{' '}
+              <span className="relative inline-block px-2.5 sm:px-3 py-1 mt-1.5 -rotate-1 bg-[#ffe600] text-[#131b2e] dark:bg-[#D9480F] dark:text-white shadow-[3px_3px_0px_#131b2e] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.4)] rounded-sm transition-transform hover:rotate-0">
+                AI Agent Development
+              </span>{' '}
+              in Mumbai
+            </h1>
           </div>
 
           {/* Right Column (col-span-4): Subcopy & CTA Cluster */}
-          <div className="lg:col-span-4 flex flex-col gap-5 lg:pl-4">
-            <FadeUp delay={90}>
-              <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Fast websites, custom software and AI assistants for businesses in Mumbai and across India. No hidden cost. You own everything.
-              </p>
-            </FadeUp>
+          <div className="lg:col-span-4 flex flex-col gap-4 lg:pl-4">
+            <p className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
+              Get more customers online. Do less manual work.
+            </p>
+            <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+              Fast websites, custom software and AI assistants for businesses in Mumbai and across India. No hidden cost. You own everything.
+            </p>
 
             {/* CTA Cluster */}
             <FadeUp delay={120}>

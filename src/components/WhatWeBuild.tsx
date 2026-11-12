@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FadeUp } from './FadeUp';
 import { SERVICES_DATA } from '../data/servicesData';
 
@@ -115,7 +116,11 @@ export const WhatWeBuild: React.FC<WhatWeBuildProps> = ({ onQuoteClick }) => {
                     {/* Right Body */}
                     <div className="svc-body">
                       <div className="svc-top">
-                        <h3 className="svc-title font-display">{item.name}</h3>
+                        <h3 className="svc-title font-display">
+                          <Link to={item.slug} className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors">
+                            {item.name}
+                          </Link>
+                        </h3>
                         {item.popular && (
                           <span className="svc-pop">★ POPULAR</span>
                         )}
