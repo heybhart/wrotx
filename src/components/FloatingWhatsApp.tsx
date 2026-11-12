@@ -1,13 +1,12 @@
 import React from 'react';
 import { Phone, MessageCircle } from 'lucide-react';
+import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
 
 export const FloatingWhatsApp: React.FC = () => {
-  const whatsappNumber = '919322208664';
-  const prefilledMessage = encodeURIComponent(
-    "Hi WrotX! We would like to discuss a website, custom software, or AI agent project for our business."
+  const whatsappUrl = getWhatsappUrl(
+    `Hi ${SITE_CONFIG.brandName}! We would like to discuss a website, custom software, or AI agent project for our business.`
   );
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${prefilledMessage}`;
-  const phoneCallUrl = 'tel:+919322208664';
+  const phoneCallUrl = `tel:${SITE_CONFIG.phones[0].tel}`;
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2.5">

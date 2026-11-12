@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Phone, Mail, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { FadeUp } from './FadeUp';
-import { SERVICES_DATA } from '../data/servicesData';
+import { CONTACT_SERVICE_OPTIONS } from '../data/servicesData';
+import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
 
 interface FinalCtaProps {
   selectedService?: string;
@@ -10,7 +11,7 @@ interface FinalCtaProps {
 export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [service, setService] = useState(SERVICES_DATA[0].dropdownLabel);
+  const [service, setService] = useState(CONTACT_SERVICE_OPTIONS[0].label);
   const [projectDetails, setProjectDetails] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -18,11 +19,11 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
 
   useEffect(() => {
     if (selectedService) {
-      const match = SERVICES_DATA.find(
-        (s) => s.name.toLowerCase() === selectedService.toLowerCase() || s.id === selectedService
+      const match = CONTACT_SERVICE_OPTIONS.find(
+        (s) => s.matchName.toLowerCase() === selectedService.toLowerCase() || s.id === selectedService
       );
       if (match) {
-        setService(match.dropdownLabel);
+        setService(match.label);
       }
     }
   }, [selectedService]);
@@ -62,9 +63,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
     }
   };
 
-  const whatsappUrl = `https://wa.me/919322208664?text=${encodeURIComponent(
-    "Hi WrotX! We would like to get a free quote for our project."
-  )}`;
+  const whatsappUrl = getWhatsappUrl();
 
   return (
     <section id="contact" className="py-16 sm:py-24 hairline-b relative">
@@ -163,9 +162,9 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
                       onChange={(e) => setService(e.target.value)}
                       className="glass-input w-full px-4 py-2.5 text-sm"
                     >
-                      {SERVICES_DATA.map((s) => (
-                        <option key={s.id} value={s.dropdownLabel} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
-                          {s.dropdownLabel}
+                      {CONTACT_SERVICE_OPTIONS.map((s) => (
+                        <option key={s.id} value={s.label} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
+                          {s.label}
                         </option>
                       ))}
                     </select>
@@ -218,7 +217,9 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
                   </div>
                   <div className="text-left">
                     <div className="font-display text-sm font-bold text-slate-900 dark:text-white">Chat on WhatsApp</div>
-                    <div className="font-mono text-xs text-slate-500 dark:text-slate-400">+91 9322208664 / +91 9967478623</div>
+                    <div className="font-mono text-xs text-slate-500 dark:text-slate-400">
+                      {SITE_CONFIG.phones[0].display} / {SITE_CONFIG.phones[1].display}
+                    </div>
                   </div>
                 </div>
                 <ArrowUpRight size={17} strokeWidth={2} className="text-slate-400 group-hover:text-[#D9480F] dark:group-hover:text-[#F97316] transition-colors" />
@@ -235,12 +236,12 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
                   <div className="text-left">
                     <div className="font-display text-sm font-bold text-slate-900 dark:text-white">Direct Phone Call</div>
                     <div className="font-mono text-xs text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-1.5">
-                      <a href="tel:+919322208664" className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors">
-                        +91 9322208664
+                      <a href={`tel:${SITE_CONFIG.phones[0].tel}`} className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors">
+                        {SITE_CONFIG.phones[0].display}
                       </a>
                       <span className="text-slate-400 dark:text-slate-600">/</span>
-                      <a href="tel:+919967478623" className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors">
-                        +91 9967478623
+                      <a href={`tel:${SITE_CONFIG.phones[1].tel}`} className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors">
+                        {SITE_CONFIG.phones[1].display}
                       </a>
                     </div>
                   </div>
@@ -250,7 +251,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
 
               {/* Email Button */}
               <a
-                href="mailto:work@wrotx.in"
+                href={`mailto:${SITE_CONFIG.email}`}
                 className="w-full min-h-[46px] p-4 rounded-2xl glass-card bg-white/90 hover:bg-white dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200/80 dark:border-white/15 hover:border-[#D9480F]/60 dark:hover:border-[#F97316]/60 flex items-center justify-between group cursor-pointer shadow-xs"
               >
                 <div className="flex items-center gap-3">
@@ -259,7 +260,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
                   </div>
                   <div className="text-left">
                     <div className="font-display text-sm font-bold text-slate-900 dark:text-white">Email Desk</div>
-                    <div className="font-mono text-xs text-slate-500 dark:text-slate-400">work@wrotx.in</div>
+                    <div className="font-mono text-xs text-slate-500 dark:text-slate-400">{SITE_CONFIG.email}</div>
                   </div>
                 </div>
                 <ArrowUpRight size={17} strokeWidth={2} className="text-slate-400 group-hover:text-[#D9480F] dark:group-hover:text-[#F97316] transition-colors" />

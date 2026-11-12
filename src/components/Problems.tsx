@@ -1,6 +1,7 @@
 import React from 'react';
 import { Gauge, Layers, Moon, UserX, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
 import { FadeUp } from './FadeUp';
+import { SITE_CONFIG } from '../config/site';
 
 export const Problems: React.FC = () => {
   const problems = [
@@ -33,7 +34,7 @@ export const Problems: React.FC = () => {
       icon: UserX,
       pain: 'Your last developer disappeared.',
       fix: 'Free support and full ownership',
-      detail: 'You get full code, staff training and two months free support.',
+      detail: `You get full code, staff training and ${SITE_CONFIG.support.days} days free support.`,
       highlightClass: 'bg-[#4ade80] text-[#052e16] dark:bg-[#4ade80] dark:text-[#052e16] rotate-1'
     }
   ];

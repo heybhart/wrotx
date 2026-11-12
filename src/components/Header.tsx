@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Mail, MessageCircle, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import logoImg from '../assets/logo.webp';
+import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
 
 interface HeaderProps {
   onQuoteClick: () => void;
@@ -45,9 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
     }
   };
 
-  const whatsappUrl = `https://wa.me/919322208664?text=${encodeURIComponent(
-    "Hi WrotX! We would like to get a free quote for our project."
-  )}`;
+  const whatsappUrl = getWhatsappUrl();
 
   return (
     <header className="fixed top-3 sm:top-4 inset-x-0 z-50 px-4 sm:px-8 pointer-events-none select-none">
@@ -109,8 +108,8 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
             </button>
 
             <a
-              href="mailto:work@wrotx.in"
-              aria-label="Send email to work@wrotx.in"
+              href={`mailto:${SITE_CONFIG.email}`}
+              aria-label={`Send email to ${SITE_CONFIG.email}`}
               className="hidden sm:flex bg-[#ffe600] text-[#131b2e] dark:bg-[#ffe600] dark:text-[#131b2e] font-mono text-xs uppercase font-bold px-3.5 py-2 rounded-lg shadow-[2px_2px_0px_#131b2e] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.3)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#131b2e] active:translate-y-[0px] active:shadow-[1px_1px_0px_#131b2e] transition-all items-center gap-1.5 cursor-pointer"
             >
               <Mail size={14} strokeWidth={2} />
@@ -177,11 +176,11 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
 
             <div className="pt-2 flex flex-col gap-2.5 text-xs font-mono border-t border-slate-200/60 dark:border-white/10">
               <a
-                href="mailto:work@wrotx.in"
+                href={`mailto:${SITE_CONFIG.email}`}
                 className="w-full bg-[#ffe600] text-[#131b2e] dark:bg-[#ffe600] dark:text-[#131b2e] font-mono text-xs uppercase font-bold px-4 py-2.5 rounded-lg shadow-[2px_2px_0px_#131b2e] flex items-center justify-center gap-2"
               >
                 <Mail size={14} strokeWidth={2} />
-                <span>work@wrotx.in</span>
+                <span>{SITE_CONFIG.email}</span>
               </a>
               <a
                 href={whatsappUrl}

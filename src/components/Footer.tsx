@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import logoImg from '../assets/logo.webp';
+import { SITE_CONFIG } from '../config/site';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -56,29 +57,29 @@ export const Footer: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Phone size={14} strokeWidth={1.5} className="text-[#D9480F] dark:text-[#F97316] shrink-0" />
                 <a
-                  href="tel:+919322208664"
+                  href={`tel:${SITE_CONFIG.phones[0].tel}`}
                   className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors"
                 >
-                  +91 9322208664
+                  {SITE_CONFIG.phones[0].display}
                 </a>
                 <span className="text-slate-400 dark:text-slate-600">/</span>
                 <a
-                  href="tel:+919967478623"
+                  href={`tel:${SITE_CONFIG.phones[1].tel}`}
                   className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors"
                 >
-                  +91 9967478623
+                  {SITE_CONFIG.phones[1].display}
                 </a>
               </div>
               <a
-                href="mailto:work@wrotx.in"
+                href={`mailto:${SITE_CONFIG.email}`}
                 className="hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors flex items-center gap-2"
               >
                 <Mail size={14} strokeWidth={1.5} className="text-[#D9480F] dark:text-[#F97316]" />
-                <span>work@wrotx.in</span>
+                <span>{SITE_CONFIG.email}</span>
               </a>
               <div className="flex items-center gap-2">
                 <MapPin size={14} strokeWidth={1.5} className="text-[#D9480F] dark:text-[#F97316]" />
-                <span>Mumbai, Maharashtra, India</span>
+                <span>{SITE_CONFIG.location}</span>
               </div>
             </div>
           </div>
@@ -147,7 +148,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Note */}
         <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-[11px] text-slate-500 dark:text-slate-500">
           <div>
-            © {currentYear} WrotX AI · Mumbai, India · GST Invoices Provided
+            © {currentYear} {SITE_CONFIG.legalName} · {SITE_CONFIG.city}, India · GST Invoices Provided
           </div>
           <div className="flex items-center gap-3">
             <span>Mumbai Based</span>

@@ -1,34 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { FadeUp } from './FadeUp';
+import { HOME_FAQS_DATA, type FaqItem } from '../data/faqsData';
 
-export interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-export const FAQS_DATA: FaqItem[] = [
-  {
-    question: 'How much does a website, custom software, or AI agent cost at WrotX?',
-    answer: 'Our business websites start from ₹24,999, custom software and web applications start from ₹69,999, and AI calling agents & WhatsApp automation solutions start from ₹39,999. All pricing is transparent with zero hidden charges.'
-  },
-  {
-    question: 'What is the delivery timeline for projects?',
-    answer: 'Fast websites launch in 5–7 days. AI assistants and WhatsApp automation workflows are delivered in 10–14 days. Custom software applications typically take 3–5 weeks depending on scope and team size.'
-  },
-  {
-    question: 'Do I own the code, design, and domain?',
-    answer: 'Yes, 100%. Upon final delivery, you receive full source code handover, admin credentials, and complete intellectual property ownership. You only pay for your own domain and cloud hosting.'
-  },
-  {
-    question: 'What kind of post-launch support and training is included?',
-    answer: 'Every project comes with 60 days of free post-launch technical support, maintenance, and comprehensive staff training so your team can confidently use and update your system.'
-  },
-  {
-    question: 'Do you provide official GST invoices and accept Indian payment methods?',
-    answer: 'Yes. We issue official GST tax invoices for all projects and accept secure milestone payments via UPI, NEFT, RTGS, Razorpay, and direct bank transfer.'
-  }
-];
+export type { FaqItem };
+export const FAQS_DATA = HOME_FAQS_DATA;
 
 export const Faq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

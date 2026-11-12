@@ -2,6 +2,14 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { buildHomeHeadHtml } from './src/config/headHtml';
+
+const seoHeadPlugin = () => ({
+  name: 'seo-head-plugin',
+  transformIndexHtml(html: string) {
+    return html.replace('<!--SEO_HEAD-->', buildHomeHeadHtml());
+  },
+});
 
 const apiPlugin = () => ({
   name: 'api-plugin',
@@ -36,7 +44,7 @@ export default defineConfig(({ command }) => {
   return {
     base: command === 'build' ? '/' : '/wrotx/',
 
-    plugins: [react(), tailwindcss(), apiPlugin()],
+    plugins: [react(), tailwindcss(), apiPlugin(), seoHeadPlugin()],
 
     resolve: {
       alias: {

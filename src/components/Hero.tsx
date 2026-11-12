@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, MessageCircle, Play, CheckCircle2 } from 'lucide-react';
 import { FadeUp } from './FadeUp';
 import logoImg from '../assets/logo.webp';
+import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
 
 interface HeroProps {
   onQuoteClick: () => void;
@@ -9,9 +10,9 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
-  const whatsappUrl = `https://wa.me/919322208664?text=${encodeURIComponent(
-    "Hi WrotX! We would like to get a free quote on WhatsApp for our project."
-  )}`;
+  const whatsappUrl = getWhatsappUrl(
+    `Hi ${SITE_CONFIG.brandName}! We would like to get a free quote on WhatsApp for our project.`
+  );
 
   return (
     <section id="hero" className="pt-32 sm:pt-36 pb-12 sm:pb-16 relative select-none">
@@ -105,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
               <div className="flex flex-col">
                 <div className="flex items-baseline gap-1">
                   <span className="font-display text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold tracking-tight">
-                    60
+                    {SITE_CONFIG.support.days}
                   </span>
                   <span className="font-display text-lg text-[#006e27] dark:text-[#00fe66] font-bold">Days</span>
                 </div>
