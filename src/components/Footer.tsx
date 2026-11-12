@@ -1,12 +1,15 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import logoImg from '../assets/logo.webp';
 import { SITE_CONFIG } from '../config/site';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { pathname } = useLocation();
 
-  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleHashScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (pathname !== '/') return;
     e.preventDefault();
     if (targetId === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -14,13 +17,8 @@ export const Footer: React.FC = () => {
     }
     const element = document.getElementById(targetId);
     if (element) {
-      const headerOffset = 76;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 76;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
@@ -33,9 +31,9 @@ export const Footer: React.FC = () => {
 
           {/* Column 1: Brand */}
           <div className="md:col-span-5 space-y-4">
-            <a
-              href="#"
-              onClick={(e) => handleScrollTo(e, 'top')}
+            <Link
+              to="/"
+              onClick={(e) => handleHashScroll(e, 'top')}
               className="inline-flex items-center cursor-pointer select-none"
             >
               <img
@@ -47,7 +45,7 @@ export const Footer: React.FC = () => {
                 decoding="async"
                 className="h-8 sm:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
               />
-            </a>
+            </Link>
 
             <p className="font-sans text-sm text-slate-600 dark:text-slate-400 max-w-sm leading-relaxed">
               Fast websites, custom software and AI assistants for Indian businesses. No hidden Cost. You own everything.
@@ -91,24 +89,24 @@ export const Footer: React.FC = () => {
             </span>
             <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                   Websites
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                   Software &amp; Apps
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                   AI Assistants
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                   Automation
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -119,27 +117,24 @@ export const Footer: React.FC = () => {
               Quick Links
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              <a href="#problems" onClick={(e) => handleScrollTo(e, 'problems')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              <Link to="/#problems" onClick={(e) => handleHashScroll(e, 'problems')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 Problems We Fix
-              </a>
-              <a href="#services" onClick={(e) => handleScrollTo(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              </Link>
+              <Link to="/#services" onClick={(e) => handleHashScroll(e, 'services')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 What We Build
-              </a>
-              <a href="#work" onClick={(e) => handleScrollTo(e, 'work')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              </Link>
+              <Link to="/#work" onClick={(e) => handleHashScroll(e, 'work')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 Our Work
-              </a>
-              {/* <a href="#ai-voice" onClick={(e) => handleScrollTo(e, 'ai-voice')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                AI Voice &amp; WhatsApp
-              </a> */}
-              <a href="#how-it-works" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              </Link>
+              <Link to="/#how-it-works" onClick={(e) => handleHashScroll(e, 'how-it-works')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 How It Works
-              </a>
-              <a href="#why-wrotx" onClick={(e) => handleScrollTo(e, 'why-wrotx')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              </Link>
+              <Link to="/#why-wrotx" onClick={(e) => handleHashScroll(e, 'why-wrotx')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 Why Us
-              </a>
-              <a href="#faq" onClick={(e) => handleScrollTo(e, 'faq')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+              </Link>
+              <Link to="/#faq" onClick={(e) => handleHashScroll(e, 'faq')} className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 FAQ
-              </a>
+              </Link>
             </div>
           </div>
 

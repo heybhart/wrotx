@@ -2,12 +2,13 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
-import { buildHomeHeadHtml } from './src/config/headHtml';
+import { buildHeadHtml, HOME_META } from './src/config/seo';
 
 const seoHeadPlugin = () => ({
   name: 'seo-head-plugin',
+  apply: 'serve' as const,
   transformIndexHtml(html: string) {
-    return html.replace('<!--SEO_HEAD-->', buildHomeHeadHtml());
+    return html.replace('<!--SEO_HEAD-->', buildHeadHtml(HOME_META));
   },
 });
 

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Mail, MessageCircle, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import logoImg from '../assets/logo.webp';
 import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
 
-interface HeaderProps {
-  onQuoteClick: () => void;
-}
-
-export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
+export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,27 +20,23 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
   }, []);
 
   const navLinks = [
-    { label: 'Services', href: '#services' },
-    { label: 'Problems', href: '#problems' },
-    { label: 'Our Work', href: '#work' },
-    // { label: 'AI Voice', href: '#ai-voice' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'FAQ', href: '#faq' }
+    { label: 'Services', href: '/#services' },
+    { label: 'Problems', href: '/#problems' },
+    { label: 'Our Work', href: '/#work' },
+    { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'FAQ', href: '/#faq' },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleHashScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsMobileMenuOpen(false);
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      const headerOffset = 90;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (pathname === '/' && href.startsWith('/#')) {
+      e.preventDefault();
+      const targetId = href.slice(2);
+      const element = document.getElementById(targetId);
+      if (element) {
+        const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 90;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
     }
   };
 
@@ -62,11 +56,10 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
         >
           {/* Left: Brand Logo */}
           <div className="flex items-center">
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            <Link
+              to="/"
+              onClick={() => {
+                if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="group flex items-center cursor-pointer select-none"
             >
@@ -77,20 +70,20 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
                 height={36}
                 className="h-8 sm:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
               />
-            </a>
+            </Link>
           </div>
 
-          {/* Center: Nav Links (Pricing and FAQ removed) */}
+          {/* Center: Nav Links */}
           <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
+                to={link.href}
+                onClick={(e) => handleHashScroll(e, link.href)}
                 className="px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 hover:border-slate-300/70 dark:hover:border-white/15 border border-transparent transition-all font-semibold"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -163,14 +156,14 @@ export const Header: React.FC<HeaderProps> = ({ onQuoteClick }) => {
 
             <nav className="flex flex-col space-y-1.5 text-xs font-mono uppercase tracking-wider text-slate-800 dark:text-slate-200">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  to={link.href}
+                  onClick={(e) => handleHashScroll(e, link.href)}
                   className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
