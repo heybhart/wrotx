@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { build } from 'vite';
+import { INDEXABLE_ROUTES, getCanonicalUrl } from '../src/config/routes';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -64,6 +65,22 @@ async function prerender() {
 
   fs.writeFileSync(indexPath, indexHtml, 'utf-8');
   console.log('✓ Successfully pre-rendered full semantic HTML into dist/index.html');
+
+  // 4b. Generate sitemap.xml automatically for all indexable routes
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${INDEXABLE_ROUTES.map(
+  (r) => `  <url>
+    <loc>${getCanonicalUrl(r.path)}</loc>
+    <lastmod>${r.lastmod}</lastmod>
+    <changefreq>${r.changefreq}</changefreq>
+    <priority>${r.priority}</priority>
+  </url>`
+).join('\n')}
+</urlset>
+`;
+  fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf-8');
+  console.log(`✓ Generated dist/sitemap.xml (${INDEXABLE_ROUTES.length} URLs)`);
 
   // 5. Cleanup temporary SSR build folder
   try {
