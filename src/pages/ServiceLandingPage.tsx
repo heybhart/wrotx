@@ -225,11 +225,10 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
                   return (
                     <div
                       key={faq.question}
-                      className={`rounded-2xl border transition-all ${
-                        isOpen
-                          ? 'border-[#D9480F]/50 dark:border-[#F97316]/50 bg-white/90 dark:bg-white/[0.08]'
-                          : 'border-slate-200/70 dark:border-white/10 glass-card'
-                      }`}
+                      className={`rounded-2xl border transition-all ${isOpen
+                        ? 'border-[#D9480F]/50 dark:border-[#F97316]/50 bg-white/90 dark:bg-white/[0.08]'
+                        : 'border-slate-200/70 dark:border-white/10 glass-card'
+                        }`}
                     >
                       <button
                         type="button"

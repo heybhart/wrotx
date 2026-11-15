@@ -78,85 +78,6 @@ export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
                 See live demos
               </button>
             </div>
-
-            {/* WrotX gives strip: uncontained, directly below CTAs */}
-            <div className="pt-5 mt-2 border-t border-slate-200/70 dark:border-white/10 flex flex-wrap items-center gap-y-4 gap-x-6 sm:gap-x-7">
-              {/* Logo + Gives */}
-              <div className="flex items-center gap-2 shrink-0">
-                <img
-                  src={logoImg}
-                  alt="WrotX"
-                  width={80}
-                  height={22}
-                  className="h-5 sm:h-6 w-auto object-contain"
-                />
-                <span className="font-display text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-                  Gives
-                </span>
-                <span className="h-4 w-[1px] bg-slate-300 dark:bg-white/20 ml-1.5 hidden sm:inline-block" />
-              </div>
-
-              {/* Metric 1 */}
-              <div className="flex flex-col">
-                <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight leading-tight">
-                  ₹0
-                </span>
-                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
-                  Surprise fees
-                </span>
-              </div>
-
-              {/* Metric 2 */}
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-1 leading-tight">
-                  <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight">
-                    {SITE_CONFIG.support.days}
-                  </span>
-                  <span className="font-display text-sm text-[#006e27] dark:text-[#00fe66] font-bold">Days</span>
-                </div>
-                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
-                  Free support after launch
-                </span>
-              </div>
-
-              {/* Metric 3 */}
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-0.5 leading-tight">
-                  <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight">
-                    100
-                  </span>
-                  <span className="font-display text-sm text-slate-900 dark:text-white font-bold">%</span>
-                </div>
-                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
-                  Yours, we hand over everything
-                </span>
-              </div>
-
-              {/* Metric 4 */}
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-0.5 leading-tight">
-                  <span className="font-display text-sm text-[#D9480F] dark:text-[#F97316] font-bold">&lt;</span>
-                  <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight">
-                    1
-                  </span>
-                  <span className="font-display text-sm text-slate-900 dark:text-white font-bold uppercase ml-0.5">s</span>
-                </div>
-                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium">
-                  Opens on mobile 4G
-                </span>
-              </div>
-
-              {/* Verification Stamp */}
-              <div className="flex items-center gap-2 sm:pl-3 sm:border-l border-slate-200/80 dark:border-white/10">
-                <div className="w-5 h-5 rounded-full bg-[#00fe66] flex items-center justify-center text-[#002107] shrink-0">
-                  <CheckCircle2 size={13} strokeWidth={2.5} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-mono text-[11px] font-bold text-slate-900 dark:text-white leading-none">Mumbai Based</span>
-                  <span className="font-mono text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">GST Invoices Provided</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Right Column (col-span-5): 3-in-1 Hero Visual (Website, AI Assistant, Software Dashboard) */}
@@ -268,13 +189,94 @@ export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
                 <div className="wv-l wv-g wv-tag" style={{ '--d': 12, left: 300, top: 452, '--c': '#14b8a6' } as React.CSSProperties}>
                   <i />Software
                 </div>
-                <p className="wv-l wv-cap" style={{ '--d': 0 } as React.CSSProperties}>
-                  Example screens with sample data
-                </p>
               </div>
             </div>
           </div>
 
+        </div>
+
+        {/* WrotX Gives Metric Strip: in one line after hero section */}
+        <div className="pt-6 sm:pt-8 border-t border-slate-200/80 dark:border-white/10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
+            {/* Logo + Gives */}
+            <div className="flex items-center gap-2.5 shrink-0">
+              <img
+                src={logoImg}
+                alt="WrotX"
+                width={80}
+                height={22}
+                className="h-5 sm:h-6 w-auto object-contain"
+              />
+              <span className="font-display text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-white/10">
+                Gives
+              </span>
+              <span className="h-4 w-[1px] bg-slate-300 dark:bg-white/20 ml-1 hidden lg:inline-block" />
+            </div>
+
+            {/* Metrics: 2-col on mobile, 3-col on tablet, single continuous flex row on desktop */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-x-6 gap-y-4 sm:gap-6 xl:gap-8 flex-1">
+              {/* Metric 1 */}
+              <div className="flex flex-col min-w-0">
+                <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight leading-tight">
+                  ₹0
+                </span>
+                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium tracking-tight mt-0.5">
+                  Surprise fees
+                </span>
+              </div>
+
+              {/* Metric 2 */}
+              <div className="flex flex-col min-w-0">
+                <div className="flex items-baseline gap-1 leading-tight">
+                  <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    {SITE_CONFIG.support.days}
+                  </span>
+                  <span className="font-display text-sm text-[#006e27] dark:text-[#00fe66] font-bold">Days</span>
+                </div>
+                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium tracking-tight mt-0.5">
+                  Free support after launch
+                </span>
+              </div>
+
+              {/* Metric 3 */}
+              <div className="flex flex-col min-w-0">
+                <div className="flex items-baseline gap-0.5 leading-tight">
+                  <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    100
+                  </span>
+                  <span className="font-display text-sm text-slate-900 dark:text-white font-bold">%</span>
+                </div>
+                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium tracking-tight mt-0.5">
+                  Yours, we hand over everything
+                </span>
+              </div>
+
+              {/* Metric 4 */}
+              <div className="flex flex-col min-w-0">
+                <div className="flex items-baseline gap-0.5 leading-tight">
+                  <span className="font-display text-sm text-[#D9480F] dark:text-[#F97316] font-bold">&lt;</span>
+                  <span className="font-display text-xl sm:text-2xl text-slate-900 dark:text-white font-bold tracking-tight">
+                    1
+                  </span>
+                  <span className="font-display text-sm text-slate-900 dark:text-white font-bold uppercase ml-0.5">s</span>
+                </div>
+                <span className="font-mono text-[10px] sm:text-[11px] uppercase text-slate-500 dark:text-slate-400 font-medium tracking-tight mt-0.5">
+                  Opens on mobile 4G
+                </span>
+              </div>
+
+              {/* Verification Stamp */}
+              <div className="col-span-2 sm:col-span-1 lg:col-span-auto flex items-center gap-2.5 lg:pl-4 lg:border-l border-slate-200/80 dark:border-white/10 shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#00fe66] flex items-center justify-center text-[#002107] shrink-0 shadow-xs">
+                  <CheckCircle2 size={14} strokeWidth={2.5} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-mono text-xs font-bold text-slate-900 dark:text-white leading-tight">Mumbai Based</span>
+                  <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">GST Invoices Provided</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
