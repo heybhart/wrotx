@@ -14,13 +14,17 @@ export const ContactPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 space-y-4">
           <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'Contact' }]} />
           <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Contact {SITE_CONFIG.brandName} in Mumbai
-          </h1>
-          <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed flex flex-wrap items-center gap-2">
-            <MapPin size={18} className="text-[#D9480F] dark:text-[#F97316] shrink-0" />
-            <span>
-              Service-area studio serving {SITE_CONFIG.location}, Thane, Navi Mumbai, and businesses across India.
+            Contact {SITE_CONFIG.brandName} in{' '}
+            <span className="inline-flex items-center gap-2 sm:gap-2.5">
+              <span>Mumbai</span>
+              <MapPin
+                className="w-7 h-7 sm:w-9 sm:h-9 text-[#D9480F] dark:text-[#F97316] shrink-0"
+                aria-hidden="true"
+              />
             </span>
+          </h1>
+          <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+            Service-area studio serving {SITE_CONFIG.location}, Thane, Navi Mumbai, and businesses across India.
           </p>
         </div>
 
@@ -29,3 +33,4 @@ export const ContactPage: React.FC = () => {
     </>
   );
 };
+

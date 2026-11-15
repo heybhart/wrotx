@@ -55,3 +55,4 @@ export const PageHead: React.FC<{ meta: RouteSeoMeta }> = ({ meta }) => {
 
   return null;
 };
+

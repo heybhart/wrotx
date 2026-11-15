@@ -41,9 +41,9 @@ const apiPlugin = () => ({
   }
 });
 
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
   return {
-    base: command === 'build' ? '/' : '/wrotx/',
+    base: '/',
 
     plugins: [react(), tailwindcss(), apiPlugin(), seoHeadPlugin()],
 

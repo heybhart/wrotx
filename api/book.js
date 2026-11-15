@@ -9,9 +9,16 @@ export default async function handler(req, res) {
   const booking = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
   const clientName = booking.name || 'Anonymous';
   const clientPhone = booking.phone || 'Not provided';
+  const clientEmail = booking.email || '';
   const serviceNeeded = booking.service || booking.projectType || 'General Inquiry';
   const projectBrief = booking.projectDetails || booking.requirements || 'None provided.';
   const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+  const isVoiceDemo = serviceNeeded.toLowerCase().includes('voice demo') || serviceNeeded.toLowerCase().includes('voice assistant');
+  const emailHeaderTitle = isVoiceDemo ? '[Live Demo Request] Asking for AI Voice Demo' : '[New Requirement] WrotX Contact Form';
+  const emailSubject = isVoiceDemo
+    ? `[AI Voice Demo Request] ${clientName} - Asking for AI Voice Demo`
+    : `[New Requirement] ${clientName} - ${serviceNeeded}`;
 
   const SMTP_USER = process.env.SMTP_USER || 'wrotxai@gmail.com';
   const SMTP_PASS = (process.env.SMTP_PASS || 'wyjm blbg gptv wlep').replace(/\s+/g, '');
@@ -23,9 +30,15 @@ export default async function handler(req, res) {
   const adminHtml = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0b0b; color: #e5e2e1; padding: 32px 24px; max-width: 600px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;">
       <div style="border-bottom: 2px solid #D9480F; padding-bottom: 12px; margin-bottom: 20px;">
-        <h2 style="font-size: 22px; color: #ffffff; margin: 0; font-weight: 700;">[New Requirement] WrotX Contact Form</h2>
+        <h2 style="font-size: 22px; color: #ffffff; margin: 0; font-weight: 700;">${emailHeaderTitle}</h2>
         <span style="font-size: 12px; color: #8e9192;">Submitted on: ${submittedAt} (IST)</span>
       </div>
+
+      ${isVoiceDemo ? `
+        <div style="background-color: #102619; border: 1px solid #1be66f; color: #1be66f; padding: 12px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; margin-bottom: 20px;">
+          Call Action Required: Client is explicitly asking for an AI Voice Demo.
+        </div>
+      ` : ''}
 
       <div style="background-color: #131313; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 20px; margin: 20px 0;">
         <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
@@ -41,6 +54,13 @@ export default async function handler(req, res) {
               <a href="https://wa.me/${clientPhone.replace(/[^0-9]/g, '')}" style="color: #25D366; text-decoration: none;">WhatsApp</a>
             </td>
           </tr>
+          ${clientEmail ? `
+          <tr>
+            <td style="padding: 8px 0; color: #8e9192; font-weight: 600; text-transform: uppercase; font-size: 11px;">Email</td>
+            <td style="padding: 8px 0; color: #ffffff; font-weight: 500; font-size: 13px;">
+              <a href="mailto:${clientEmail}" style="color: #60A5FA; text-decoration: none;">${clientEmail}</a>
+            </td>
+          </tr>` : ''}
           <tr>
             <td style="padding: 8px 0; color: #8e9192; font-weight: 600; text-transform: uppercase; font-size: 11px;">Service Needed</td>
             <td style="padding: 8px 0; color: #ffffff; font-weight: 500;">${serviceNeeded}</td>
@@ -71,7 +91,7 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: `"WrotX Contact" <${SMTP_USER}>`,
       to: SMTP_RECEIVER,
-      subject: `[New Requirement] ${clientName} - ${serviceNeeded}`,
+      subject: emailSubject,
       html: adminHtml,
     });
 

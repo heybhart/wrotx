@@ -284,7 +284,9 @@ export function getServicePageMeta(page: ServicePageData): RouteSeoMeta {
         { name: page.title, path: page.slug },
       ]),
       serviceSchema,
-      getFaqSchema(`${canonicalUrl}#faq`, page.faqs),
+      ...(page.slug !== '/website-development-mumbai' && page.faqs && page.faqs.length > 0
+        ? [getFaqSchema(`${canonicalUrl}#faq`, page.faqs)]
+        : []),
     ],
   };
 }
@@ -339,17 +341,20 @@ export function getBlogPostMeta(post: BlogPost): RouteSeoMeta {
 }
 
 export function getCaseStudyMeta(slug: string): RouteSeoMeta {
+  const isDemo = slug === 'sample-case-study' || slug === 'real-estate-brokerage-portal';
   return {
     path: `/work/${slug}`,
-    title: `Case Study Template | ${SITE_CONFIG.brandName}`,
-    description: `Unpublished case study template on ${SITE_CONFIG.brandName}.`,
+    title: isDemo ? `Real estate brokerage portal | ${SITE_CONFIG.brandName} case study` : `Case Study Template | ${SITE_CONFIG.brandName}`,
+    description: isDemo
+      ? `A fast property website for a Vasai-Virar broker with listings, an EMI calculator and WhatsApp enquiries. A ${SITE_CONFIG.brandName} demo build.`
+      : `Case study on ${SITE_CONFIG.brandName}.`,
     ogType: 'website',
     robots: 'noindex, nofollow',
     schemas: [
       getBreadcrumbSchema([
         { name: 'Home', path: '/' },
         { name: 'Our Work', path: '/work' },
-        { name: slug, path: `/work/${slug}` },
+        { name: isDemo ? 'Real estate brokerage portal' : slug, path: `/work/${slug}` },
       ]),
     ],
   };

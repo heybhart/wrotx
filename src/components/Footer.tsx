@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import logoImg from '../assets/logo.webp';
+import logoImg from '../assets/logo-sm.webp';
 import { SITE_CONFIG } from '../config/site';
 
 export const Footer: React.FC = () => {
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
                 src={logoImg}
                 alt="WrotX - Mumbai Website, Software and AI Agent Development Studio"
                 width={140}
-                height={36}
+                height={70}
                 loading="lazy"
                 decoding="async"
                 className="h-8 sm:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
@@ -84,7 +84,7 @@ export const Footer: React.FC = () => {
 
           {/* Column 2: What we build */}
           <div className="md:col-span-3 space-y-3">
-            <span className="font-mono text-xs text-[#D9480F] dark:text-[#F97316] uppercase tracking-wider block font-semibold mb-2">
+            <span className="font-mono text-xs text-[#C23E0A] dark:text-[#F97316] uppercase tracking-wider block font-semibold mb-2">
               What We Build
             </span>
             <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
@@ -128,7 +128,7 @@ export const Footer: React.FC = () => {
 
           {/* Column 3: Quick Navigation */}
           <div className="md:col-span-4 space-y-3">
-            <span className="font-mono text-xs text-[#D9480F] dark:text-[#F97316] uppercase tracking-wider block font-semibold mb-2">
+            <span className="font-mono text-xs text-[#C23E0A] dark:text-[#F97316] uppercase tracking-wider block font-semibold mb-2">
               Quick Links
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">

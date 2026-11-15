@@ -25,8 +25,8 @@ export const BLOG_POSTS: BlogPost[] = [
     path: '/blog/real-estate-website-cost-india',
     title: 'How much does a real estate website cost in India?',
     metaTitle: `Real Estate Website Cost in India (2026 Guide) | ${brandName}`,
-    metaDescription: `Realistic breakdown of real estate website cost in India — from ${prices.websites.formatted} agency sites to ${prices.software.formatted} property portals, plus hidden hosting costs.`,
-    excerpt: `A straightforward breakdown of what Indian real estate brokers, channel partners, and developers actually pay for property websites — and how to avoid recurring agency traps.`,
+    metaDescription: `Realistic breakdown of real estate website cost in India, from ${prices.websites.formatted} agency sites to ${prices.software.formatted} property portals, plus hidden hosting costs.`,
+    excerpt: `A straightforward breakdown of what Indian real estate brokers, channel partners, and developers actually pay for property websites, and how to avoid recurring agency traps.`,
     publishedAt: '2026-11-12',
     publishedLabel: '12 November 2026',
     updatedAt: '2026-11-12',
@@ -51,7 +51,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Tier 2: Multi-listing property portal with CRM & filters (${prices.software.fromLabel})`,
         paragraphs: [
-          `Once your brokerage handles 30+ active residential and commercial listings across multiple Mumbai suburbs — say Bandra, Powai, Thane, and Navi Mumbai — static brochure pages become tedious to maintain. At this stage, custom software and portal builds starting from ${prices.software.formatted} (delivered in ${prices.software.timeline}) make operational sense.`,
+          `Once your brokerage handles 30+ active residential and commercial listings across multiple Mumbai suburbs (such as Bandra, Powai, Thane, and Navi Mumbai), static brochure pages become tedious to maintain. At this stage, custom software and portal builds starting from ${prices.software.formatted} (delivered in ${prices.software.timeline}) make operational sense.`,
           `A Tier-2 property portal includes dynamic filters (locality, 1/2/3 BHK, carpet area, budget range, possession status), an interactive home-loan EMI calculator, a private admin panel or sheet-backed inventory updater, and lead tagging so every WhatsApp or form enquiry records the exact property name. Crucially, building custom means zero recurring per-seat SaaS subscription bills as your sales team grows.`,
         ],
       },
@@ -65,15 +65,15 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Ongoing costs you should expect (and fees you should refuse)',
         paragraphs: [
-          `No honest engineering team will tell you a website costs zero rupees forever — every live site has real third-party infrastructure expenses. In India, expect to pay directly for your domain name (typically around ₹800–₹1,200/year for .in or .com), cloud hosting or serverless tiers (often low-cost or free on static hosts like Vercel/Cloudflare for smaller portals, or ₹500–₹2,500/month for managed databases as traffic scales), and optional official WhatsApp Business API conversation charges.`,
-          `What you should refuse are opaque "annual software lock-in fees" where an agency holds your domain in their personal account and charges ₹3,000 every time you want to change a brochure PDF or project price. Always insist on owning your domain, source code repository, and hosting credentials — backed by an official GST invoice and clear post-launch support (${support.label} is standard at ${brandName}).`,
+          `No honest engineering team will tell you a website costs zero rupees forever. Every live site has real third-party infrastructure expenses. In India, expect to pay directly for your domain name (typically around ₹800–₹1,200/year for .in or .com), cloud hosting or serverless tiers (often low-cost or free on static hosts like Vercel/Cloudflare for smaller portals, or ₹500–₹2,500/month for managed databases as traffic scales), and optional official WhatsApp Business API conversation charges.`,
+          `What you should refuse are opaque "annual software lock-in fees" where an agency holds your domain in their personal account and charges ₹3,000 every time you want to change a brochure PDF or project price. Always insist on owning your domain, source code repository, and hosting credentials, backed by an official GST invoice and clear post-launch support (${support.label} is standard at ${brandName}).`,
         ],
       },
       {
         heading: 'Checklist before hiring a real estate web developer in Mumbai',
         paragraphs: [
-          `Before paying an advance, verify five practical items in writing. First, test their existing demo links on your own phone over 4G mobile data, not office Wi-Fi — pay attention to how quickly images, EMI tools, and WhatsApp buttons respond. Second, check whether the proposal gives a fixed milestone price and timeline rather than vague hourly estimates.`,
-          `Third, confirm how your team will add new towers, update carpet-area pricing, or mark units as sold without calling a developer every week. Fourth, check that each property listing page supports clean canonical URLs, descriptive image alt text, and structured location headings so Google can index your inventory for micro-market searches like "2 BHK in Powai" or "commercial office in Andheri East". Fifth, make sure GST invoicing and complete intellectual property ownership — source code, domain registrar login, and hosting account — stay in your company’s name.`,
+          `Before paying an advance, verify five practical items in writing. First, test their existing demo links on your own phone over 4G mobile data, not office Wi-Fi. Pay attention to how quickly images, EMI tools, and WhatsApp buttons respond. Second, check whether the proposal gives a fixed milestone price and timeline rather than vague hourly estimates.`,
+          `Third, confirm how your team will add new towers, update carpet-area pricing, or mark units as sold without calling a developer every week. Fourth, check that each property listing page supports clean canonical URLs, descriptive image alt text, and structured location headings so Google can index your inventory for micro-market searches like "2 BHK in Powai" or "commercial office in Andheri East". Fifth, make sure GST invoicing and complete intellectual property ownership (source code, domain registrar login, and hosting account) stay in your company’s name.`,
         ],
       },
       {
@@ -96,7 +96,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'WhatsApp automation for business: what it can and cannot do',
     metaTitle: `WhatsApp Automation for Business in India | ${brandName}`,
     metaDescription: `Honest guide to WhatsApp automation in India: what official API bots handle well (${prices.aiAssistants.fromLabel}), what fails, and how to avoid number bans.`,
-    excerpt: `An honest, hype-free look at what WhatsApp Business automation actually solves for Indian companies — and the mistakes that get business numbers flagged.`,
+    excerpt: `An honest, hype-free look at what WhatsApp Business automation actually solves for Indian companies, and the mistakes that get business numbers flagged.`,
     publishedAt: '2026-11-12',
     publishedLabel: '12 November 2026',
     updatedAt: '2026-11-12',
@@ -105,9 +105,9 @@ export const BLOG_POSTS: BlogPost[] = [
     readingTime: '6 min read',
     sections: [
       {
-        heading: 'Why Indian businesses rely on WhatsApp — and where manual chatting breaks',
+        heading: 'Why Indian businesses rely on WhatsApp, and where manual chatting breaks',
         paragraphs: [
-          `For most Indian SMBs, WhatsApp is both the enquiry desk and the follow-up CRM. Clinics, real estate brokers, distributors, and local service studios receive dozens of messages every day asking the same five questions: price, location, availability, brochure PDF, and payment details. When one manager answers all of those from a personal WhatsApp app, evening messages sit unread until 11 AM the next day — by which time the customer has already booked elsewhere.`,
+          `For most Indian SMBs, WhatsApp is both the enquiry desk and the follow-up CRM. Clinics, real estate brokers, distributors, and local service studios receive dozens of messages every day asking the same five questions: price, location, availability, brochure PDF, and payment details. When one manager answers all of those from a personal WhatsApp app, evening messages sit unread until 11 AM the next day, by which time the customer has already booked elsewhere.`,
           `WhatsApp automation solves that responsiveness gap, provided you know what automation handles reliably and where human judgment must take over.`,
         ],
       },
@@ -131,7 +131,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Adding natural Hindi & English AI replies without losing control',
         paragraphs: [
-          `Older menu bots forced customers to "Press 1 for Sales, Press 2 for Support" — which feels robotic when a buyer simply types "Andheri me site visit kab hoga?". Modern AI-assisted WhatsApp flows combine structured guardrails with natural English, Hindi, and Hinglish understanding.`,
+          `Older menu bots forced customers to "Press 1 for Sales, Press 2 for Support", which feels robotic when a buyer simply types "Andheri me site visit kab hoga?". Modern AI-assisted WhatsApp flows combine structured guardrails with natural English, Hindi, and Hinglish understanding.`,
           `The safest pattern is hybrid: use deterministic buttons for booking slots and human escalation, and let an AI layer trained strictly on your verified pricing and FAQ data answer common questions. If a question falls outside your approved knowledge base, the assistant collects the customer’s query and alerts your team immediately instead of guessing.`,
         ],
       },
@@ -146,7 +146,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'How to get started cleanly without risking your main number',
         paragraphs: [
-          `Start by listing the 10 repetitive questions your team answers every week and deciding which Google Sheet, CRM, or email inbox should receive qualified leads. Pair your WhatsApp flow with a clear website landing page so prospects can verify your brand, check transparent starting prices, and start a chat directly. Keep approved message templates concise and genuinely useful — appointment confirmations, brochure links, and invoice updates — and always provide an obvious "Talk to a person" exit path. Done right, WhatsApp automation feels like your fastest, most reliable staff member — never like spam.`,
+          `Start by listing the 10 repetitive questions your team answers every week and deciding which Google Sheet, CRM, or email inbox should receive qualified leads. Pair your WhatsApp flow with a clear website landing page so prospects can verify your brand, check transparent starting prices, and start a chat directly. Keep approved message templates concise and genuinely useful (appointment confirmations, brochure links, and invoice updates) and always provide an obvious "Talk to a person" exit path. Done right, WhatsApp automation feels like your fastest, most reliable staff member, never like spam.`,
           `If you also miss phone calls after hours or during busy weekends, consider pairing WhatsApp automation with an AI calling agent (${prices.aiCalling.fromLabel}) so callers receive an immediate Hindi or English response followed by a clean WhatsApp summary link.`,
         ],
       },

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Mail, MessageCircle, Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import logoImg from '../assets/logo.webp';
-import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
+import logoImg from '../assets/logo-sm.webp';
+import { getWhatsappUrl } from '../config/site';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,197 +11,257 @@ export const Header: React.FC = () => {
   const { toggleTheme } = useTheme();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const navRef = useRef<HTMLElement>(null);
+  const linksRef = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const [highlightStyle, setHighlightStyle] = useState<React.CSSProperties>({
+    opacity: 0,
+    width: 0,
+    transform: 'translateX(0px)',
+  });
 
   const navLinks = [
     { label: 'Websites', href: '/website-development-mumbai' },
-    { label: 'AI Agents', href: '/ai-agent-development' },
+    { label: 'AI agents', href: '/ai-agent-development' },
     { label: 'Software', href: '/custom-software-development' },
-    { label: 'Our Work', href: '/work' },
+    { label: 'Our work', href: '/work' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Contact', href: '/contact' },
   ];
 
-  const handleNavClick = () => {
-    setIsMobileMenuOpen(false);
+  const whatsappUrl = getWhatsappUrl('Hi WrotX, I want to start a project.');
+
+  const moveToLink = (el: HTMLAnchorElement | null | undefined) => {
+    if (!el) {
+      setHighlightStyle((prev) => ({ ...prev, opacity: 0 }));
+      return;
+    }
+    setHighlightStyle({
+      opacity: 1,
+      width: el.offsetWidth,
+      transform: `translateX(${el.offsetLeft}px)`,
+    });
   };
 
-  const whatsappUrl = getWhatsappUrl();
+  const handleStartProjectClick = (e: React.MouseEvent) => {
+    setIsMobileMenuOpen(false);
+    const contactEl = document.getElementById('contact');
+    if (contactEl) {
+      e.preventDefault();
+      const offsetPosition = contactEl.getBoundingClientRect().top + window.pageYOffset - 90;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      if (window.location.hash !== '#contact') {
+        window.history.pushState(null, '', pathname === '/' ? '/#contact' : `${pathname}#contact`);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const activeEl = linksRef.current.get(pathname);
+    moveToLink(activeEl);
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const activeEl = linksRef.current.get(pathname);
+      moveToLink(activeEl);
+    };
+    window.addEventListener('resize', handleResize);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(handleResize);
+    }
+    return () => window.removeEventListener('resize', handleResize);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.wx-bar')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   return (
-    <header className="fixed top-3 sm:top-4 inset-x-0 z-50 px-4 sm:px-8 pointer-events-none select-none">
-      <div className="max-w-[1440px] mx-auto pointer-events-auto">
-
-        {/* Rectangular Glassmorphism Navbar */}
-        <div
-          className={`w-full rounded-2xl transition-all duration-300 px-5 sm:px-7 py-2.5 sm:py-3 flex items-center justify-between ${
-            isScrolled
-              ? 'bg-white/45 dark:bg-[#090D16]/65 backdrop-blur-[28px] border border-slate-300/90 dark:border-white/20 shadow-[0_14px_36px_-6px_rgba(15,23,42,0.1),inset_0_1.5px_2px_rgba(255,255,255,0.95)]'
-              : 'bg-white/35 dark:bg-white/5 backdrop-blur-[24px] border border-slate-300/80 dark:border-white/15 shadow-[0_8px_28px_-4px_rgba(15,23,42,0.06),inset_0_1.5px_2px_rgba(255,255,255,0.9)]'
-          }`}
+    <div className="wx-wrap">
+      <header className={`wx-bar ${isScrolled ? 'wx-s' : ''}`}>
+        <Link
+          to="/"
+          className="wx-logo flex items-center"
+          aria-label="WrotX home"
+          onClick={() => {
+            if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
         >
-          {/* Left: Brand Logo */}
-          <div className="flex items-center">
+          <img
+            src={logoImg}
+            alt="WrotX - Mumbai Website, Software and AI Agent Development Studio"
+            width={140}
+            height={70}
+            className="h-8 sm:h-8.5 w-auto object-contain hover:opacity-90 transition-opacity"
+          />
+        </Link>
+
+        <nav
+          ref={navRef}
+          className="wx-links"
+          aria-label="Main"
+          onMouseLeave={() => moveToLink(linksRef.current.get(pathname))}
+        >
+          <span className="wx-hl" style={highlightStyle} aria-hidden="true" />
+          {navLinks.map((link) => (
             <Link
-              to="/"
-              onClick={() => {
-                if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
+              key={link.href}
+              to={link.href}
+              ref={(el) => {
+                if (el) linksRef.current.set(link.href, el);
+                else linksRef.current.delete(link.href);
               }}
-              className="group flex items-center cursor-pointer select-none"
+              aria-current={pathname === link.href ? 'page' : undefined}
+              onMouseEnter={(e) => moveToLink(e.currentTarget)}
+              onFocus={(e) => moveToLink(e.currentTarget)}
             >
-              <img
-                src={logoImg}
-                alt="WrotX - Mumbai Website, Software and AI Agent Development Studio"
-                width={140}
-                height={36}
-                className="h-8 sm:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
-              />
+              {link.label}
             </Link>
-          </div>
+          ))}
+        </nav>
 
-          {/* Center: Nav Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                to={link.href}
-                onClick={handleNavClick}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider border transition-all font-semibold ${
-                  pathname === link.href
-                    ? 'text-[#D9480F] dark:text-[#F97316] bg-white/80 dark:bg-white/10 border-slate-300/70 dark:border-white/15'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 hover:border-slate-300/70 dark:hover:border-white/15 border-transparent'
-                }`}
+        <div className="wx-right">
+          <button
+            onClick={toggleTheme}
+            type="button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+            className="wx-ic"
+            style={{ color: 'var(--wx-ink)' }}
+          >
+            <Sun size={18} strokeWidth={2} className="hidden dark:block text-amber-400" />
+            <Moon size={18} strokeWidth={2} className="block dark:hidden text-slate-700" />
+          </button>
+
+          <a
+            className="wx-ic"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 5h16v11H9l-5 4z" />
+            </svg>
+          </a>
+
+          <Link
+            to="/#contact"
+            className="wx-cta"
+            onClick={handleStartProjectClick}
+          >
+            <i aria-hidden="true" />
+            Start a project
+          </Link>
+
+          <button
+            className="wx-ic wx-mb"
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 8h16M4 16h16" />
+              </svg>
+            )}
+          </button>
+        </div>
 
-          {/* Right Actions: Theme Toggle, Mail & WhatsApp */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className={`wx-mp ${isMobileMenuOpen ? 'wx-open' : ''}`}>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
+            About
+          </Link>
+          <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)}>
+            Blog
+          </Link>
+          <div className="pt-2 flex items-center justify-between px-3.5 pb-1 border-t border-slate-200/60 dark:border-white/10">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Appearance</span>
             <button
               onClick={toggleTheme}
               type="button"
-              aria-label="Toggle theme"
-              title="Toggle theme"
-              className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-300/80 bg-white/70 dark:border-white/15 dark:bg-white/10 text-slate-700 dark:text-amber-300 backdrop-blur-md transition-all cursor-pointer shadow-2xs hover:bg-white dark:hover:bg-white/20 active:scale-95"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/15 bg-white/60 dark:bg-white/10 text-xs text-slate-800 dark:text-slate-200 cursor-pointer"
             >
-              <Sun size={15} strokeWidth={2} className="hidden dark:block text-amber-400" />
-              <Moon size={15} strokeWidth={2} className="block dark:hidden text-slate-700" />
-            </button>
-
-            <a
-              href={`mailto:${SITE_CONFIG.email}`}
-              aria-label={`Send email to ${SITE_CONFIG.email}`}
-              className="hidden sm:flex bg-[#ffe600] text-[#131b2e] dark:bg-[#ffe600] dark:text-[#131b2e] font-mono text-xs uppercase font-bold px-3.5 py-2 rounded-lg shadow-[2px_2px_0px_#131b2e] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.3)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#131b2e] active:translate-y-[0px] active:shadow-[1px_1px_0px_#131b2e] transition-all items-center gap-1.5 cursor-pointer"
-            >
-              <Mail size={14} strokeWidth={2} />
-              <span>Mail</span>
-            </a>
-
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Get Free Quote on WhatsApp"
-              className="bg-[#00fe66] text-[#00280b] dark:bg-[#00fe66] dark:text-[#00280b] font-mono text-xs uppercase font-bold px-4 py-2 rounded-lg shadow-[2px_2px_0px_#00280b] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.3)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#00280b] active:translate-y-[0px] active:shadow-[1px_1px_0px_#00280b] transition-all flex items-center gap-1.5 cursor-pointer"
-            >
-              <MessageCircle size={14} strokeWidth={2} />
-              <span>Get Free Quote</span>
-            </a>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle Navigation Menu"
-              className="lg:hidden w-9 h-9 rounded-xl flex items-center justify-center text-slate-800 dark:text-white border border-slate-300/80 bg-white/70 dark:border-white/15 dark:bg-white/10 cursor-pointer shadow-2xs hover:bg-white dark:hover:bg-white/20 transition-all"
-            >
-              {isMobileMenuOpen ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Drawer Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden mt-2.5 w-full rounded-2xl bg-white/95 dark:bg-[#090D16]/95 backdrop-blur-2xl border border-slate-300/90 dark:border-white/15 p-5 space-y-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-200/60 dark:border-white/10">
-              <span className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Appearance
+              <span className="hidden dark:inline-flex items-center gap-1.5">
+                <Sun size={13} className="text-amber-400" />
+                <span>Dark Mode</span>
               </span>
-              <button
-                onClick={toggleTheme}
-                type="button"
-                aria-label="Toggle theme"
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/15 bg-slate-50 dark:bg-white/10 text-xs font-mono text-slate-800 dark:text-slate-200"
-              >
-                <span className="hidden dark:inline-flex items-center gap-2">
-                  <Sun size={13} className="text-amber-400" />
-                  <span>Dark Mode</span>
-                </span>
-                <span className="inline-flex dark:hidden items-center gap-2">
-                  <Moon size={13} className="text-slate-700" />
-                  <span>Light Mode</span>
-                </span>
-              </button>
-            </div>
-
-            <nav className="flex flex-col space-y-1.5 text-xs font-mono uppercase tracking-wider text-slate-800 dark:text-slate-200">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.href}
-                  onClick={handleNavClick}
-                  className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Link
-                to="/about"
-                onClick={handleNavClick}
-                className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                to="/blog"
-                onClick={handleNavClick}
-                className="py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-              >
-                Blog
-              </Link>
-            </nav>
-
-            <div className="pt-2 flex flex-col gap-2.5 text-xs font-mono border-t border-slate-200/60 dark:border-white/10">
-              <a
-                href={`mailto:${SITE_CONFIG.email}`}
-                className="w-full bg-[#ffe600] text-[#131b2e] dark:bg-[#ffe600] dark:text-[#131b2e] font-mono text-xs uppercase font-bold px-4 py-2.5 rounded-lg shadow-[2px_2px_0px_#131b2e] flex items-center justify-center gap-2"
-              >
-                <Mail size={14} strokeWidth={2} />
-                <span>{SITE_CONFIG.email}</span>
-              </a>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#00fe66] text-[#00280b] dark:bg-[#00fe66] dark:text-[#00280b] font-mono text-xs uppercase font-bold px-4 py-2.5 rounded-lg shadow-[2px_2px_0px_#00280b] flex items-center justify-center gap-2"
-              >
-                <MessageCircle size={14} strokeWidth={2} />
-                <span>WhatsApp: Get Free Quote</span>
-              </a>
-              <p className="text-[11px] text-slate-500 dark:text-slate-500 text-center pt-1">
-                Mumbai, India · Fixed Pricing · GST Invoices Provided
-              </p>
-            </div>
+              <span className="inline-flex dark:hidden items-center gap-1.5">
+                <Moon size={13} className="text-slate-700" />
+                <span>Light Mode</span>
+              </span>
+            </button>
           </div>
-        )}
-
-      </div>
-    </header>
+          <Link
+            to="/#contact"
+            className="wx-cta"
+            onClick={handleStartProjectClick}
+          >
+            <i aria-hidden="true" />
+            Start a project
+          </Link>
+        </div>
+      </header>
+    </div>
   );
 };

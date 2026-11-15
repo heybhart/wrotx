@@ -15,7 +15,12 @@ export interface ServicePageData {
   timeline: string;
   introParagraphs: string[];
   whoItIsForTitle: string;
-  whoItIsFor: { title: string; detail: string }[];
+  whoItIsFor: {
+    title: string;
+    detail: string;
+    chipsLabel?: string;
+    chips?: { label: string; active?: boolean; variant?: 'on' | 'wa' }[];
+  }[];
   whatYouGetTitle: string;
   whatYouGet: string[];
   processTitle: string;
@@ -35,7 +40,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `Website Development Mumbai (${prices.websites.fromLabel}) | ${brandName}`,
     metaDescription: `Business website design in Mumbai from ${prices.websites.formatted}, delivered in ${prices.websites.timeline}. Mobile-fast, Google SEO ready, ${support.days}-day support.`,
     h1: 'Website Development in Mumbai That Brings Direct Enquiries',
-    lead: `Fast, mobile-first business websites starting from ${prices.websites.formatted} — delivered in ${prices.websites.timeline} with ${support.label} and zero recurring platform lock-in.`,
+    lead: `Fast, mobile-first business websites starting from ${prices.websites.formatted}, delivered in ${prices.websites.timeline} with ${support.label} and zero recurring platform lock-in.`,
     priceFrom: prices.websites.fromLabel,
     priceAmount: prices.websites.amount,
     timeline: prices.websites.timelineLabel,
@@ -47,20 +52,20 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     whoItIsForTitle: 'Who this website service is built for',
     whoItIsFor: [
       {
-        title: 'Local service businesses & clinics across Mumbai',
-        detail: 'Doctors, CA firms, salons, gyms, and repair studios that need Google visibility, clear service menus, and instant WhatsApp booking.',
+        title: 'Local service businesses and clinics across Mumbai',
+        detail: 'Doctors, CA firms, salons, gyms and repair studios that want to show up on Google, list services clearly and take bookings on WhatsApp.',
       },
       {
-        title: 'Manufacturers, wholesalers & B2B traders',
-        detail: 'Businesses in MIDC, Andheri, Bhiwandi, and Navi Mumbai showcasing product catalogues, ISO certificates, and bulk enquiry forms.',
+        title: 'Manufacturers, wholesalers and B2B traders',
+        detail: 'Businesses in MIDC, Andheri, Bhiwandi and Navi Mumbai that show product catalogues, ISO certificates and bulk enquiry forms.',
       },
       {
-        title: 'Real estate brokers & builders',
-        detail: 'Developers and advisory teams needing project microsites, floor-plan galleries, EMI tools, and direct site-visit scheduling.',
+        title: 'Real estate brokers and builders',
+        detail: 'Developers and advisory teams that need project microsites, floor-plan galleries, EMI tools and site-visit booking.',
       },
       {
         title: 'Companies replacing slow template sites',
-        detail: 'Owners tired of sluggish WordPress or Wix sites that fail mobile speed checks and leak paid ad clicks.',
+        detail: 'Owners tired of slow WordPress or Wix sites that fail mobile speed checks and waste paid ad clicks.',
       },
     ],
     whatYouGetTitle: 'What you get with every business website',
@@ -68,7 +73,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       'Mobile-first design tested across Indian Android and iOS screen sizes',
       'Direct WhatsApp chat button, click-to-call bar, and reliable email enquiry form',
       'Clean semantic HTML, proper headings, canonical URLs, and schema markup for Google',
-      'Zero monthly plugin fees — you own 100% of the code, design, and domain',
+      'Zero monthly plugin fees: you own 100% of the code, design, and domain',
       'Easy content updates and staff walkthrough training upon handover',
       `Razorpay, UPI payment links, or Google Maps integration when required`,
       `Official GST tax invoice and ${support.label}`,
@@ -146,12 +151,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `AI Agent Development India (${prices.aiAssistants.fromLabel}) | ${brandName}`,
     metaDescription: `Custom AI assistants for Indian businesses from ${prices.aiAssistants.formatted}. Qualify leads, book appointments, and sync CRM in ${prices.aiAssistants.timeline}.`,
     h1: 'AI Agent Development in India That Works Around the Clock',
-    lead: `Custom AI assistants starting from ${prices.aiAssistants.formatted} — built in ${prices.aiAssistants.timeline} to qualify leads, answer product questions, and book appointments in English and Hindi.`,
+    lead: `Custom AI assistants starting from ${prices.aiAssistants.formatted}, built in ${prices.aiAssistants.timeline} to qualify leads, answer product questions, and book appointments in English and Hindi.`,
     priceFrom: prices.aiAssistants.fromLabel,
     priceAmount: prices.aiAssistants.amount,
     timeline: prices.aiAssistants.timelineLabel,
     introParagraphs: [
-      `Most Indian businesses do not lose customers because their service is weak — they lose them because nobody replies when a prospect messages at 9:30 PM or calls during lunch hour. Hiring round-the-clock support staff is expensive, and off-the-shelf generic chatbots frustrate buyers with rigid menu trees that cannot answer simple pricing or availability questions.`,
+      `Most Indian businesses do not lose customers because their service is weak. They lose them because nobody replies when a prospect messages at 9:30 PM or calls during lunch hour. Hiring round-the-clock support staff is expensive, and off-the-shelf generic chatbots frustrate buyers with rigid menu trees that cannot answer simple pricing or availability questions.`,
       `${brandName} builds practical AI agents trained on your exact business rules, service catalogue, and tone of voice. Whether a customer asks a question on your website chat widget, messages on WhatsApp, or fills out a form after office hours, your AI assistant responds within seconds, collects their requirements, checks your calendar or business hours, and forwards a clean summary straight to your team.`,
       `Instead of locking you into high per-seat SaaS markups, we connect your agent cleanly to your own business accounts, WhatsApp Business API, CRM, or Google Sheets. You stay in complete control of conversation logs, prompts, and escalation rules, backed by ${support.label}.`,
     ],
@@ -160,18 +165,42 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       {
         title: 'Clinics, diagnostic centres & wellness studios',
         detail: 'Answer timing, test preparation, and fee questions automatically and schedule patient slots without front-desk bottlenecks.',
+        chipsLabel: 'Appointment assistant',
+        chips: [
+          { label: 'Slot booked: 11:30 AM' },
+          { label: 'Doctor calendar synced' },
+          { label: 'WhatsApp reminder', variant: 'wa' },
+        ],
       },
       {
         title: 'Real estate developers & channel partners',
         detail: 'Share project brochures, budget ranges, and site-visit availability immediately when an ad lead comes in.',
+        chipsLabel: 'Ad lead qualifier',
+        chips: [
+          { label: 'Brochure PDF' },
+          { label: 'Budget: ₹45L-65L' },
+          { label: 'Visit booked', active: true },
+        ],
       },
       {
         title: 'Coaching institutes & education counsellors',
         detail: 'Handle batch timings, syllabus queries, and admission counselling follow-ups across hundreds of student enquiries.',
+        chipsLabel: 'Student counsellor',
+        chips: [
+          { label: 'Batch timing: 6 PM' },
+          { label: 'Syllabus sent' },
+          { label: 'Follow-up set', active: true },
+        ],
       },
       {
         title: 'D2C & B2B operations teams',
         detail: 'Automate order status checks, GST invoice requests, and internal SOP lookups for sales and support staff.',
+        chipsLabel: 'Operations bot',
+        chips: [
+          { label: 'Live order track' },
+          { label: 'GST invoice copy' },
+          { label: 'Instant reply < 3s', active: true },
+        ],
       },
     ],
     whatYouGetTitle: 'What is included in your AI agent setup',
@@ -257,12 +286,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `WhatsApp Automation India (${prices.aiAssistants.fromLabel}) | ${brandName}`,
     metaDescription: `WhatsApp chatbot & business automation in India from ${prices.aiAssistants.formatted}. Instant lead replies, appointment booking, and payment reminders in ${prices.aiAssistants.timeline}.`,
     h1: 'WhatsApp Automation & Chatbots Built for Indian Businesses',
-    lead: `Turn incoming WhatsApp enquiries into qualified leads and booked calls — starting from ${prices.aiAssistants.formatted}, delivered in ${prices.aiAssistants.timeline}.`,
+    lead: `Turn incoming WhatsApp enquiries into qualified leads and booked calls, starting from ${prices.aiAssistants.formatted}, delivered in ${prices.aiAssistants.timeline}.`,
     priceFrom: prices.aiAssistants.fromLabel,
     priceAmount: prices.aiAssistants.amount,
     timeline: prices.aiAssistants.timelineLabel,
     introParagraphs: [
-      `In India, business happens on WhatsApp. Whether a customer clicks your Meta ad, scans a QR code at your store, or taps the chat button on your website, they expect a reply within minutes — not the next afternoon. When sales reps juggle dozens of chats manually on one personal phone, follow-ups slip through the cracks and leads go cold.`,
+      `In India, business happens on WhatsApp. Whether a customer clicks your Meta ad, scans a QR code at your store, or taps the chat button on your website, they expect a reply within minutes, not the next afternoon. When sales reps juggle dozens of chats manually on one personal phone, follow-ups slip through the cracks and leads go cold.`,
       `${brandName} builds structured WhatsApp automation workflows using official API integrations so your business replies instantly, shares brochures or price lists, collects customer details, and logs every enquiry into your tracker or CRM automatically. Unlike generic bulk-spam tools that risk getting your number banned, we focus on permission-based inbound qualification, booking confirmations, and clean payment or renewal reminders.`,
       `Whether you need a guided WhatsApp chatbot starting from ${prices.aiAssistants.formatted} or custom workflow automation connecting Razorpay, Tally, and Google Sheets, you get a system tailored to your business with ${support.label}.`,
     ],
@@ -271,18 +300,42 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       {
         title: 'Click-to-WhatsApp Ad Campaigns',
         detail: 'Greet ad leads immediately, ask 2–3 qualifying questions (city, budget, timeline), and route hot buyers to the right salesperson.',
+        chipsLabel: 'Ad lead routing',
+        chips: [
+          { label: 'Instant auto-reply' },
+          { label: 'Lead qualified' },
+          { label: 'Sales rep alerted', active: true },
+        ],
       },
       {
         title: 'Appointment & Site Visit Scheduling',
         detail: 'Let clinic patients, salon clients, or property buyers pick available slots and receive automatic reminder messages.',
+        chipsLabel: 'Slot booking',
+        chips: [
+          { label: 'Slot selection' },
+          { label: 'Auto confirmation' },
+          { label: 'WhatsApp reminder', variant: 'wa' },
+        ],
       },
       {
         title: 'Invoice, Dispatch & Payment Reminders',
         detail: 'Send automated order confirmations, GST invoice PDFs, and polite UPI payment reminders without chasing manually.',
+        chipsLabel: 'Billing & payment',
+        chips: [
+          { label: 'GST invoice PDF' },
+          { label: 'UPI payment link' },
+          { label: 'Tally reconciler', active: true },
+        ],
       },
       {
         title: 'Multi-Agent Team Routing',
         detail: 'Keep one official business number while routing Mumbai, Pune, or category-specific chats to the right team member.',
+        chipsLabel: 'Shared team inbox',
+        chips: [
+          { label: 'Single official number' },
+          { label: 'Category routing' },
+          { label: 'Zero lost chats', active: true },
+        ],
       },
     ],
     whatYouGetTitle: 'What you get with WhatsApp automation',
@@ -368,32 +421,56 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `AI Calling Agents India (${prices.aiCalling.fromLabel}) | ${brandName}`,
     metaDescription: `24/7 AI voice calling agents for Indian businesses from ${prices.aiCalling.formatted}. Natural Hindi, Hinglish & English calls, delivered in ${prices.aiCalling.timeline}.`,
     h1: 'AI Calling Agents for Indian Businesses in Hindi & English',
-    lead: `Answer every inbound call and follow up on leads in seconds — natural Hindi, Hinglish, and Indian English voice agents starting from ${prices.aiCalling.formatted}.`,
+    lead: `Answer every inbound call and follow up on leads in seconds. Natural Hindi, Hinglish, and Indian English voice agents starting from ${prices.aiCalling.formatted}.`,
     priceFrom: prices.aiCalling.fromLabel,
     priceAmount: prices.aiCalling.amount,
     timeline: prices.aiCalling.timelineLabel,
     introParagraphs: [
-      `Missed phone calls cost service businesses more revenue than almost anything else. A customer calling a clinic at 10 PM, a real estate buyer enquiring during a busy Sunday site visit, or a prospect waiting two hours for a callback rarely calls twice — they simply dial the next listing on Google.`,
+      `Missed phone calls cost service businesses more revenue than almost anything else. A customer calling a clinic at 10 PM, a real estate buyer enquiring during a busy Sunday site visit, or a prospect waiting two hours for a callback rarely calls twice. They simply dial the next listing on Google.`,
       `${brandName} builds AI voice calling agents tuned for Indian accents, Hindi, Hinglish, and Indian English. Your voice assistant picks up inbound calls 24/7, greets callers politely, answers common questions about pricing, timings, or location, qualifies their requirement, and books an appointment or transfers urgent calls straight to your team’s mobile number.`,
-      `After every conversation, you receive a concise summary and recording link on WhatsApp or your dashboard so your staff knows exactly who called and what they need — with zero guesswork. Delivered in ${prices.aiCalling.timeline} and backed by ${support.label}.`,
+      `After every conversation, you receive a concise summary and recording link on WhatsApp or your dashboard so your staff knows exactly who called and what they need, with zero guesswork. Delivered in ${prices.aiCalling.timeline} and backed by ${support.label}.`,
     ],
     whoItIsForTitle: 'Where AI voice calling makes the biggest difference',
     whoItIsFor: [
       {
         title: 'Inbound After-Hours & Overflow Reception',
         detail: 'Ensure no caller ever hears a busy tone or unanswered ring after 7 PM, on Sundays, or when your front desk is occupied.',
+        chipsLabel: '24/7 reception',
+        chips: [
+          { label: 'Zero missed calls' },
+          { label: 'Hindi / English support' },
+          { label: 'WhatsApp summary', variant: 'wa' },
+        ],
       },
       {
         title: 'Instant Lead Qualification Callbacks',
         detail: 'Call web-form or Meta ad leads within 30 seconds to confirm budget, location preference, and convenient callback time.',
+        chipsLabel: 'Speed-to-lead',
+        chips: [
+          { label: 'Call within 30s' },
+          { label: 'Budget qualified' },
+          { label: 'Hot lead routed', active: true },
+        ],
       },
       {
         title: 'Appointment Confirmations & Reminders',
         detail: 'Reduce no-shows for clinics, diagnostic labs, salons, and service centres with polite automated confirmation calls.',
+        chipsLabel: 'Automated reminders',
+        chips: [
+          { label: 'Slot confirmed' },
+          { label: 'Reschedule handling' },
+          { label: 'Zero staff time', active: true },
+        ],
       },
       {
         title: 'Real Estate & Education Enquiry Desks',
         detail: 'Handle high-volume weekend enquiry spikes smoothly in Hindi, English, or mixed Hinglish.',
+        chipsLabel: 'Enquiry spikes',
+        chips: [
+          { label: 'Weekend intake' },
+          { label: 'Natural Hinglish' },
+          { label: 'CRM synced', active: true },
+        ],
       },
     ],
     whatYouGetTitle: 'What is included with your AI calling agent',
@@ -479,7 +556,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `Custom Software Development Mumbai (${prices.software.fromLabel}) | ${brandName}`,
     metaDescription: `Custom business software, CRM & GST billing portals in Mumbai from ${prices.software.formatted}. Zero monthly SaaS fees, built in ${prices.software.timeline}.`,
     h1: 'Custom Software & GST Billing Portals Built Around Your Team',
-    lead: `Stop paying per-user monthly SaaS fees for bloated tools your staff barely uses — custom web software starting from ${prices.software.formatted}, delivered in ${prices.software.timeline}.`,
+    lead: `Stop paying per-user monthly SaaS fees for bloated tools your staff barely uses. Custom web software starting from ${prices.software.formatted}, delivered in ${prices.software.timeline}.`,
     priceFrom: prices.software.fromLabel,
     priceAmount: prices.software.amount,
     timeline: prices.software.timelineLabel,
@@ -493,18 +570,42 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       {
         title: 'Growing teams outgrowing Excel & Google Sheets',
         detail: 'Replace fragile multi-tab spreadsheets with proper user logins, audit logs, and zero accidental deletions.',
+        chipsLabel: 'Spreadsheet upgrade',
+        chips: [
+          { label: 'Role logins' },
+          { label: 'Audit trail log' },
+          { label: 'Zero accidental delete', active: true },
+        ],
       },
       {
         title: 'Distributors, wholesalers & service companies',
         detail: 'Manage quotations, GST invoices, pending receivables, and field-team updates in one fast portal.',
+        chipsLabel: 'Operations portal',
+        chips: [
+          { label: 'GST invoice' },
+          { label: 'Tally export' },
+          { label: 'Live receivables', active: true },
+        ],
       },
       {
         title: 'Businesses tired of per-seat SaaS renewals',
         detail: 'Eliminate rising monthly per-employee software bills with software you own outright.',
+        chipsLabel: 'Cost ownership',
+        chips: [
+          { label: '₹0 per-seat fee', active: true },
+          { label: 'Code is yours' },
+          { label: 'Host anywhere' },
+        ],
       },
       {
         title: 'Financial & regulated teams needing custom rules',
         detail: 'Enforce strict maker-checker approvals, role-based data visibility, and custom report exports.',
+        chipsLabel: 'Internal compliance',
+        chips: [
+          { label: 'Maker-checker approval' },
+          { label: 'Role data isolation', active: true },
+          { label: 'Export audit PDF' },
+        ],
       },
     ],
     whatYouGetTitle: 'What comes standard in our software builds',
@@ -590,7 +691,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `Real Estate Websites Mumbai (${prices.websites.fromLabel}) | ${brandName}`,
     metaDescription: `Real estate websites & property portals in Mumbai from ${prices.websites.formatted}. Interactive listings, EMI tools, WhatsApp lead routing in ${prices.websites.timeline}.`,
     h1: 'Real Estate Website & Property Portal Development in Mumbai',
-    lead: `High-converting property websites for builders, brokers, and real estate advisories — starting from ${prices.websites.formatted}, delivered in ${prices.websites.timeline}.`,
+    lead: `High-converting property websites for builders, brokers, and real estate advisories, starting from ${prices.websites.formatted}, delivered in ${prices.websites.timeline}.`,
     priceFrom: prices.websites.fromLabel,
     priceAmount: prices.websites.amount,
     timeline: prices.websites.timelineLabel,
@@ -604,18 +705,42 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       {
         title: 'Independent Brokers & Property Advisories',
         detail: 'Showcase verified residential and commercial inventory across Mumbai micro-markets with direct WhatsApp callback.',
+        chipsLabel: 'Broker portal',
+        chips: [
+          { label: 'Direct buyer enquiry' },
+          { label: 'WhatsApp callback', variant: 'wa' },
+          { label: 'Zero aggregator cut', active: true },
+        ],
       },
       {
         title: 'Builders & Project Microsites',
         detail: 'Dedicated landing pages for new towers featuring floor plans, amenities, RERA ID slots, and Google Ads conversion tracking.',
+        chipsLabel: 'New launch',
+        chips: [
+          { label: 'Brochure unlock' },
+          { label: 'Floor plan viewer' },
+          { label: 'RERA compliant', active: true },
+        ],
       },
       {
         title: 'Channel Partners Running Meta & Google Ads',
         detail: 'Sub-2-second mobile pages built to maximize Quality Score and convert paid clicks into site visits.',
+        chipsLabel: 'Ad campaigns',
+        chips: [
+          { label: 'Sub-2s mobile load' },
+          { label: 'Site visit booked' },
+          { label: 'High conversion', active: true },
+        ],
       },
       {
         title: 'Commercial Leasing & Warehouse Specialists',
         detail: 'Filterable spec sheets showing carpet area, power load, loading bays, and rent per sq ft cleanly.',
+        chipsLabel: 'Commercial spec sheet',
+        chips: [
+          { label: 'Power & bay specs' },
+          { label: 'Rate per sq ft' },
+          { label: 'Verified inventory', active: true },
+        ],
       },
     ],
     whatYouGetTitle: 'Built-in features for property portals',
@@ -701,12 +826,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     metaTitle: `Banking & Fintech Software India (${prices.software.fromLabel}) | ${brandName}`,
     metaDescription: `Custom web portals, loan DSA CRMs & automated client onboarding for Indian finance teams from ${prices.software.formatted}. Built in ${prices.software.timeline}.`,
     h1: 'Software & Automation for Banking, NBFC & Finance Teams in India',
-    lead: `Secure lead portals, DSA workflow tools, EMI calculators, and automated KYC/document follow-ups — starting from ${prices.software.formatted} with full code ownership.`,
+    lead: `Secure lead portals, DSA workflow tools, EMI calculators, and automated KYC/document follow-ups, starting from ${prices.software.formatted} with full code ownership.`,
     priceFrom: prices.software.fromLabel,
     priceAmount: prices.software.amount,
     timeline: prices.software.timelineLabel,
     introParagraphs: [
-      `Financial services teams — from DSAs, credit advisors, and wealth managers to cooperative credit societies and fintech startups — deal with high paperwork volume and strict client trust requirements. When prospects wait days for an eligibility update, or sales executives track loan files inside unencrypted spreadsheets, deals stall and compliance risks grow.`,
+      `Financial services teams (from DSAs, credit advisors, and wealth managers to cooperative credit societies and fintech startups) deal with high paperwork volume and strict client trust requirements. When prospects wait days for an eligibility update, or sales executives track loan files inside unencrypted spreadsheets, deals stall and compliance risks grow.`,
       `${brandName} builds clean, role-restricted web portals, client intake systems, and automated follow-up workflows tailored for Indian banking and finance companies. We keep sensitive workflows inside infrastructure you own and control, with strict role-based logins, structured audit trails, and automated WhatsApp document-collection checklists so relationship managers spend time closing instead of chasing PAN/ITR scans.`,
       `Whether you need a customer-facing financial advisory website from ${prices.websites.formatted}, a custom loan/client tracking portal from ${prices.software.formatted}, or AI-assisted onboarding from ${prices.aiAssistants.formatted}, we build clearly scoped software with ${support.label}.`,
     ],
@@ -715,18 +840,42 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       {
         title: 'Loan DSAs & Mortgage Advisory Firms',
         detail: 'Track application stages across banks, collect KYC documents neatly, and compute eligibility on mobile.',
+        chipsLabel: 'Loan processing',
+        chips: [
+          { label: 'Doc checklist' },
+          { label: 'Bank status log' },
+          { label: 'Mobile eligibility', active: true },
+        ],
       },
       {
         title: 'Wealth Management, Mutual Fund & Insurance Advisors',
         detail: 'Build trust online with clean advisory websites, SIP/EMI calculators, and automated renewal reminders.',
+        chipsLabel: 'Advisory client hub',
+        chips: [
+          { label: 'SIP & EMI tool' },
+          { label: 'Portfolio summary' },
+          { label: 'Renewal alert', active: true },
+        ],
       },
       {
         title: 'NBFC Operations & Credit Societies',
         detail: 'Internal dashboards with maker-checker roles, staff permissions, and automated repayment alert hooks.',
+        chipsLabel: 'Credit operations',
+        chips: [
+          { label: 'Maker-checker' },
+          { label: 'UPI AutoPay hook' },
+          { label: 'WhatsApp EMI alert', variant: 'wa' },
+        ],
       },
       {
         title: 'Fintech MVP & Internal Ops Teams',
         detail: 'Launch clean web portals and vendor/payout reconciliation dashboards without bloated enterprise retainers.',
+        chipsLabel: 'Reconciliation',
+        chips: [
+          { label: 'Payout tracker' },
+          { label: 'Tally export' },
+          { label: 'Zero retainers', active: true },
+        ],
       },
     ],
     whatYouGetTitle: 'Key capabilities for finance portals',

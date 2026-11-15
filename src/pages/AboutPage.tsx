@@ -21,7 +21,7 @@ export const AboutPage: React.FC = () => {
               An Engineering-First Studio in Mumbai
             </h1>
             <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-              {SITE_CONFIG.brandName} builds websites, custom business software, WhatsApp automation, and AI voice agents for companies across Mumbai and India — with transparent pricing and direct access to the engineers building your product.
+              {SITE_CONFIG.brandName} builds websites, custom business software, WhatsApp automation, and AI voice agents for companies across Mumbai and India, with transparent pricing and direct access to the engineers building your product.
             </p>
           </header>
 
@@ -42,7 +42,7 @@ export const AboutPage: React.FC = () => {
               <div className="glass-card p-5 rounded-2xl space-y-2">
                 <div className="font-mono text-xs text-[#D9480F] dark:text-[#F97316] font-bold uppercase">Service Area</div>
                 <p className="font-sans text-sm text-slate-700 dark:text-slate-300">
-                  Operating from {SITE_CONFIG.location} — working with businesses across Mumbai, Thane, Navi Mumbai, and remote clients throughout India.
+                  Operating from {SITE_CONFIG.location}, working with businesses across Mumbai, Thane, Navi Mumbai, and remote clients throughout India.
                 </p>
               </div>
             </div>
@@ -93,3 +93,4 @@ export const AboutPage: React.FC = () => {
     </>
   );
 };
+

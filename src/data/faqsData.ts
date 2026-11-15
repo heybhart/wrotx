@@ -29,3 +29,4 @@ export const HOME_FAQS_DATA: FaqItem[] = [
     answer: 'Yes. We issue official GST tax invoices for all projects and accept secure milestone payments via UPI, NEFT, RTGS, Razorpay, and direct bank transfer.',
   },
 ];
+

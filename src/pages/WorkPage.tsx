@@ -46,3 +46,4 @@ export const WorkPage: React.FC = () => {
     </>
   );
 };
+

@@ -5,7 +5,7 @@ import { WhatWeBuild } from '../components/WhatWeBuild';
 import { OurWork } from '../components/OurWork';
 import { AudioDemo } from '../components/AudioDemo';
 import { HowItWorks } from '../components/HowItWorks';
-import { WhyUs } from '../components/WhyUs';
+import { Testimonials } from '../components/Testimonials';
 import { Faq } from '../components/Faq';
 import { FinalCta } from '../components/FinalCta';
 import { PageHead } from '../components/PageHead';
@@ -53,10 +53,11 @@ export const HomePage: React.FC = () => {
         <WhatWeBuild onQuoteClick={(serviceName) => scrollToElement('contact', serviceName)} />
         {false && <AudioDemo onQuoteClick={() => scrollToElement('contact')} />}
         <HowItWorks />
-        <WhyUs />
+        <Testimonials />
         <Faq />
         <FinalCta selectedService={selectedService} />
       </div>
     </>
   );
 };
+

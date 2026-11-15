@@ -101,3 +101,4 @@ export const BlogPostPage: React.FC<{ post: BlogPost }> = ({ post }) => {
     </>
   );
 };
+

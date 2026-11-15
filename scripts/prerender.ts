@@ -1,9 +1,8 @@
 import path from 'path';
 import fs from 'fs';
-import { Writable } from 'stream';
 import { fileURLToPath, pathToFileURL } from 'url';
 import React from 'react';
-import { renderToPipeableStream } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { build } from 'vite';
 import { INDEXABLE_ROUTES, getCanonicalUrl } from '../src/config/routes';
@@ -31,30 +30,21 @@ const distDir = path.join(rootDir, 'dist');
 const distSsrDir = path.join(rootDir, 'dist-ssr');
 const ssrEntryFile = path.join(distSsrDir, 'entry-ssr.js');
 
-function renderRouteHtml(App: React.ComponentType, routePath: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let html = '';
-    const stream = new Writable({
-      write(chunk, _encoding, callback) {
-        html += chunk.toString();
-        callback();
-      },
-    });
-    stream.on('finish', () => resolve(html));
-    stream.on('error', reject);
+function renderRouteHtml(App: React.ComponentType, routePath: string): string {
+  return renderToString(React.createElement(StaticRouter, { location: routePath }, React.createElement(App)));
+}
 
-    const { pipe } = renderToPipeableStream(
-      React.createElement(StaticRouter, { location: routePath }, React.createElement(App)),
-      {
-        onAllReady() {
-          pipe(stream);
-        },
-        onError(err) {
-          reject(err);
-        },
-      }
-    );
-  });
+function getFontPreloadLinks(): string {
+  const assetsDir = path.join(distDir, 'assets');
+  if (!fs.existsSync(assetsDir)) return '';
+  return fs
+    .readdirSync(assetsDir)
+    .filter((file) => file.endsWith('.woff2') && file.startsWith('bricolage-grotesque-latin-600-normal-'))
+    .map(
+      (file) =>
+        `<link rel="preload" as="font" type="font/woff2" href="/assets/${file}" crossorigin />`
+    )
+    .join('\n    ');
 }
 
 function getOutputPath(routePath: string): string {
@@ -118,11 +108,23 @@ async function prerender() {
     getCaseStudyMeta('sample-case-study'),
     NOT_FOUND_META,
   ];
+  const fontPreloads = getFontPreloadLinks();
+  // Prioritize stylesheet download ahead of modulepreload/scripts in <head>
+  const cssLinkMatch = templateHtml.match(/<link rel="stylesheet"[^>]+>/);
+  let orderedTemplateHtml = templateHtml;
+  if (cssLinkMatch) {
+    orderedTemplateHtml = templateHtml
+      .replace(cssLinkMatch[0], '')
+      .replace('<!--SEO_HEAD-->', `${cssLinkMatch[0]}\n    <!--SEO_HEAD-->`);
+  }
   for (const meta of targets) {
-    const renderedAppHtml = await renderRouteHtml(App, meta.path);
-    const outHtml = templateHtml
+    const renderedAppHtml = renderRouteHtml(App, meta.path);
+    let outHtml = orderedTemplateHtml
       .replace('<!--SEO_HEAD-->', buildHeadHtml(meta))
       .replace('<div id="root"></div>', `<div id="root">${renderedAppHtml}</div>`);
+    if (fontPreloads) {
+      outHtml = outHtml.replace('</head>', `    ${fontPreloads}\n  </head>`);
+    }
     const outPath = getOutputPath(meta.path);
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, outHtml, 'utf-8');

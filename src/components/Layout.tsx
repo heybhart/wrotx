@@ -14,12 +14,21 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   useEffect(() => {
     if (hash) {
       const targetId = hash.replace('#', '');
-      const el = document.getElementById(targetId);
-      if (el) {
-        const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset - 90;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        return;
+      const scrollToHash = () => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset - 90;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          return true;
+        }
+        return false;
+      };
+
+      if (!scrollToHash()) {
+        const timer = setTimeout(scrollToHash, 100);
+        return () => clearTimeout(timer);
       }
+      return;
     }
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [pathname, hash]);
@@ -42,3 +51,4 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     </div>
   );
 };
+

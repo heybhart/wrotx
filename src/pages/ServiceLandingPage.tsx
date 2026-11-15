@@ -2,10 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, CheckCircle2, ChevronDown, MessageCircle, Phone, Clock, IndianRupee } from 'lucide-react';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { ProcessStepsGrid } from '../components/HowItWorks';
+import { WebsiteWhoItIsFor } from '../components/WebsiteWhoItIsFor';
+import { AvailableTemplates } from '../components/AvailableTemplates';
 import { PageHead } from '../components/PageHead';
 import { getServicePageMeta } from '../config/seo';
 import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
 import type { ServicePageData } from '../data/servicePagesData';
+
+const handleCardPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+  card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+};
 
 export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -83,32 +93,93 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
             </div>
           </header>
 
-          {/* Practical Overview */}
-          <section className="glass-panel p-6 sm:p-9 rounded-3xl space-y-4">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-              Why {SITE_CONFIG.brandName} builds this differently
-            </h2>
-            <div className="space-y-4 font-sans text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-              {page.introParagraphs.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </section>
-
-          {/* Who This Is For */}
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-              {page.whoItIsForTitle}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {page.whoItIsFor.map((item) => (
-                <div key={item.title} className="glass-card p-6 rounded-2xl space-y-2">
-                  <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
-                  <p className="font-sans text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{item.detail}</p>
+          {page.slug === '/website-development-mumbai' ? (
+            <>
+              {/* Who This Is For */}
+              <section className="space-y-6">
+                <div>
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                    {page.whoItIsForTitle}
+                  </h2>
+                  <p className="font-sans text-base text-slate-600 dark:text-slate-400 mt-2 max-w-xl">
+                    Four kinds of businesses we build for most often. Find yours below.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </section>
+                <WebsiteWhoItIsFor />
+              </section>
+
+              {/* Practical Overview */}
+              <section className="glass-panel p-6 sm:p-9 rounded-3xl space-y-4">
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                  Why {SITE_CONFIG.brandName} builds this differently
+                </h2>
+                <div className="space-y-4 font-sans text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {page.introParagraphs.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : (
+            <>
+              {/* Practical Overview */}
+              <section className="glass-panel p-6 sm:p-9 rounded-3xl space-y-4">
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                  Why {SITE_CONFIG.brandName} builds this differently
+                </h2>
+                <div className="space-y-4 font-sans text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {page.introParagraphs.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+              </section>
+
+              {/* Who This Is For */}
+              <section className="space-y-6">
+                <div>
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                    {page.whoItIsForTitle}
+                  </h2>
+                  <p className="font-sans text-base text-slate-600 dark:text-slate-400 mt-2 max-w-xl">
+                    Four kinds of businesses we build for most often. Find yours below.
+                  </p>
+                </div>
+
+                <div className="who-grid">
+                  {page.whoItIsFor.map((item, idx) => {
+                    const variant = ['a', 'b', 'c', 'd'][idx % 4];
+                    return (
+                      <article
+                        key={item.title}
+                        className={`who-card ${variant}`}
+                        onPointerMove={handleCardPointerMove}
+                      >
+                        <div>
+                          <h3>{item.title}</h3>
+                          <p>{item.detail}</p>
+                        </div>
+                        {item.chips && item.chips.length > 0 && (
+                          <div className="who-chipbox">
+                            {item.chipsLabel && <p className="who-lbl">{item.chipsLabel}</p>}
+                            <div className="who-row">
+                              {item.chips.map((chip) => (
+                                <span
+                                  key={chip.label}
+                                  className={`who-pill ${chip.active ? 'on' : ''} ${chip.variant === 'wa' ? 'wa' : ''}`}
+                                >
+                                  {chip.label}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            </>
+          )}
 
           {/* What You Get */}
           <section className="glass-panel p-6 sm:p-9 rounded-3xl space-y-6">
@@ -126,62 +197,65 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
           </section>
 
           {/* Process */}
-          <section className="space-y-6">
+          <section className="space-y-8">
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
               {page.processTitle}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {page.processSteps.map((st) => (
-                <div key={st.step} className="glass-card p-5 rounded-2xl space-y-2">
-                  <span className="font-mono text-xs font-bold text-[#D9480F] dark:text-[#F97316]">{st.step}</span>
-                  <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">{st.title}</h3>
-                  <p className="font-sans text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{st.detail}</p>
-                </div>
-              ))}
-            </div>
+            <ProcessStepsGrid
+              steps={page.processSteps.map((st) => ({
+                num: st.step,
+                title: st.title,
+                description: st.detail,
+              }))}
+            />
           </section>
 
+          {/* Available Templates (Website Development Mumbai) */}
+          {page.slug === '/website-development-mumbai' && <AvailableTemplates />}
+
           {/* Service-Specific FAQs */}
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-              Frequently Asked Questions
-            </h2>
-            <div className="glass-panel p-4 sm:p-6 rounded-3xl space-y-3">
-              {page.faqs.map((faq, idx) => {
-                const isOpen = openFaq === idx;
-                return (
-                  <div
-                    key={faq.question}
-                    className={`rounded-2xl border transition-all ${
-                      isOpen
-                        ? 'border-[#D9480F]/50 dark:border-[#F97316]/50 bg-white/90 dark:bg-white/[0.08]'
-                        : 'border-slate-200/70 dark:border-white/10 glass-card'
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpenFaq(isOpen ? null : idx)}
-                      aria-expanded={isOpen}
-                      className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left cursor-pointer"
+          {page.slug !== '/website-development-mumbai' && (
+            <section className="space-y-6">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                Frequently Asked Questions
+              </h2>
+              <div className="glass-panel p-4 sm:p-6 rounded-3xl space-y-3">
+                {page.faqs.map((faq, idx) => {
+                  const isOpen = openFaq === idx;
+                  return (
+                    <div
+                      key={faq.question}
+                      className={`rounded-2xl border transition-all ${
+                        isOpen
+                          ? 'border-[#D9480F]/50 dark:border-[#F97316]/50 bg-white/90 dark:bg-white/[0.08]'
+                          : 'border-slate-200/70 dark:border-white/10 glass-card'
+                      }`}
                     >
-                      <span className="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                        {faq.question}
-                      </span>
-                      <ChevronDown
-                        size={18}
-                        className={`shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#D9480F]' : 'text-slate-500'}`}
-                      />
-                    </button>
-                    {isOpen && (
-                      <div className="px-4 sm:px-5 pb-5 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+                      <button
+                        type="button"
+                        onClick={() => setOpenFaq(isOpen ? null : idx)}
+                        aria-expanded={isOpen}
+                        className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left cursor-pointer"
+                      >
+                        <span className="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                          {faq.question}
+                        </span>
+                        <ChevronDown
+                          size={18}
+                          className={`shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#D9480F]' : 'text-slate-500'}`}
+                        />
+                      </button>
+                      {isOpen && (
+                        <div className="px-4 sm:px-5 pb-5 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {faq.answer}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
           {/* Related Services & Internal Links */}
           <section className="space-y-5">
@@ -213,3 +287,4 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
     </>
   );
 };
+

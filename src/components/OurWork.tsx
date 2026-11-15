@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { ArrowRight, PhoneCall, X, CheckCircle2, Loader2 } from 'lucide-react';
 import { FadeUp } from './FadeUp';
 
 const checksWeb = [
@@ -34,6 +36,58 @@ const checksVoice = [
 ];
 
 export const OurWork: React.FC = () => {
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [demoName, setDemoName] = useState('');
+  const [demoPhone, setDemoPhone] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (!isDemoOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsDemoOpen(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isDemoOpen]);
+
+  const handleDemoSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!demoName.trim() || !demoPhone.trim()) {
+      setErrorMessage('Please enter your name and contact number.');
+      return;
+    }
+    setErrorMessage('');
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: demoName.trim(),
+          phone: demoPhone.trim(),
+          service: 'AI Voice Demo',
+          projectDetails: 'User requested an AI voice demo call from the Live demo CTA on the Voice Assistants card.'
+        })
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || (data && data.success === false)) {
+        throw new Error((data && data.message) || 'Failed to submit demo request. Please try again.');
+      }
+      setIsSubmitted(true);
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Failed to submit demo request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -118,6 +172,7 @@ export const OurWork: React.FC = () => {
                     <span className="work-templates-hint">Live interactive previews</span>
                   </div>
 
+                  {/* [TODO: Move external template demos (vercel.app / github.io) onto demo.wrotx.in subdomains when ready] */}
                   <div className="work-templates-list">
                     <a
                       href="https://bigbroker-iota.vercel.app/"
@@ -315,11 +370,160 @@ export const OurWork: React.FC = () => {
                     </li>
                   ))}
                 </ul>
+
+                <div className="mt-auto pt-6 border-t border-dashed border-[var(--work-hair)]">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsDemoOpen(true);
+                      setIsSubmitted(false);
+                      setErrorMessage('');
+                    }}
+                    className="w-full inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-bold text-slate-950 bg-[#1be66f] hover:bg-[#16c75f] active:scale-[0.99] transition-all shadow-[0_4px_16px_rgba(27,230,111,0.3)] cursor-pointer"
+                  >
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-950 opacity-70"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-950"></span>
+                    </span>
+                    <span>Request Live Demo</span>
+                    <ArrowRight className="w-4 h-4 ml-0.5" />
+                  </button>
+                </div>
               </article>
             </FadeUp>
           </div>
         </div>
       </div>
+
+      {/* Voice Demo Request Modal */}
+      {isDemoOpen && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsDemoOpen(false);
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="voice-demo-modal-title"
+            className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl"
+          >
+            <button
+              type="button"
+              onClick={() => setIsDemoOpen(false)}
+              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              aria-label="Close dialog"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {isSubmitted ? (
+              <div className="py-6 text-center flex flex-col items-center">
+                <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold font-display text-slate-900 dark:text-white mb-2">
+                  Demo Request Sent!
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xs leading-relaxed mb-6">
+                  Thanks {demoName.trim()}. We received your request for an AI voice demo and will connect with you on {demoPhone.trim()} shortly.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDemoOpen(false);
+                    setDemoName('');
+                    setDemoPhone('');
+                    setIsSubmitted(false);
+                  }}
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 transition-opacity cursor-pointer"
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mb-5 pr-6">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-2.5">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    AI Voice Demo
+                  </div>
+                  <h3 id="voice-demo-modal-title" className="text-xl sm:text-2xl font-bold font-display text-slate-900 dark:text-white leading-tight">
+                    Experience Our Voice Assistant Live
+                  </h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1.5">
+                    Share your name and contact number. We will set up a live interactive voice call demonstration on your phone.
+                  </p>
+                </div>
+
+                <form onSubmit={handleDemoSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="voice-demo-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+                      Your Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="voice-demo-name"
+                      type="text"
+                      required
+                      value={demoName}
+                      onChange={(e) => setDemoName(e.target.value)}
+                      placeholder="e.g. Rahul Sharma"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#1be66f] transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="voice-demo-phone" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+                      Contact Number (Phone / WhatsApp) <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="voice-demo-phone"
+                      type="tel"
+                      required
+                      value={demoPhone}
+                      onChange={(e) => setDemoPhone(e.target.value)}
+                      placeholder="e.g. +91 98765 43210"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#1be66f] transition-all"
+                    />
+                  </div>
+
+                  {errorMessage && (
+                    <p className="text-xs text-red-500 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 p-2.5 rounded-lg">
+                      {errorMessage}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full mt-2 py-3 px-5 rounded-xl font-bold text-sm text-slate-950 bg-[#1be66f] hover:bg-[#16c75f] active:scale-[0.99] disabled:opacity-60 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending request...</span>
+                      </>
+                    ) : (
+                      <>
+                        <PhoneCall className="w-4 h-4" />
+                        <span>Request Live Demo</span>
+                      </>
+                    )}
+                  </button>
+                  <p className="text-[11px] text-center text-slate-500 dark:text-slate-400">
+                    No spam. We will only contact you for this AI voice demo.
+                  </p>
+                </form>
+              </>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };

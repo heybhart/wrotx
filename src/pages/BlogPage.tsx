@@ -21,7 +21,7 @@ export const BlogPage: React.FC = () => {
               Practical Guides for Indian Businesses
             </h1>
             <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
-              Clear pricing breakdowns, WhatsApp API rules, and software ownership advice — written without agency jargon.
+              Clear pricing breakdowns, WhatsApp API rules, and software ownership advice, written without agency jargon.
             </p>
           </header>
 
@@ -64,3 +64,4 @@ export const BlogPage: React.FC = () => {
     </>
   );
 };
+
