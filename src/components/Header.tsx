@@ -178,7 +178,6 @@ export const Header: React.FC = () => {
             className="wx-cta"
             onClick={handleStartProjectClick}
           >
-            <i aria-hidden="true" />
             Start a project
           </Link>
 
@@ -257,7 +256,6 @@ export const Header: React.FC = () => {
             className="wx-cta"
             onClick={handleStartProjectClick}
           >
-            <i aria-hidden="true" />
             Start a project
           </Link>
         </div>
