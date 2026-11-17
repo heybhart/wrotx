@@ -125,15 +125,15 @@ export const AboutPage: React.FC = () => {
 
                 <div className="sign">
                   <div>
-                    <div className="sig">Rohan Kumawat</div>
-                    <div className="cap">
-                      <b>Rohan Kumawat</b>, Founder
-                    </div>
-                  </div>
-                  <div>
                     <div className="sig">Bharat Chaudhary</div>
                     <div className="cap">
                       <b>Bharat Chaudhary</b>, Founder
+                    </div>
+                  </div>
+                  <div>
+                    <div className="sig">Rohan Kumawat</div>
+                    <div className="cap">
+                      <b>Rohan Kumawat</b>, Founder
                     </div>
                   </div>
                 </div>
