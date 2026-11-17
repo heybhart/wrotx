@@ -18,7 +18,7 @@ export const NotFoundPage: React.FC = () => {
             Page not found
           </h1>
           <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-8 leading-relaxed">
-            The link you opened does not exist or may have moved. Head back to the homepage or talk to an engineer directly.
+            The link you opened does not exist or may have moved. Head back to the homepage or talk to our team directly.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link

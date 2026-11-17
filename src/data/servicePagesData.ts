@@ -541,7 +541,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
         description: 'View transparent starting prices across all WrotX services.',
       },
       {
-        label: 'Contact Our Engineers',
+        label: 'Talk to Team',
         to: '/contact',
         description: 'Request a live test call demo tailored to your industry.',
       },
@@ -946,9 +946,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
         description: 'See products we built across real estate, retail, and finance.',
       },
       {
-        label: 'Book an Engineering Consultation',
+        label: 'Talk to Team',
         to: '/contact',
-        description: 'Speak directly with our engineers about your workflow requirements.',
+        description: 'Speak directly with our team about your workflow requirements.',
       },
     ],
   },

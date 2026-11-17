@@ -215,7 +215,7 @@ export const PRICING_META: RouteSeoMeta = {
 
 export const CONTACT_META: RouteSeoMeta = {
   path: '/contact',
-  title: `Contact ${SITE_CONFIG.brandName} | Talk to a Mumbai Engineer`,
+  title: `Contact ${SITE_CONFIG.brandName} | Talk to Team`,
   description: `Request a fixed project quote from ${SITE_CONFIG.brandName} in Mumbai. Reach us via form, WhatsApp, phone, or email for websites, software, and AI.`,
   ogType: 'website',
   schemas: [

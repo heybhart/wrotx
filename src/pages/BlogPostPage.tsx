@@ -63,7 +63,7 @@ export const BlogPostPage: React.FC<{ post: BlogPost }> = ({ post }) => {
                 Have a project in mind?
               </h2>
               <p className="font-sans text-sm text-slate-600 dark:text-slate-300 mt-1">
-                Talk directly to our Mumbai engineers on WhatsApp or request a fixed quote.
+                Talk directly to our Mumbai team on WhatsApp or request a fixed quote.
               </p>
             </div>
             <a
@@ -73,7 +73,7 @@ export const BlogPostPage: React.FC<{ post: BlogPost }> = ({ post }) => {
               className="inline-flex items-center gap-2 min-h-[44px] bg-[#00fe66] text-[#00280b] font-mono text-xs uppercase font-bold px-5 py-3 rounded-xl shadow-[2px_2px_0px_#00280b] shrink-0"
             >
               <MessageCircle size={15} />
-              <span>WhatsApp an Engineer</span>
+              <span>Talk to Team</span>
             </a>
           </section>
 

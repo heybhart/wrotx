@@ -155,7 +155,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: 'WhatsApp Automation Service India', to: '/whatsapp-automation' },
       { label: 'AI Agent Development India', to: '/ai-agent-development' },
       { label: 'AI Calling Agents in Hindi & English', to: '/ai-calling-agents' },
-      { label: 'Talk to Our Engineers', to: '/contact' },
+      { label: 'Talk to Team', to: '/contact' },
     ],
   },
 ];

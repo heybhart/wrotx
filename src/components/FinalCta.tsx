@@ -80,7 +80,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
           </FadeUp>
           <FadeUp delay={40}>
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
-              Talk to an engineer
+              Talk to Team
             </h2>
           </FadeUp>
           <FadeUp delay={80}>
@@ -105,7 +105,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
                     We received your details.
                   </h3>
                   <p className="font-sans text-sm text-slate-600 dark:text-slate-300">
-                    Thank you {name}. An engineer will call or WhatsApp you at {phone} within 2 hours.
+                    Thank you {name}. Our team will call or WhatsApp you at {phone} within 2 hours.
                   </p>
                 </div>
               ) : (

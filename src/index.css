@@ -3769,6 +3769,276 @@ a, button {
   }
 }
 
+/* ==========================================================================
+   About Page: Who is behind WrotX (Paper Pledge Design)
+   ========================================================================== */
+.about-paper-block {
+  background: #0E1330;
+  color: #FFFFFF;
+  border-radius: 28px;
+  border: 3px solid #0E1330;
+  box-shadow: 8px 8px 0 #5B4BFF;
+  padding: clamp(48px, 6vw, 84px) clamp(20px, 4vw, 56px);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .about-paper-block {
+  border-color: #F3F5FF;
+  box-shadow: 8px 8px 0 #FFE500;
+}
+
+.about-paper-block .paper-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: start;
+}
+
+.about-paper-block .left {
+  position: sticky;
+  top: 120px;
+}
+
+.about-paper-block h2 {
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 6.8vw, 5.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin: 0 0 30px;
+  color: #FFFFFF;
+}
+
+.about-paper-block h2 em {
+  font-style: normal;
+  color: #FFE500;
+}
+
+.about-paper-block .story {
+  font-family: var(--font-sans, "DM Sans", system-ui, sans-serif);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.7;
+  color: #B9BFE0;
+  margin: 0;
+}
+
+.about-paper-block .x {
+  color: #FFFFFF;
+  font-weight: 600;
+  background: linear-gradient(#FFE500, #FFE500) 0 56%/0 0.13em no-repeat;
+  transition: background-size 0.7s cubic-bezier(0.6, 0, 0.2, 1) var(--d, 0s);
+}
+
+.about-paper-block .in .x,
+.about-paper-block.in .x {
+  background-size: 100% 0.13em;
+}
+
+.about-paper-block .paper {
+  position: relative;
+  background: #FFFDF6;
+  color: #14183A;
+  border-radius: 6px;
+  padding: 58px clamp(24px, 4vw, 48px) 36px;
+  transform: rotate(1.2deg);
+  box-shadow: 0 40px 70px -24px rgba(0, 0, 0, 0.7);
+}
+
+.about-paper-block .paper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 14px;
+  background: radial-gradient(circle at 10px 0, #0E1330 7px, transparent 8px) 0 0/20px 14px repeat-x;
+}
+
+.about-paper-block .paper-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.about-paper-block .paper-head h3 {
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #14183A;
+}
+
+.about-paper-block .stamp {
+  flex: none;
+  border: 3px double #E4572E;
+  color: #E4572E;
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  font-weight: 800;
+  font-size: 0.9rem;
+  line-height: 1.1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transform: rotate(9deg);
+  text-align: center;
+}
+
+.about-paper-block .clause {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 18px;
+  padding: 22px 0;
+  border-top: 2px dashed rgba(20, 24, 58, 0.22);
+}
+
+.about-paper-block .tick {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border: 3px solid #14183A;
+  border-radius: 8px;
+  margin-top: 3px;
+}
+
+.about-paper-block .tick svg {
+  position: absolute;
+  left: 1px;
+  top: -9px;
+  width: 36px;
+  height: 36px;
+  overflow: visible;
+}
+
+.about-paper-block .tick path {
+  fill: none;
+  stroke: #5B4BFF;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  transition: stroke-dashoffset 0.5s ease 0.25s;
+}
+
+.about-paper-block .in .tick path,
+.about-paper-block.in .tick path {
+  stroke-dashoffset: 0;
+}
+
+.about-paper-block .clause h4 {
+  font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
+  font-weight: 800;
+  font-size: 1.45rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  color: #14183A;
+}
+
+.about-paper-block .clause p {
+  margin: 0;
+  color: #4A5070;
+  font-family: var(--font-sans, "DM Sans", system-ui, sans-serif);
+  line-height: 1.5;
+}
+
+.about-paper-block .sign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 14px;
+  padding-top: 26px;
+  border-top: 2px dashed rgba(20, 24, 58, 0.22);
+}
+
+.about-paper-block .sig {
+  height: 60px;
+  font-family: "Caveat", "Brush Script MT", cursive;
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1.3;
+  color: #1B2BD6;
+  white-space: nowrap;
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
+  clip-path: inset(-12px 100% -12px 0);
+  transition: clip-path 1.3s ease 0.3s;
+}
+
+.about-paper-block .sign > div:nth-child(2) .sig {
+  transition-delay: 1.2s;
+  transform: rotate(-1deg);
+}
+
+.about-paper-block .in .sig,
+.about-paper-block.in .sig {
+  clip-path: inset(-12px -12px -12px 0);
+}
+
+.about-paper-block .cap {
+  border-top: 2px solid #14183A;
+  padding-top: 6px;
+  font-size: 0.92rem;
+  color: #4A5070;
+  font-family: var(--font-sans, "DM Sans", system-ui, sans-serif);
+}
+
+.about-paper-block .cap b {
+  color: #14183A;
+}
+
+.about-paper-block .paper-area {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 2px dashed rgba(20, 24, 58, 0.22);
+  font-size: 0.95rem;
+  color: #4A5070;
+  font-family: var(--font-sans, "DM Sans", system-ui, sans-serif);
+  line-height: 1.5;
+}
+
+.about-paper-block .paper-area b {
+  color: #14183A;
+}
+
+@media (max-width: 900px) {
+  .about-paper-block .paper-wrap {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-paper-block .left {
+    position: static;
+  }
+  .about-paper-block .paper {
+    transform: rotate(0.5deg);
+  }
+  .about-paper-block .sign {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-paper-block .x {
+    transition: none !important;
+    background-size: 100% 0.13em !important;
+  }
+  .about-paper-block .tick path {
+    transition: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .about-paper-block .sig {
+    transition: none !important;
+    clip-path: none !important;
+  }
+}
+
 
 
 
