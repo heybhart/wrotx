@@ -4,7 +4,7 @@ import logoImg from '../assets/logo-sm.webp';
 import { SITE_CONFIG } from '../config/site';
 
 interface HeroProps {
-  onQuoteClick: () => void;
+  onQuoteClick?: () => void;
   onWorkClick: () => void;
 }
 
@@ -36,7 +36,7 @@ const HERO_SLABS: SlabItem[] = [
   },
 ];
 
-export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
+export const Hero: React.FC<HeroProps> = ({ onWorkClick }) => {
   const [positions, setPositions] = useState<number[]>([0, 1, 2]);
 
   const handleShuffle = () => {
@@ -63,23 +63,79 @@ export const Hero: React.FC<HeroProps> = ({ onQuoteClick, onWorkClick }) => {
               You talk directly to the engineers who build your website, custom software, or AI assistant. Pay in milestones by UPI or bank transfer, and own everything we deliver.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 sm:gap-4">
-              <button
-                type="button"
-                onClick={onQuoteClick}
-                className="hero-cta-btn"
-              >
-                Start a project
-              </button>
-
+            {/* CTA & Global Live Presence */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
               <button
                 type="button"
                 onClick={onWorkClick}
-                className="hero-ghost-btn"
+                className="hero-cta-btn shrink-0"
               >
                 See live demos
               </button>
+
+              {/* Worldwide Live Trust Badge */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center shrink-0 pl-1">
+                  {/* US */}
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white dark:border-[#0E1330] shadow-sm -ml-2 first:ml-0 shrink-0 overflow-hidden" viewBox="0 0 32 32" aria-label="United States">
+                    <rect width="32" height="32" fill="#B22234" />
+                    <path d="M0,4.5h32 M0,9.5h32 M0,14.5h32 M0,19.5h32 M0,24.5h32 M0,29.5h32" stroke="#FFFFFF" strokeWidth="2.4" />
+                    <rect width="14" height="16" fill="#3C3B6E" />
+                    <circle cx="4" cy="4" r="0.9" fill="#FFF" />
+                    <circle cx="10" cy="4" r="0.9" fill="#FFF" />
+                    <circle cx="7" cy="8" r="0.9" fill="#FFF" />
+                    <circle cx="4" cy="12" r="0.9" fill="#FFF" />
+                    <circle cx="10" cy="12" r="0.9" fill="#FFF" />
+                  </svg>
+
+                  {/* UK */}
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white dark:border-[#0E1330] shadow-sm -ml-2 shrink-0 overflow-hidden" viewBox="0 0 32 32" aria-label="United Kingdom">
+                    <rect width="32" height="32" fill="#012169" />
+                    <path d="M0,0 L32,32 M32,0 L0,32" stroke="#FFFFFF" strokeWidth="5.5" />
+                    <path d="M0,0 L32,32 M32,0 L0,32" stroke="#C8102E" strokeWidth="2.8" />
+                    <path d="M16,0 V32 M0,16 H32" stroke="#FFFFFF" strokeWidth="8" />
+                    <path d="M16,0 V32 M0,16 H32" stroke="#C8102E" strokeWidth="4.8" />
+                  </svg>
+
+                  {/* UAE */}
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white dark:border-[#0E1330] shadow-sm -ml-2 shrink-0 overflow-hidden" viewBox="0 0 32 32" aria-label="United Arab Emirates">
+                    <rect width="32" height="10.67" fill="#00732F" />
+                    <rect y="10.67" width="32" height="10.67" fill="#FFFFFF" />
+                    <rect y="21.33" width="32" height="10.67" fill="#000000" />
+                    <rect width="9.6" height="32" fill="#FF0000" />
+                  </svg>
+
+                  {/* India */}
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white dark:border-[#0E1330] shadow-sm -ml-2 shrink-0 overflow-hidden" viewBox="0 0 32 32" aria-label="India">
+                    <rect width="32" height="10.67" fill="#FF9933" />
+                    <rect y="10.67" width="32" height="10.67" fill="#FFFFFF" />
+                    <rect y="21.33" width="32" height="10.67" fill="#138808" />
+                    <circle cx="16" cy="16" r="3.4" fill="none" stroke="#000080" strokeWidth="1" />
+                    <circle cx="16" cy="16" r="0.8" fill="#000080" />
+                  </svg>
+
+                  {/* Singapore */}
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white dark:border-[#0E1330] shadow-sm -ml-2 shrink-0 overflow-hidden" viewBox="0 0 32 32" aria-label="Singapore">
+                    <rect width="32" height="16" fill="#EF3340" />
+                    <rect y="16" width="32" height="16" fill="#FFFFFF" />
+                    <path d="M7.5,4.5 a4.5,4.5 0 1,0 0,7 a3.6,3.6 0 1,1 0,-7" fill="#FFFFFF" />
+                    <circle cx="10" cy="5.5" r="0.6" fill="#FFF" />
+                    <circle cx="11.5" cy="7" r="0.6" fill="#FFF" />
+                    <circle cx="11.5" cy="9" r="0.6" fill="#FFF" />
+                    <circle cx="10" cy="10.5" r="0.6" fill="#FFF" />
+                    <circle cx="8.5" cy="8" r="0.6" fill="#FFF" />
+                  </svg>
+                </div>
+
+                <div className="flex flex-col text-left">
+                  <span className="font-display font-bold text-xs sm:text-[13px] text-slate-900 dark:text-white leading-tight">
+                    Built in Mumbai, live worldwide
+                  </span>
+                  <span className="font-sans text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-tight">
+                    Serving clients across India, UAE, US, UK & Singapore
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 

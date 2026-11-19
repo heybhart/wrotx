@@ -16,7 +16,7 @@ interface ProblemItem {
 const PROBLEMS_DATA: ProblemItem[] = [
   {
     key: 'slow-site',
-    color: '#FFE500',
+    color: '#CDFD2F',
     pain: '“Customers leave because your website is slow.”',
     fixDesc: 'We build your site to load in one second on mobile phones.',
     fixTag: 'Fast website',
@@ -24,7 +24,7 @@ const PROBLEMS_DATA: ProblemItem[] = [
   },
   {
     key: 'monthly-software',
-    color: '#2EC4F1',
+    color: '#7FB8E8',
     pain: '“You pay monthly for software you barely use.”',
     fixDesc: 'We build custom software for your exact team with no monthly fees.',
     fixTag: 'Custom software',
@@ -32,7 +32,7 @@ const PROBLEMS_DATA: ProblemItem[] = [
   },
   {
     key: 'unanswered-enquiries',
-    color: '#FF8A2B',
+    color: '#9B87FF',
     pain: '“Enquiries go unanswered after 7 PM.”',
     fixDesc: 'Our AI agent answers WhatsApp and calls while you sleep.',
     fixTag: 'AI assistant',
@@ -40,7 +40,7 @@ const PROBLEMS_DATA: ProblemItem[] = [
   },
   {
     key: 'disappeared-dev',
-    color: '#14C38E',
+    color: '#FFA878',
     pain: '“Your last developer disappeared.”',
     fixDesc: `You get full code, staff training and ${SITE_CONFIG.support.days} days free support.`,
     fixTag: 'Free support and full ownership',

@@ -1765,10 +1765,11 @@ a, button {
   align-items: center;
 }
 
-.wx-links a {
+.wx-links a,
+.wx-links button {
   position: relative;
   z-index: 1;
-  padding: 9px 16px;
+  padding: 9px 15px;
   border-radius: 12px;
   color: var(--wx-mut);
   text-decoration: none;
@@ -1776,9 +1777,17 @@ a, button {
   font-weight: 500;
   transition: color 0.2s;
   white-space: nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
 }
 
 .wx-links a:hover,
+.wx-links button:hover,
 .wx-links a[aria-current="page"] {
   color: var(--wx-ink);
 }
@@ -1926,6 +1935,66 @@ a, button {
   justify-content: center;
   margin-top: 10px;
   color: #0E1330;
+}
+
+/* WrotX Services Mega-Menu Dropdown */
+.wx-mega {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1220px;
+  max-width: calc(100vw - 32px);
+  background: #ffffff;
+  border-radius: 28px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 30px 70px -15px rgba(15, 23, 42, 0.16), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+  padding: 32px 36px 24px;
+  z-index: 100;
+  pointer-events: auto;
+  animation: wx-mega-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Invisible hover bridge to eliminate gap between navbar and mega menu */
+.wx-mega::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  pointer-events: auto;
+  background: transparent;
+}
+
+@keyframes wx-mega-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.dark .wx-mega {
+  background: #0C101D;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.wx-services-pill {
+  border: 1.5px solid #0F172A;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.08);
+}
+
+.dark .wx-services-pill {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.4);
 }
 
 .wx-mp.wx-open {
