@@ -147,15 +147,29 @@ export const Header: React.FC = () => {
     '/banking-fintech-solutions',
   ].includes(pathname);
 
+  const getActiveNavElement = () => {
+    const NAVBAR_ROUTES = ['/', '/work', '/pricing', '/about', '/contact'];
+    if (NAVBAR_ROUTES.includes(pathname)) {
+      return linksRef.current.get(pathname);
+    }
+    return null;
+  };
+
   const moveToLink = (el: HTMLElement | null | undefined) => {
-    if (!el) {
-      setHighlightStyle((prev) => ({ ...prev, opacity: 0 }));
+    if (!el || !navRef.current) {
+      setHighlightStyle({
+        opacity: 0,
+        width: 0,
+        transform: 'translateX(0px)',
+      });
       return;
     }
+    const navRect = navRef.current.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
     setHighlightStyle({
       opacity: 1,
-      width: el.offsetWidth,
-      transform: `translateX(${el.offsetLeft}px)`,
+      width: elRect.width,
+      transform: `translateX(${elRect.left - navRect.left}px)`,
     });
   };
 
@@ -223,24 +237,20 @@ export const Header: React.FC = () => {
   useEffect(() => {
     closeServices();
     setIsMobileMenuOpen(false);
-    const activeKey = isServicePage ? 'services' : pathname;
-    const activeEl = linksRef.current.get(activeKey);
-    moveToLink(activeEl);
-  }, [pathname, isServicePage]);
+    moveToLink(getActiveNavElement());
+  }, [pathname]);
 
   // Window resize highlight adjustment
   useEffect(() => {
     const handleResize = () => {
-      const activeKey = isServicePage ? 'services' : pathname;
-      const activeEl = linksRef.current.get(activeKey);
-      moveToLink(activeEl);
+      moveToLink(getActiveNavElement());
     };
     window.addEventListener('resize', handleResize);
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(handleResize);
     }
     return () => window.removeEventListener('resize', handleResize);
-  }, [pathname, isServicePage]);
+  }, [pathname]);
 
   // Click outside to close menus
   useEffect(() => {
@@ -294,8 +304,7 @@ export const Header: React.FC = () => {
           className="wx-links"
           aria-label="Main"
           onMouseLeave={() => {
-            const activeKey = isServicePage ? 'services' : pathname;
-            moveToLink(linksRef.current.get(activeKey));
+            moveToLink(getActiveNavElement());
           }}
         >
           <span className="wx-hl" style={highlightStyle} aria-hidden="true" />
@@ -340,13 +349,12 @@ export const Header: React.FC = () => {
                 if (el) linksRef.current.set('services', el);
                 else linksRef.current.delete('services');
               }}
-              className={`wx-services-btn relative z-[2] px-3.5 py-2 text-sm font-medium transition-all flex items-center gap-1 cursor-pointer ${
-                isServicesOpen || isServicesPinned
-                  ? 'wx-services-pill text-slate-900 dark:text-white'
-                  : isServicePage
+              className={`wx-services-btn relative z-[2] px-3.5 py-2 text-sm font-medium transition-all flex items-center gap-1 cursor-pointer ${isServicesOpen || isServicesPinned
+                ? 'wx-services-pill text-slate-900 dark:text-white'
+                : isServicePage
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-              }`}
+                }`}
               onClick={handleServicesToggleClick}
               onMouseEnter={(e) => moveToLink(e.currentTarget)}
               onFocus={(e) => moveToLink(e.currentTarget)}
@@ -356,9 +364,8 @@ export const Header: React.FC = () => {
               <span>Services</span>
               <ChevronDown
                 size={14}
-                className={`transition-transform duration-200 ${
-                  isServicesOpen || isServicesPinned ? 'rotate-180' : ''
-                }`}
+                className={`transition-transform duration-200 ${isServicesOpen || isServicesPinned ? 'rotate-180' : ''
+                  }`}
               />
             </button>
           </div>
@@ -498,11 +505,11 @@ export const Header: React.FC = () => {
             onMouseEnter={handleServicesEnter}
             onMouseLeave={handleServicesLeave}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 text-left relative z-10">
               {/* Column 1: Websites & e-commerce */}
-              <div className="lg:pr-8 lg:border-r lg:border-slate-100 dark:lg:border-white/10 space-y-5">
+              <div className="lg:pr-8 lg:border-r lg:border-slate-900/10 dark:lg:border-white/10 space-y-5">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#FFF0E6] dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF0E6]/90 dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] backdrop-blur-sm border border-[#D9480F]/15 flex items-center justify-center shrink-0 shadow-sm">
                     <Monitor size={20} strokeWidth={2.2} />
                   </div>
                   <div>
@@ -521,7 +528,7 @@ export const Header: React.FC = () => {
                       key={link.label}
                       to={link.href}
                       onClick={closeServices}
-                      className="group block p-2 -mx-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors"
+                      className="group block p-2.5 -mx-2.5 rounded-2xl hover:bg-white/70 dark:hover:bg-white/[0.08] hover:backdrop-blur-md hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.85)] dark:hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-150"
                     >
                       <div className="font-sans text-[13.5px] sm:text-[14px] font-semibold text-slate-900 dark:text-white group-hover:text-[#D9480F] transition-colors">
                         {link.label}
@@ -537,9 +544,9 @@ export const Header: React.FC = () => {
               </div>
 
               {/* Column 2: Web apps & AI */}
-              <div className="lg:px-8 lg:border-r lg:border-slate-100 dark:lg:border-white/10 space-y-5">
+              <div className="lg:px-8 lg:border-r lg:border-slate-900/10 dark:lg:border-white/10 space-y-5">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#FFF0E6] dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF0E6]/90 dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] backdrop-blur-sm border border-[#D9480F]/15 flex items-center justify-center shrink-0 shadow-sm">
                     <Cpu size={20} strokeWidth={2.2} />
                   </div>
                   <div>
@@ -558,7 +565,7 @@ export const Header: React.FC = () => {
                       key={link.label}
                       to={link.href}
                       onClick={closeServices}
-                      className="group block p-2 -mx-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors"
+                      className="group block p-2.5 -mx-2.5 rounded-2xl hover:bg-white/70 dark:hover:bg-white/[0.08] hover:backdrop-blur-md hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.85)] dark:hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-150"
                     >
                       <div className="font-sans text-[13.5px] sm:text-[14px] font-semibold text-slate-900 dark:text-white group-hover:text-[#D9480F] transition-colors">
                         {link.label}
@@ -574,9 +581,9 @@ export const Header: React.FC = () => {
               </div>
 
               {/* Column 3: AI Agents & WhatsApp */}
-              <div className="lg:px-8 lg:border-r lg:border-slate-100 dark:lg:border-white/10 space-y-5">
+              <div className="lg:px-8 lg:border-r lg:border-slate-900/10 dark:lg:border-white/10 space-y-5">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#FFF0E6] dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF0E6]/90 dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] backdrop-blur-sm border border-[#D9480F]/15 flex items-center justify-center shrink-0 shadow-sm">
                     <Bot size={20} strokeWidth={2.2} />
                   </div>
                   <div>
@@ -595,7 +602,7 @@ export const Header: React.FC = () => {
                       key={link.label}
                       to={link.href}
                       onClick={closeServices}
-                      className="group block p-2 -mx-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors"
+                      className="group block p-2.5 -mx-2.5 rounded-2xl hover:bg-white/70 dark:hover:bg-white/[0.08] hover:backdrop-blur-md hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.85)] dark:hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-150"
                     >
                       <div className="font-sans text-[13.5px] sm:text-[14px] font-semibold text-slate-900 dark:text-white group-hover:text-[#D9480F] transition-colors">
                         {link.label}
@@ -614,7 +621,7 @@ export const Header: React.FC = () => {
               <div className="lg:pl-8 space-y-5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-start gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-[#FFF0E6] dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-[#FFF0E6]/90 dark:bg-[#D9480F]/20 text-[#D9480F] dark:text-[#F97316] backdrop-blur-sm border border-[#D9480F]/15 flex items-center justify-center shrink-0 shadow-sm">
                       <ShieldCheck size={20} strokeWidth={2.2} />
                     </div>
                     <div>
@@ -633,7 +640,7 @@ export const Header: React.FC = () => {
                         key={link.label}
                         to={link.href}
                         onClick={closeServices}
-                        className="group block p-2 -mx-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors"
+                        className="group block p-2.5 -mx-2.5 rounded-2xl hover:bg-white/70 dark:hover:bg-white/[0.08] hover:backdrop-blur-md hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.85)] dark:hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-150"
                       >
                         <div className="font-sans text-[13.5px] sm:text-[14px] font-semibold text-slate-900 dark:text-white group-hover:text-[#D9480F] transition-colors">
                           {link.label}
@@ -649,7 +656,7 @@ export const Header: React.FC = () => {
                 </div>
 
                 {/* Featured Card from Reference Design */}
-                <div className="bg-[#0B0F19] dark:bg-black/80 text-white p-5 rounded-2xl border border-white/10 space-y-2 shadow-md">
+                <div className="bg-[#0B0F19]/90 dark:bg-black/75 backdrop-blur-xl text-white p-5 rounded-2xl border border-white/15 space-y-2 shadow-xl shadow-black/20 ring-1 ring-white/10">
                   <div className="font-display font-bold text-sm text-white">
                     Not sure what you need?
                   </div>
@@ -672,7 +679,7 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Mega Menu Footer Strip */}
-            <div className="border-t border-slate-100 dark:border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-bold font-mono tracking-wider">
+            <div className="border-t border-slate-900/10 dark:border-white/10 pt-4 mt-6 flex items-center justify-between text-xs font-bold font-mono tracking-wider relative z-10">
               <div className="flex items-center gap-8">
                 <Link
                   to="/work"
@@ -714,9 +721,8 @@ export const Header: React.FC = () => {
               <span>Services</span>
               <ChevronDown
                 size={16}
-                className={`transition-transform duration-200 ${
-                  isMobileServicesOpen ? 'rotate-180' : ''
-                }`}
+                className={`transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''
+                  }`}
               />
             </button>
 

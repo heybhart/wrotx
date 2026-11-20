@@ -111,6 +111,9 @@ export const Problems: React.FC = () => {
                     <small>Hover or tap for the fix</small>
                   </span>
                   <span className="fix">
+                    <div className="fix-badge-wrap">
+                      <span className="fix-badge">The Fix</span>
+                    </div>
                     <p>{item.fixDesc}</p>
                     <Link
                       to={item.slug}
