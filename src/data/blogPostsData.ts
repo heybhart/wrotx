@@ -56,7 +56,7 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
       {
-        heading: `Tier 3: Adding 24/7 WhatsApp & AI calling automation (${prices.aiAssistants.fromLabel} – ${prices.aiCalling.fromLabel})`,
+        heading: `Tier 3: Adding 24/7 WhatsApp & AI calling automation (${prices.aiAssistants.fromLabel})`,
         paragraphs: [
           `Real estate enquiries peak late in the evening and on Sundays when families discuss home purchases together. A website alone captures the enquiry, but response speed decides who books the site visit. Adding WhatsApp automation starting from ${prices.aiAssistants.formatted} lets your site respond immediately with floor plans, price sheets, and slot options in ${prices.aiAssistants.timeline}.`,
           `For teams running heavy weekend Meta or Google campaigns, AI calling agents starting from ${prices.aiCalling.formatted} can qualify inbound or form leads in Hindi, Hinglish, and English within seconds and push a clean summary straight to the assigned sales manager.`,
