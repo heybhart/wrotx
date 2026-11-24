@@ -46,7 +46,6 @@ export const HomePage: React.FC = () => {
 
         <Hero
           onQuoteClick={() => scrollToElement('contact')}
-          onWorkClick={() => scrollToElement('work')}
         />
         <Problems />
         <OurWork />

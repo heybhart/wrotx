@@ -1,72 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SITE_CONFIG } from '../config/site';
 
-interface Review {
-  n: string;
-  r: string;
-  t: string;
-  k: string;
-  c: string;
-  i: string;
-  p?: string;
-}
-
-const REVIEWS: Review[] = [
-  { n: 'Rahul Mehta', r: 'Real estate broker, Vasai', t: 'Website ek hafte mein ready ho gayi. Ab har enquiry seedha WhatsApp par aati hai.', k: 'Website', c: '#6366f1', i: 'RM' },
-  { n: 'Priya Nair', r: 'CA firm, Andheri', t: 'Pehle sab Excel mein likhte the. Ab GST invoice ek click mein ban jaata hai.', k: 'Software', c: '#0d9488', i: 'PN' },
-  { n: 'Amit Shah', r: 'Distributor, Bhiwandi', t: 'Har Friday demo dikhaya, toh koi surprise nahi mila. Price bhi wahi raha jo bola tha.', k: 'Software', c: '#d97706', i: 'AS' },
-  { n: 'Sneha Kulkarni', r: 'Property advisor, Pune', t: 'AI assistant raat ko bhi customers ko reply kar deta hai. Site visit booking aasaan ho gayi.', k: 'AI agent', c: '#16a34a', i: 'SK' },
-  { n: 'Vikram Singh', r: 'Manufacturer, Navi Mumbai', t: 'Dealers ab portal par order daalte hain. Phone calls kaafi kam ho gaye.', k: 'Software', c: '#ea580c', i: 'VS' },
-  { n: 'Farah Khan', r: 'Boutique owner, Bandra', t: 'Simple language mein samjhaya, no jargon. Launch ke baad support bhi free mila.', k: 'Website', c: '#db2777', i: 'FK' },
-  { n: 'Karan Patel', r: 'Clinic owner, Thane', t: 'Mobile par site bahut fast khulti hai. Ab patients seedha WhatsApp par appointment lete hain.', k: 'Website', c: '#2563eb', i: 'KP' },
-  { n: 'Meera Iyer', r: 'Travel agency, Mumbai', t: 'Code aur logins sab hamare paas hain. Yeh baat sabse zyada pasand aayi.', k: 'Website', c: '#7c3aed', i: 'MI' },
-  { n: 'Sandeep Joshi', r: 'Wholesaler, Vashi', t: 'Tally export seedha ho jaata hai. Accountant bhi khush hai.', k: 'Automation', c: '#0891b2', i: 'SJ' },
-  { n: 'Neha Verma', r: 'Salon owner, Andheri', t: 'Quote se pehle poori baat clear ki. Engineers se seedha baat hui, koi middleman nahi.', k: 'AI agent', c: '#c026d3', i: 'NV' }
+const WAVEFORM_HEIGHTS = [
+  30, 55, 40, 75, 50, 90, 60, 35, 80, 45, 70, 95, 55, 40, 85, 60, 30, 65,
+  90, 50, 35, 75, 55, 45, 80, 60, 40, 70, 30, 55, 85, 45, 65, 35, 50, 25,
 ];
 
-const ReviewCard: React.FC<{ item: Review }> = ({ item }) => (
-  <article
-    className="wt-card"
-    style={{ ['--c' as string]: item.c }}
-  >
-    <div className="wt-who">
-      {item.p ? (
-        <img
-          src={item.p}
-          alt={item.n}
-          width={42}
-          height={42}
-          loading="lazy"
-          className="wt-av"
-        />
-      ) : (
-        <span className="wt-av" aria-hidden="true">
-          {item.i}
-        </span>
-      )}
-      <div>
-        <span className="wt-n">{item.n}</span>
-        <span className="wt-r">{item.r}</span>
-      </div>
-    </div>
-    <p className="wt-t">{item.t}</p>
-    <span className="wt-k">{item.k}</span>
-  </article>
-);
-
 export const Testimonials: React.FC = () => {
-  const [isPaused, setIsPaused] = useState(false);
+  const [isPlayingVoice, setIsPlayingVoice] = useState(false);
+  const [voiceProgress, setVoiceProgress] = useState(0);
+  const voiceTimerRef = useRef<number | null>(null);
 
-  const colA = REVIEWS.slice(0, 5);
-  const colB = REVIEWS.slice(5);
+  const toggleVoiceNote = () => {
+    setIsPlayingVoice((prev) => {
+      const next = !prev;
+      if (next && voiceProgress >= 1) {
+        setVoiceProgress(0);
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (isPlayingVoice) {
+      const durationMs = 27000;
+      const stepMs = 120;
+      const stepRatio = stepMs / durationMs;
+
+      voiceTimerRef.current = window.setInterval(() => {
+        setVoiceProgress((prev) => {
+          const next = prev + stepRatio;
+          if (next >= 1) {
+            setIsPlayingVoice(false);
+            return 1;
+          }
+          return next;
+        });
+      }, stepMs);
+    } else {
+      if (voiceTimerRef.current) {
+        clearInterval(voiceTimerRef.current);
+        voiceTimerRef.current = null;
+      }
+    }
+
+    return () => {
+      if (voiceTimerRef.current) {
+        clearInterval(voiceTimerRef.current);
+      }
+    };
+  }, [isPlayingVoice]);
+
+  const activeBarIndex = Math.floor(voiceProgress * WAVEFORM_HEIGHTS.length);
+  const currentSeconds = Math.floor(voiceProgress * 27);
+  const formattedTime =
+    isPlayingVoice || voiceProgress > 0
+      ? `0:${String(currentSeconds).padStart(2, '0')}`
+      : '0:27';
 
   return (
-    <section className={`wt hairline-b ${isPaused ? 'wt-paused' : ''}`} id="reviews" aria-labelledby="wt-h">
+    <section className="wt hairline-b" id="reviews" aria-labelledby="wt-h">
       <div className="wt-in">
+        {/* Left Column: Heading, Subtitle & Stats (Preserved unchanged) */}
         <div>
           <span className="wt-lab">Client reviews</span>
           <h2 id="wt-h">What our clients say</h2>
-          <p className="wt-p">Straight talk from business owners we have built for. No jargon and no surprises.</p>
+          <p className="wt-p">
+            Straight talk from business owners we have built for. No jargon and no surprises.
+          </p>
           <div className="wt-stats">
             <div>
               <b>{SITE_CONFIG.support.days} days</b>
@@ -77,47 +78,140 @@ export const Testimonials: React.FC = () => {
               <span>Code and data are yours</span>
             </div>
           </div>
-          <button
-            className="wt-pause"
-            type="button"
-            aria-pressed={isPaused}
-            onClick={() => setIsPaused(!isPaused)}
-          >
-            {isPaused ? 'Resume scrolling' : 'Pause scrolling'}
-          </button>
         </div>
 
-        <div className="wt-cols" role="region" aria-label="Client reviews">
-          {/* Column A: Scrolls downward */}
-          <div className="wt-col d">
-            <div className="wt-run">
-              <div className="wt-set">
-                {colA.map((rev) => (
-                  <ReviewCard key={rev.n} item={rev} />
-                ))}
+        {/* Right Column: Redesigned 2-Column Cards Grid */}
+        <div className="rc-col2" role="region" aria-label="Client review highlights">
+          {/* Column 1 */}
+          <div className="rc-col">
+            {/* WhatsApp Chat Card */}
+            <article className="rc-card">
+              <div className="rc-who">
+                <div
+                  className="rc-av"
+                  style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+                  aria-hidden="true"
+                >
+                  RM
+                </div>
+                <div>
+                  <b>Rahul Mehta</b>
+                  <small>Real estate broker, Vasai</small>
+                </div>
               </div>
-              <div className="wt-set" aria-hidden="true">
-                {colA.map((rev) => (
-                  <ReviewCard key={`dup-${rev.n}`} item={rev} />
-                ))}
+
+              <div className="rc-chat">
+                <span className="rc-dt">Thu, 20 Nov</span>
+                <div className="rc-b rc-in">
+                  Bhai site mast bani hai 👌 phone pe bhi ekdum smooth
+                  <time>9:12 pm</time>
+                </div>
+                <div className="rc-b rc-in">
+                  Kal hi 2 enquiry aayi WhatsApp pe, ek ne to visit bhi fix kar li
+                  <time>9:13 pm</time>
+                </div>
+                <div className="rc-b rc-out">
+                  Great sir! Listing photos bhej do toh aur add kar dete hain
+                  <time>
+                    9:20 pm <i aria-hidden="true">✓✓</i>
+                  </time>
+                </div>
               </div>
-            </div>
+
+              <div className="rc-pj">Real estate website · live in 6 days</div>
+            </article>
+
+            {/* Voice Note Card */}
+            <article className="rc-card">
+              <div className="rc-who">
+                <div
+                  className="rc-av"
+                  style={{ background: 'linear-gradient(135deg, #0ea5a4, #34d399)' }}
+                  aria-hidden="true"
+                >
+                  KR
+                </div>
+                <div>
+                  <b>Dr. Kavita Rao</b>
+                  <small>Dental clinic, Thane</small>
+                </div>
+              </div>
+
+              <div className={`rc-vn ${isPlayingVoice ? 'on' : ''}`}>
+                <div className="rc-pl">
+                  <button
+                    type="button"
+                    className="rc-play"
+                    onClick={toggleVoiceNote}
+                    aria-label={isPlayingVoice ? 'Pause voice note' : 'Play voice note'}
+                  />
+                  <div className="rc-wv" aria-hidden="true">
+                    {WAVEFORM_HEIGHTS.map((h, i) => (
+                      <i
+                        key={i}
+                        style={{ height: `${h}%` }}
+                        className={
+                          i <= activeBarIndex && (isPlayingVoice || voiceProgress > 0)
+                            ? 'p'
+                            : ''
+                        }
+                      />
+                    ))}
+                  </div>
+                  <span className="font-mono text-xs text-slate-500 dark:text-slate-400 select-none">
+                    {formattedTime}
+                  </span>
+                </div>
+
+                <p className="rc-tr">
+                  "Pehle receptionist din bhar phone uthati thi, ab appointment seedha calendar mein aa jaata hai. Ek-do baar agent ne naam galat bola, woh bas theek kar do."
+                </p>
+              </div>
+
+              <div className="rc-pj">AI calling agent · voice note</div>
+            </article>
           </div>
 
-          {/* Column B: Scrolls upward */}
-          <div className="wt-col">
-            <div className="wt-run">
-              <div className="wt-set">
-                {colB.map((rev) => (
-                  <ReviewCard key={rev.n} item={rev} />
-                ))}
-              </div>
-              <div className="wt-set" aria-hidden="true">
-                {colB.map((rev) => (
-                  <ReviewCard key={`dup-${rev.n}`} item={rev} />
-                ))}
-              </div>
+          {/* Column 2 */}
+          <div className="rc-col">
+            {/* Plain Quote */}
+            <div className="rc-q">
+              <p>
+                "Pehle sab Excel mein likhte the. Ab <mark>GST invoice ek click mein</mark> ban jaata hai."
+              </p>
+              <small>
+                <b className="font-semibold text-slate-900 dark:text-slate-100">Priya Nair</b> · CA firm, Andheri
+              </small>
+              <small className="text-slate-500 dark:text-slate-400 mt-0.5">GST billing portal</small>
             </div>
+
+            {/* Google Style Review */}
+            <article className="rc-card">
+              <div className="rc-who">
+                <div
+                  className="rc-av"
+                  style={{ background: 'linear-gradient(135deg, #f97316, #fb7185)' }}
+                  aria-hidden="true"
+                >
+                  SM
+                </div>
+                <div>
+                  <b>Sneha M.</b>
+                  <small>3 weeks ago</small>
+                </div>
+              </div>
+
+              <div className="rc-gr">
+                <div className="rc-stars" aria-label="5 out of 5 stars">
+                  ★★★★★
+                </div>
+                <p>
+                  Price and timeline were told upfront and they stuck to both. I saw the preview on my phone within 3 days. Only wish the logo options had come a bit earlier.
+                </p>
+              </div>
+
+              <div className="rc-pj">Travel agency website</div>
+            </article>
           </div>
         </div>
       </div>

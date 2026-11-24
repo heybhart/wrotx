@@ -4,6 +4,11 @@ import { PageHead } from '../components/PageHead';
 import { PORTFOLIO_META } from '../config/seo';
 import { usePreviewModal } from '../context/PreviewModalContext';
 
+import rec1 from '../assets/recording 1.aac';
+import rec2 from '../assets/Recording 2.aac';
+import rec3 from '../assets/recording 3.aac';
+import rec4 from '../assets/Recording 4.aac';
+
 interface TemplateItem {
   n: string;
   c: string;
@@ -92,6 +97,7 @@ interface CallSlip {
   s: string;
   d: string;
   n: string;
+  audio: string;
 }
 
 const CALL_SLIPS: Record<string, { label: string; data: CallSlip }> = {
@@ -99,44 +105,48 @@ const CALL_SLIPS: Record<string, { label: string; data: CallSlip }> = {
     label: 'Real estate',
     data: {
       t: 'Meta lead · Real estate',
-      a: '"Namaste Amit ji! Main WrotX real estate desk se bol rahi hoon. Kya aap iss weekend Saturday 4 baje sample flat visit karna chahenge?"',
-      l: '"Haan, Saturday 4 PM theek rahega. Parking included hai?"',
+      a: 'Namaste Amit ji! Main WrotX real estate desk se bol raha hoon. Would you like to visit the sample flat this Saturday at 4 PM?',
+      l: 'Yes, Saturday 4 PM works. Is parking included?',
       s: 'Booked',
       d: 'Sat, 4:00 PM · site visit',
       n: 'Calendar invite and WhatsApp recap sent',
+      audio: rec1,
     },
   },
   dc: {
     label: 'Dental clinic',
     data: {
       t: 'Web form · Dental clinic',
-      a: '"Namaste Priya ji! Aapne teeth whitening ke liye enquiry ki thi. Kya Thursday 11 baje clinic mein consultation rakh doon?"',
-      l: '"Haan, 11 baje theek hai. Fees kitni hogi?"',
+      a: 'Good afternoon Priya, aapne teeth whitening ke liye enquiry ki thi. Kya Thursday 11 baje clinic mein consultation rakh doon?',
+      l: 'Haan, 11 baje theek hai. Fees kitni hogi?',
       s: 'Booked',
       d: 'Thu, 11:00 AM · consultation',
       n: 'Reminder and clinic location sent on WhatsApp',
+      audio: rec2,
     },
   },
   tr: {
     label: 'Travel agency',
     data: {
       t: 'Inbound call · Travel agency',
-      a: '"Hello Rahul ji! You asked about a Goa trip for four people. Shall I send two package options on WhatsApp right now?"',
-      l: '"Yes please. Our budget is around ₹60,000."',
+      a: 'Hello Rahul, you asked about a Goa trip for four people. Shall I send two package options on WhatsApp right now?',
+      l: 'Yes please. Our budget is around ₹60,000.',
       s: 'Qualified',
       d: '₹60,000 budget · 4 travellers',
       n: 'Two packages sent, lead assigned to an agent',
+      audio: rec3,
     },
   },
   ed: {
     label: 'Coaching institute',
     data: {
       t: 'Admission form · Coaching institute',
-      a: '"Namaste Neha ji! Aapne Class 10 coaching ke liye form bhara tha. Kya kal shaam 5 baje free demo class mein aana chahengi?"',
-      l: '"Haan, kal 5 baje theek rahega."',
+      a: 'Hi, welcome to WrotX Institute. Are you looking for the right classes to help you excel in your studies? I am here to help you with courses, batches, fees, and demo class bookings.',
+      l: 'Yes, please share Class 10 batch timings and demo booking.',
       s: 'Booked',
       d: 'Tomorrow, 5:00 PM · demo class',
       n: 'Batch details sent on WhatsApp',
+      audio: rec4,
     },
   },
 };
@@ -443,14 +453,59 @@ export const PortfolioPage: React.FC = () => {
   const [openLedgerIndex, setOpenLedgerIndex] = useState<number | null>(0);
   const [activeAppIndex, setActiveAppIndex] = useState<number>(0);
 
+  // Audio state
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [audioProgress, setAudioProgress] = useState<number>(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState<number>(-1);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const shelfRef = useRef<HTMLDivElement>(null);
   const trkRef = useRef<HTMLDivElement>(null);
   const isAppScrollingRef = useRef<boolean>(false);
 
+  const activeSlip = CALL_SLIPS[activeCallKey]?.data || CALL_SLIPS.re.data;
+  const words = activeSlip.a.split(' ');
+
   const handleLangChange = (key: string) => {
     if (key === activeCallKey) return;
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setAudioProgress(0);
+    setCurrentWordIndex(-1);
+
     setActiveCallKey(key);
     setIsPrinting(true);
+  };
+
+  const togglePlayPause = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleAudioTimeUpdate = () => {
+    if (!audioRef.current) return;
+    const dur = audioRef.current.duration || 1;
+    const cur = audioRef.current.currentTime;
+    const p = Math.min(1, Math.max(0, cur / dur));
+    setAudioProgress(p);
+
+    const total = words.length;
+    const wIdx = Math.min(total - 1, Math.floor(p * total));
+    setCurrentWordIndex(wIdx);
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+    setAudioProgress(1);
+    setCurrentWordIndex(words.length);
   };
 
   useEffect(() => {
@@ -490,8 +545,6 @@ export const PortfolioPage: React.FC = () => {
     }
   };
 
-  const activeSlip = CALL_SLIPS[activeCallKey]?.data || CALL_SLIPS.re.data;
-
   // Handle escape key to close modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -504,13 +557,24 @@ export const PortfolioPage: React.FC = () => {
   }, [selectedTemplate]);
 
   return (
-    <div className="pf-page pt-28 sm:pt-32">
+    <div className="pf-page pt-20 sm:pt-24">
       <PageHead meta={PORTFOLIO_META} />
+
+      {/* Hidden audio element for synchronized playback */}
+      <audio
+        ref={audioRef}
+        src={activeSlip.audio}
+        onTimeUpdate={handleAudioTimeUpdate}
+        onEnded={handleAudioEnded}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        preload="metadata"
+      />
 
       {/* Hero Section */}
       <header className="pf-hero">
         <div className="pf-wrap">
-          <div className="mb-4">
+          <div className="mb-2.5">
             <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'Portfolio' }]} />
           </div>
           <span className="pf-live pf-mono">Live in production</span>
@@ -564,16 +628,64 @@ export const PortfolioPage: React.FC = () => {
             </div>
 
             <div className="pf-slipw">
-              <div className={`pf-slip ${isPrinting ? 'print' : ''}`} aria-live="polite">
-                <div className="pf-top pf-mono">
+              <div
+                className={`pf-slip pf-slip-clickable ${isPrinting ? 'print' : ''}`}
+                aria-live="polite"
+                onClick={togglePlayPause}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    togglePlayPause();
+                  }
+                }}
+                aria-label={`${isPlaying ? 'Pause' : 'Play'} sample call recording`}
+              >
+                <div className="pf-top pf-mono flex items-center justify-between">
                   <span>Sample call · {activeSlip.t}</span>
-                  <span>0:42</span>
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[#f0480f] select-none">
+                    {isPlaying ? (
+                      <>
+                        <span className="w-2 h-2 rounded-full bg-[#f0480f] animate-ping" />
+                        <span>Pause</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-[#f0480f]">▶</span>
+                        <span>Click to play</span>
+                      </>
+                    )}
+                  </div>
                 </div>
-                <p className="pf-ag">
+
+                {/* Audio Progress Bar */}
+                <div className="w-full bg-slate-100 dark:bg-slate-200 h-1 rounded-full overflow-hidden mt-3 mb-1">
+                  <div
+                    className="bg-[#f0480f] h-full transition-all duration-100"
+                    style={{ width: `${Math.round(audioProgress * 100)}%` }}
+                  />
+                </div>
+
+                <p className={`pf-ag pf-ag-sync ${isPlaying || audioProgress > 0 ? 'sync-active' : ''}`}>
                   <small className="pf-mono">AI agent</small>
-                  {activeSlip.a}
+                  "{words.map((word, wIdx) => {
+                    let cls = '';
+                    if (isPlaying || audioProgress > 0) {
+                      if (wIdx < currentWordIndex || audioProgress >= 1) {
+                        cls = 'on';
+                      } else if (wIdx === currentWordIndex) {
+                        cls = 'cur';
+                      }
+                    }
+                    return (
+                      <span key={wIdx} className={cls}>
+                        {word}{' '}
+                      </span>
+                    );
+                  })}"
                 </p>
-                <p className="pf-ld">{activeSlip.l}</p>
+                <p className="pf-ld">"{activeSlip.l}"</p>
                 <div className="pf-end">
                   <span className="pf-stamp">{activeSlip.s}</span>
                   <span>

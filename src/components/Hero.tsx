@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 import logoImg from '../assets/logo-sm.webp';
 import { SITE_CONFIG } from '../config/site';
 
 interface HeroProps {
   onQuoteClick?: () => void;
-  onWorkClick: () => void;
+  onWorkClick?: () => void;
 }
 
 interface SlabItem {
@@ -65,13 +66,12 @@ export const Hero: React.FC<HeroProps> = ({ onWorkClick }) => {
 
             {/* CTA & Global Live Presence */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <button
-                type="button"
-                onClick={onWorkClick}
+              <Link
+                to="/portfolio"
                 className="hero-cta-btn shrink-0"
               >
                 See live demos
-              </button>
+              </Link>
 
               {/* Worldwide Live Trust Badge */}
               <div className="flex items-center gap-3">
