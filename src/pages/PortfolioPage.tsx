@@ -449,7 +449,6 @@ export const PortfolioPage: React.FC = () => {
   const { openPreviewModal } = usePreviewModal();
   const [activeCallKey, setActiveCallKey] = useState<string>('re');
   const [isPrinting, setIsPrinting] = useState<boolean>(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateItem | null>(null);
   const [openLedgerIndex, setOpenLedgerIndex] = useState<number | null>(0);
   const [activeAppIndex, setActiveAppIndex] = useState<number>(0);
 
@@ -545,16 +544,6 @@ export const PortfolioPage: React.FC = () => {
     }
   };
 
-  // Handle escape key to close modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && selectedTemplate) {
-        setSelectedTemplate(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedTemplate]);
 
   return (
     <div className="pf-page pt-20 sm:pt-24">
@@ -593,16 +582,54 @@ export const PortfolioPage: React.FC = () => {
       <section id="voice">
         <div className="pf-wrap pf-voice">
           <div>
-            <h2>Natural AI calling in Hindi, Indian English and Hinglish.</h2>
-            <p className="pf-mut" style={{ marginTop: '18px', maxWidth: '44ch' }}>
-              Our agents answer inbound enquiries and dial new web and Meta leads within seconds. They check inventory, confirm budgets and book visits straight into Google Calendar and your CRM.
+            <h2>AI calling in any language, in your own voice.</h2>
+            <p className="pf-mut" style={{ marginTop: '18px', maxWidth: '48ch' }}>
+              Our agents speak Hindi, Indian English, Hinglish and many more languages, switching to whichever one your caller uses. Give them your own voice or a brand voice, and they answer enquiries, call new Meta and web leads within seconds, and book visits straight into Google Calendar and your CRM.
             </p>
-            <div className="pf-facts">
-              <span><b>Under 650 ms</b> to reply</span>
-              <span>Stops when the caller cuts in</span>
-              <span>Books on Google Calendar or Cal.com</span>
-              <span>Recording and summary on WhatsApp</span>
+
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 mt-7 text-[21px] sm:text-[23px] font-semibold leading-tight">
+              <span className="text-[#f0480f]">नमस्ते</span>
+              <span className="text-slate-900 dark:text-white font-bold">Hello</span>
+              <span className="text-slate-600 dark:text-slate-400">નમસ્તે</span>
+              <span className="text-slate-600 dark:text-slate-400">வணக்கம்</span>
+              <span className="text-slate-600 dark:text-slate-400">नमस्कार</span>
+              <span className="text-slate-600 dark:text-slate-400">নমস্কার</span>
             </div>
+
+            <div className="border-t border-[#ebe5de] dark:border-white/10 my-6" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+              <div>
+                <h3 className="font-bold text-[17px] text-slate-900 dark:text-white mb-1">Any language</h3>
+                <p className="text-[14.5px] leading-relaxed text-slate-600 dark:text-slate-400">
+                  Hindi, English, Hinglish and many more. It follows the language your caller speaks.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-bold text-[17px] text-slate-900 dark:text-white mb-1">Your own voice</h3>
+                <p className="text-[14.5px] leading-relaxed text-slate-600 dark:text-slate-400">
+                  Customised with your voice or a brand voice, so callers hear you and not a robot.
+                </p>
+              </div>
+            </div>
+
+            <div className="border-t border-[#ebe5de] dark:border-white/10 my-6" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+              <div>
+                <h3 className="font-bold text-[17px] text-slate-900 dark:text-white mb-1">Replies in under 650 ms</h3>
+                <p className="text-[14.5px] leading-relaxed text-slate-600 dark:text-slate-400">
+                  Stops talking the moment the caller cuts in.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-bold text-[17px] text-slate-900 dark:text-white mb-1">Books and reports</h3>
+                <p className="text-[14.5px] leading-relaxed text-slate-600 dark:text-slate-400">
+                  Google Calendar or Cal.com booking, with recording and summary on WhatsApp.
+                </p>
+              </div>
+            </div>
+
             <button
               type="button"
               onClick={() => openPreviewModal('voice')}
@@ -731,17 +758,18 @@ export const PortfolioPage: React.FC = () => {
 
           <div className="pf-shelf" ref={shelfRef}>
             {TEMPLATES.map((t, idx) => (
-              <button
+              <a
                 key={idx}
-                type="button"
+                href={t.u}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="pf-it"
-                aria-label={`Preview ${t.n}`}
-                onClick={() => setSelectedTemplate(t)}
+                aria-label={`Open live demo of ${t.n}`}
               >
                 <RenderLaptop template={t} showHint />
                 <b>{t.n}</b>
                 <small>{t.c}</small>
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -936,41 +964,6 @@ export const PortfolioPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Modal Preview for Templates */}
-      {selectedTemplate && (
-        <div
-          className="pf-modal on"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${selectedTemplate.n} preview`}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setSelectedTemplate(null);
-            }
-          }}
-        >
-          <div className="pf-mi">
-            <RenderLaptop template={selectedTemplate} />
-            <h3>{selectedTemplate.n}</h3>
-            <p>{selectedTemplate.c}</p>
-            <a
-              className="pf-cta"
-              href={selectedTemplate.u}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open live demo
-            </a>
-            <button
-              type="button"
-              className="pf-cta pf-ghost"
-              onClick={() => setSelectedTemplate(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

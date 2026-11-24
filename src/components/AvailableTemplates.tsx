@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { ArrowUpRight } from 'lucide-react';
 
 export interface LaptopTemplateItem {
   name: string;
@@ -226,20 +224,20 @@ const LaptopScreenContent: React.FC<{
 
 const LaptopCard: React.FC<{
   template: LaptopTemplateItem;
-  onSelect: () => void;
-}> = ({ template, onSelect }) => {
+}> = ({ template }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <button
-      type="button"
-      onClick={onSelect}
+    <a
+      href={template.url}
+      target="_blank"
+      rel="noopener noreferrer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
-      className="lap-card group text-center"
-      aria-label={`Preview ${template.name}`}
+      className="lap-card group text-center block cursor-pointer"
+      aria-label={`Open live demo of ${template.name}`}
     >
       <div className="lap-glow" style={{ background: template.accent }} />
       <div className="lap-device">
@@ -257,27 +255,11 @@ const LaptopCard: React.FC<{
         <b>{template.name}</b>
         <small>{template.category}</small>
       </div>
-    </button>
+    </a>
   );
 };
 
 export const AvailableTemplates: React.FC = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState<LaptopTemplateItem | null>(null);
-
-  useEffect(() => {
-    if (!selectedTemplate) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedTemplate(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [selectedTemplate]);
-
   return (
     <section id="available-templates" className="space-y-8 sm:space-y-10 scroll-mt-24">
       <div>
@@ -298,64 +280,9 @@ export const AvailableTemplates: React.FC = () => {
           <LaptopCard
             key={tpl.name}
             template={tpl}
-            onSelect={() => setSelectedTemplate(tpl)}
           />
         ))}
       </div>
-
-      {/* Modal Preview */}
-      {selectedTemplate && typeof document !== 'undefined' && createPortal(
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-150 overflow-y-auto"
-          onClick={() => setSelectedTemplate(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${selectedTemplate.name} template preview`}
-        >
-          <div
-            className="relative w-full max-w-[840px] text-center text-white my-auto animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="lap-modal-device">
-              <div className="lap-lid">
-                <div className="lap-screen">
-                  <LaptopScreenContent template={selectedTemplate} isModal />
-                </div>
-              </div>
-              <div className="lap-base" />
-            </div>
-
-            <div className="mt-6 space-y-1.5">
-              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white">
-                {selectedTemplate.name}
-              </h3>
-              <p className="font-sans text-sm sm:text-base text-slate-300">
-                {selectedTemplate.category}
-              </p>
-            </div>
-
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href={selectedTemplate.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lap-btn-demo inline-flex items-center gap-2 font-display font-bold text-sm px-6 py-3 rounded-xl transition-all cursor-pointer"
-              >
-                <span>Open live demo</span>
-                <ArrowUpRight size={16} strokeWidth={2.4} />
-              </a>
-              <button
-                type="button"
-                onClick={() => setSelectedTemplate(null)}
-                className="px-5 py-3 rounded-xl border border-white/30 text-white font-display font-bold text-sm hover:border-white hover:bg-white/10 transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>,
-        document.body
-      )}
     </section>
   );
 };
