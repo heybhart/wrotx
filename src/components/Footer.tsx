@@ -135,8 +135,8 @@ export const Footer: React.FC = () => {
               <Link to="/work" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 Our Work
               </Link>
-              <Link to="/pricing" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                Pricing
+              <Link to="/portfolio" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                Portfolio
               </Link>
               <Link to="/about" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
                 About WrotX
@@ -158,12 +158,12 @@ export const Footer: React.FC = () => {
         {/* Bottom Note */}
         <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-[11px] text-slate-500 dark:text-slate-500">
           <div>
-            © {currentYear} {SITE_CONFIG.legalName} · {SITE_CONFIG.city}, India · GST Invoices Provided
+            © {currentYear} {SITE_CONFIG.legalName} · {SITE_CONFIG.city}, India
           </div>
           <div className="flex items-center gap-3">
             <span>Mumbai Based</span>
             <span>·</span>
-            <span>GST Invoices Provided</span>
+            <span>100% Code Ownership</span>
             <span>·</span>
             <span>Engineering Team</span>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, PhoneCall, X, CheckCircle2, Loader2 } from 'lucide-react';
 import { FadeUp } from './FadeUp';
 
@@ -162,117 +163,58 @@ export const OurWork: React.FC = () => {
                   ))}
                 </ul>
 
-                {/* View Recent / New Available Templates */}
-                <div className="work-templates">
-                  <div className="work-templates-header">
-                    <span className="work-templates-badge">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#12c45a] animate-pulse inline-block" />
-                      AVAILABLE TEMPLATES
-                    </span>
-                    <span className="work-templates-hint">Live interactive previews</span>
+                {/* Devices Mockup Preview Block */}
+                <div className="site-preview" aria-hidden="true">
+                  <div className="dev laptop">
+                    <div className="scr">
+                      <div className="sp-bar">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <div className="sp-url">yourbusiness.com</div>
+                      </div>
+                      <div className="sp-body">
+                        <div className="sp-hero"></div>
+                        <div className="sp-line w70"></div>
+                        <div className="sp-line w45"></div>
+                        <div className="sp-grid">
+                          <i></i>
+                          <i></i>
+                          <i></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="base"></div>
                   </div>
 
-                  {/* [TODO: Move external template demos (vercel.app / github.io) onto demo.wrotx.in subdomains when ready] */}
-                  <div className="work-templates-list">
-                    <a
-                      href="https://bigbroker-iota.vercel.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="work-template-link group/tpl"
-                    >
-                      <div className="work-template-left">
-                        <span className="work-template-icon" aria-hidden="true">
-                          <svg viewBox="0 0 24 24">
-                            <path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" />
-                          </svg>
-                        </span>
-                        <div className="work-template-texts">
-                          <span className="work-template-name">Real Estate Brokerage &amp; Portal</span>
-                          <span className="work-template-desc">Property listings, EMI calculator &amp; WhatsApp inquiries</span>
-                        </div>
+                  <div className="dev tablet">
+                    <div className="pad">
+                      <div className="sp-hero"></div>
+                      <div className="sp-line w70"></div>
+                      <div className="sp-line w45"></div>
+                      <div className="sp-grid">
+                        <i></i>
+                        <i></i>
                       </div>
-                      <span className="work-template-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M7 17 17 7M8 7h9v9" />
-                        </svg>
-                      </span>
-                    </a>
+                    </div>
+                  </div>
 
-                    <a
-                      href="https://rohankkw.github.io/meena-properties/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="work-template-link group/tpl"
-                    >
-                      <div className="work-template-left">
-                        <span className="work-template-icon" aria-hidden="true">
-                          <svg viewBox="0 0 24 24">
-                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                          </svg>
-                        </span>
-                        <div className="work-template-texts">
-                          <span className="work-template-name">Meena Properties &amp; Advisory</span>
-                          <span className="work-template-desc">Residential &amp; commercial properties showcase</span>
-                        </div>
-                      </div>
-                      <span className="work-template-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M7 17 17 7M8 7h9v9" />
-                        </svg>
-                      </span>
-                    </a>
-
-                    <a
-                      href="https://triplio-topaz.vercel.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="work-template-link group/tpl"
-                    >
-                      <div className="work-template-left">
-                        <span className="work-template-icon" aria-hidden="true">
-                          <svg viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-                          </svg>
-                        </span>
-                        <div className="work-template-texts">
-                          <span className="work-template-name">Luxury Travel &amp; Tours Agency</span>
-                          <span className="work-template-desc">Destination discovery, tour packages &amp; booking scheduler</span>
-                        </div>
-                      </div>
-                      <span className="work-template-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M7 17 17 7M8 7h9v9" />
-                        </svg>
-                      </span>
-                    </a>
-
-                    <a
-                      href="https://zivlynfashion.vercel.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="work-template-link group/tpl"
-                    >
-                      <div className="work-template-left">
-                        <span className="work-template-icon" aria-hidden="true">
-                          <svg viewBox="0 0 24 24">
-                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0" />
-                          </svg>
-                        </span>
-                        <div className="work-template-texts">
-                          <span className="work-template-name">Fashion &amp; Jewelry E-Commerce</span>
-                          <span className="work-template-desc">Curated catalog, instant search &amp; smooth checkout</span>
-                        </div>
-                      </div>
-                      <span className="work-template-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M7 17 17 7M8 7h9v9" />
-                        </svg>
-                      </span>
-                    </a>
+                  <div className="dev phone">
+                    <div className="pad">
+                      <div className="sp-hero small"></div>
+                      <div className="sp-line w70"></div>
+                      <div className="sp-btn">Call</div>
+                    </div>
                   </div>
                 </div>
+
+                <Link
+                  className="tpl-btn"
+                  to="/website-development-mumbai#available-templates"
+                >
+                  <span>Open templates</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
               </article>
             </FadeUp>
           </div>

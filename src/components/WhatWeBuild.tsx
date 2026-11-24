@@ -139,7 +139,7 @@ export const WhatWeBuild: React.FC<WhatWeBuildProps> = ({ onQuoteClick }) => {
           </FadeUp>
           <FadeUp delay={80}>
             <p className="font-sans text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-normal">
-              Clear prices. No hidden cost. You own everything.
+              Clear scope. No hidden cost. You own everything.
             </p>
           </FadeUp>
         </div>
@@ -181,16 +181,6 @@ export const WhatWeBuild: React.FC<WhatWeBuildProps> = ({ onQuoteClick }) => {
                         )}
                       </div>
                       <p className="svc-desc">{item.description}</p>
-
-                      <div className="svc-price">
-                        <div>
-                          <small>{item.priceLabel || 'STARTING FROM'}</small>
-                          <strong className={item.isQuote ? 'q' : ''}>
-                            {item.priceRaw}
-                          </strong>
-                        </div>
-                        <span className="svc-time">{item.timeline}</span>
-                      </div>
 
                       <ul className="svc-list">
                         {item.ticks.map((tick, tIdx) => (
@@ -291,7 +281,7 @@ export const WhatWeBuild: React.FC<WhatWeBuildProps> = ({ onQuoteClick }) => {
                     Get Started with {selectedItem.name}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400 mt-1.5">
-                    Starting from {selectedItem.priceRaw}. Enter your details and our team will get in touch with scope and milestones.
+                    Enter your details and our team will get in touch with scope and milestones.
                   </p>
                 </div>
 

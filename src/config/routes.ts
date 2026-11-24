@@ -24,7 +24,7 @@ export const INDEXABLE_ROUTES: SitemapRoute[] = [
     changefreq: 'weekly' as const,
     priority: '0.9',
   })),
-  { path: '/pricing', lastmod: TODAY, changefreq: 'weekly', priority: '0.9' },
+  { path: '/portfolio', lastmod: TODAY, changefreq: 'weekly', priority: '0.9' },
   { path: '/work', lastmod: TODAY, changefreq: 'weekly', priority: '0.8' },
   { path: '/contact', lastmod: TODAY, changefreq: 'monthly', priority: '0.8' },
   { path: '/about', lastmod: TODAY, changefreq: 'monthly', priority: '0.7' },

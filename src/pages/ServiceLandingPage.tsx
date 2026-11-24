@@ -108,6 +108,23 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
                 <WebsiteWhoItIsFor />
               </section>
 
+              {/* Available Templates (Website Development Mumbai) */}
+              <AvailableTemplates />
+
+              {/* Process */}
+              <section className="space-y-8">
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                  {page.processTitle}
+                </h2>
+                <ProcessStepsGrid
+                  steps={page.processSteps.map((st) => ({
+                    num: st.step,
+                    title: st.title,
+                    description: st.detail,
+                  }))}
+                />
+              </section>
+
               {/* Practical Overview */}
               <section className="glass-panel p-6 sm:p-9 rounded-3xl space-y-4">
                 <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
@@ -196,22 +213,21 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
             </ul>
           </section>
 
-          {/* Process */}
-          <section className="space-y-8">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-              {page.processTitle}
-            </h2>
-            <ProcessStepsGrid
-              steps={page.processSteps.map((st) => ({
-                num: st.step,
-                title: st.title,
-                description: st.detail,
-              }))}
-            />
-          </section>
-
-          {/* Available Templates (Website Development Mumbai) */}
-          {page.slug === '/website-development-mumbai' && <AvailableTemplates />}
+          {/* Process (for other service pages) */}
+          {page.slug !== '/website-development-mumbai' && (
+            <section className="space-y-8">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                {page.processTitle}
+              </h2>
+              <ProcessStepsGrid
+                steps={page.processSteps.map((st) => ({
+                  num: st.step,
+                  title: st.title,
+                  description: st.detail,
+                }))}
+              />
+            </section>
+          )}
 
           {/* Service-Specific FAQs */}
           {page.slug !== '/website-development-mumbai' && (

@@ -97,7 +97,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ selectedService }) => {
                 onClick={() => openPreviewModal()}
                 className="inline-flex items-center gap-2 bg-[#FFE500] text-[#0E1330] font-mono text-xs uppercase font-extrabold px-4 py-2.5 rounded-xl border-2 border-[#0E1330] shadow-[3px_3px_0px_#5B4BFF] hover:translate-y-[-1px] transition-all cursor-pointer"
               >
-                <span>Get your free homepage preview</span>
+                <span>Get your free demo preview</span>
                 <ArrowUpRight size={14} strokeWidth={2.4} />
               </button>
             </div>

@@ -25,8 +25,8 @@ export const HOME_FAQS_DATA: FaqItem[] = [
     answer: `Every project comes with ${support.label}, maintenance, and comprehensive staff training so your team can confidently use and update your system.`,
   },
   {
-    question: 'Do you provide official GST invoices and accept Indian payment methods?',
-    answer: 'Yes. We issue official GST tax invoices for all projects and accept secure milestone payments via UPI, NEFT, RTGS, Razorpay, and direct bank transfer.',
+    question: 'What payment methods do you accept?',
+    answer: 'We accept secure milestone payments via UPI, NEFT, RTGS, Razorpay, and direct bank transfer.',
   },
 ];
 

@@ -4,7 +4,7 @@ import { usePreviewModal } from '../context/PreviewModalContext';
 import { COUNTRIES, DEFAULT_COUNTRY, type CountryItem } from '../data/countries';
 import { SITE_CONFIG } from '../config/site';
 
-const NEED_OPTIONS = [
+const WEBSITE_NEEDS = [
   'Website',
   'Online store',
   'Web app',
@@ -12,10 +12,18 @@ const NEED_OPTIONS = [
   'Other',
 ];
 
-export const PreviewModal: React.FC = () => {
-  const { isOpen, closePreviewModal } = usePreviewModal();
+const VOICE_NEEDS = [
+  'Inbound calls',
+  'Lead qualification',
+  'Appointment booking',
+  'Customer support',
+  'Other',
+];
 
-  const [enquiryType, setEnquiryType] = useState<'business' | 'agency'>('business');
+export const PreviewModal: React.FC = () => {
+  const { isOpen, defaultType, closePreviewModal } = usePreviewModal();
+
+  const [enquiryType, setEnquiryType] = useState<'website' | 'voice'>('website');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedNeeds, setSelectedNeeds] = useState<string[]>([]);
@@ -32,6 +40,20 @@ export const PreviewModal: React.FC = () => {
 
   const countryDropdownRef = useRef<HTMLDivElement>(null);
   const countrySearchInputRef = useRef<HTMLInputElement>(null);
+
+  const currentNeeds = enquiryType === 'website' ? WEBSITE_NEEDS : VOICE_NEEDS;
+
+  const handleTabChange = (type: 'website' | 'voice') => {
+    setEnquiryType(type);
+    setSelectedNeeds([]);
+  };
+
+  useEffect(() => {
+    if (isOpen && defaultType) {
+      setEnquiryType(defaultType);
+      setSelectedNeeds([]);
+    }
+  }, [isOpen, defaultType]);
 
   // Close on Escape key
   useEffect(() => {
@@ -96,9 +118,9 @@ export const PreviewModal: React.FC = () => {
     setErrorMessage('');
 
     const lines = [
-      `Hi ${SITE_CONFIG.brandName}! I would like to get my free homepage preview.`,
+      `Hi ${SITE_CONFIG.brandName}! I would like to get my free ${enquiryType === 'website' ? 'website demo preview' : 'AI voice demo'}.`,
       ``,
-      `Enquiry for: ${enquiryType === 'business' ? 'For my business (Website, store or app)' : 'For an agency (White label)'}`,
+      `Demo Type: ${enquiryType === 'website' ? 'Website' : 'AI Voice Demo'}`,
       `Name: ${name.trim()}`,
       email.trim() ? `Email: ${email.trim()}` : null,
       selectedNeeds.length > 0 ? `Looking for: ${selectedNeeds.join(', ')}` : null,
@@ -136,8 +158,8 @@ export const PreviewModal: React.FC = () => {
           name: name.trim(),
           email: email.trim(),
           phone: fullPhone,
-          service: `Free Homepage Preview (${enquiryType === 'business' ? 'For my business' : 'For an agency'})`,
-          projectDetails: `Enquiry Type: ${enquiryType === 'business' ? 'For my business' : 'For an agency'}\nNeeds: ${selectedNeeds.join(', ') || 'Not specified'}\nBrief: ${brief.trim() || 'None provided'}`,
+          service: `Demo Preview (${enquiryType === 'website' ? 'Website' : 'AI Voice Demo'})`,
+          projectDetails: `Demo Type: ${enquiryType === 'website' ? 'Website' : 'AI Voice Demo'}\nNeeds: ${selectedNeeds.join(', ') || 'Not specified'}\nBrief: ${brief.trim() || 'None provided'}`,
         }),
       });
 
@@ -175,10 +197,10 @@ export const PreviewModal: React.FC = () => {
               id="preview-modal-title"
               className="font-display text-2xl sm:text-[1.85rem] font-black tracking-tight text-slate-900 dark:text-white leading-tight"
             >
-              Get your free homepage preview
+              Get your free Demo Preview
             </h2>
             <p className="font-sans text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-              Takes 30 seconds. We design your homepage first - you decide after you have seen it.
+              Takes 30 seconds. We prepare your demo first - you decide after you have seen it.
             </p>
           </div>
 
@@ -201,7 +223,7 @@ export const PreviewModal: React.FC = () => {
               Preview request received!
             </h3>
             <p className="font-sans text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
-              Thank you {name}. Our team will review your business details and send your free homepage design preview within one working day.
+              Thank you {name}. Our team will review your business details and send your free {enquiryType === 'website' ? 'homepage design' : 'AI voice'} preview within one working day.
             </p>
             <div className="pt-2">
               <button
@@ -221,35 +243,35 @@ export const PreviewModal: React.FC = () => {
               </div>
             )}
 
-            {/* 1. I'M ENQUIRING: 2 Selector Cards */}
+            {/* 1. SELECT DEMO TYPE: 2 Selector Cards */}
             <div>
               <span className="font-mono text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">
-                I'M ENQUIRING
+                SELECT DEMO TYPE
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {/* Option 1: For my business */}
+                {/* Option 1: Website */}
                 <button
                   type="button"
-                  onClick={() => setEnquiryType('business')}
+                  onClick={() => handleTabChange('website')}
                   className={`text-left p-4 rounded-2xl relative transition-all border ${
-                    enquiryType === 'business'
+                    enquiryType === 'website'
                       ? 'bg-slate-950 text-white border-slate-950 shadow-md'
                       : 'bg-white dark:bg-slate-900/40 text-slate-900 dark:text-white border-slate-200 dark:border-white/10 hover:border-slate-300'
                   }`}
                 >
                   <span
                     className={`w-3 h-3 rounded-full absolute top-4 right-4 ${
-                      enquiryType === 'business'
+                      enquiryType === 'website'
                         ? 'bg-[#ff6b00]'
                         : 'border-2 border-slate-300 dark:border-white/30'
                     }`}
                   />
                   <div className="font-display text-base font-bold leading-tight">
-                    For my business
+                    Website
                   </div>
                   <div
                     className={`font-sans text-xs mt-1 ${
-                      enquiryType === 'business'
+                      enquiryType === 'website'
                         ? 'text-slate-300'
                         : 'text-slate-500 dark:text-slate-400'
                     }`}
@@ -258,34 +280,34 @@ export const PreviewModal: React.FC = () => {
                   </div>
                 </button>
 
-                {/* Option 2: For an agency */}
+                {/* Option 2: AI Voice Demo */}
                 <button
                   type="button"
-                  onClick={() => setEnquiryType('agency')}
+                  onClick={() => handleTabChange('voice')}
                   className={`text-left p-4 rounded-2xl relative transition-all border ${
-                    enquiryType === 'agency'
+                    enquiryType === 'voice'
                       ? 'bg-slate-950 text-white border-slate-950 shadow-md'
                       : 'bg-white dark:bg-slate-900/40 text-slate-900 dark:text-white border-slate-200 dark:border-white/10 hover:border-slate-300'
                   }`}
                 >
                   <span
                     className={`w-3 h-3 rounded-full absolute top-4 right-4 ${
-                      enquiryType === 'agency'
+                      enquiryType === 'voice'
                         ? 'bg-[#ff6b00]'
                         : 'border-2 border-slate-300 dark:border-white/30'
                     }`}
                   />
                   <div className="font-display text-base font-bold leading-tight">
-                    For an agency
+                    AI Voice Demo
                   </div>
                   <div
                     className={`font-sans text-xs mt-1 ${
-                      enquiryType === 'agency'
+                      enquiryType === 'voice'
                         ? 'text-slate-300'
                         : 'text-slate-500 dark:text-slate-400'
                     }`}
                   >
-                    White label, under your brand
+                    Voice calling agent for your business
                   </div>
                 </button>
               </div>
@@ -334,7 +356,7 @@ export const PreviewModal: React.FC = () => {
                 <span className="font-normal text-slate-400">(optional)</span>
               </label>
               <div className="flex flex-wrap gap-2">
-                {NEED_OPTIONS.map((item) => {
+                {currentNeeds.map((item) => {
                   const isSelected = selectedNeeds.includes(item);
                   return (
                     <button
@@ -519,7 +541,7 @@ export const PreviewModal: React.FC = () => {
 
               {/* Bottom Notice */}
               <p className="font-sans text-[11px] text-slate-500 dark:text-slate-400 mt-3 text-center sm:text-left leading-relaxed">
-                WhatsApp opens with your answers written out - you just press send. Your homepage design is free. We reply within one working day and use your details only to reply - privacy policy.
+                WhatsApp opens with your answers written out - you just press send. Your preview is free. We reply within one working day and use your details only to reply - privacy policy.
               </p>
             </div>
           </form>

@@ -66,7 +66,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: 'Ongoing costs you should expect (and fees you should refuse)',
         paragraphs: [
           `No honest engineering team will tell you a website costs zero rupees forever. Every live site has real third-party infrastructure expenses. In India, expect to pay directly for your domain name (typically around ₹800–₹1,200/year for .in or .com), cloud hosting or serverless tiers (often low-cost or free on static hosts like Vercel/Cloudflare for smaller portals, or ₹500–₹2,500/month for managed databases as traffic scales), and optional official WhatsApp Business API conversation charges.`,
-          `What you should refuse are opaque "annual software lock-in fees" where an agency holds your domain in their personal account and charges ₹3,000 every time you want to change a brochure PDF or project price. Always insist on owning your domain, source code repository, and hosting credentials, backed by an official GST invoice and clear post-launch support (${support.label} is standard at ${brandName}).`,
+          `What you should refuse are opaque "annual software lock-in fees" where an agency holds your domain in their personal account and charges ₹3,000 every time you want to change a brochure PDF or project price. Always insist on owning your domain, source code repository, and hosting credentials, backed by clear post-launch support (${support.label} is standard at ${brandName}).`,
         ],
       },
       {
@@ -86,7 +86,7 @@ export const BLOG_POSTS: BlogPost[] = [
     relatedLinks: [
       { label: 'Real Estate Website Development Mumbai', to: '/real-estate-websites' },
       { label: 'Website Development Mumbai', to: '/website-development-mumbai' },
-      { label: 'View Transparent Pricing', to: '/pricing' },
+      { label: 'View Portfolio & Demos', to: '/portfolio' },
       { label: 'See Live Real Estate Demos', to: '/work' },
     ],
   },

@@ -118,7 +118,7 @@ export const AboutPage: React.FC = () => {
                   <div>
                     <h4>{SITE_CONFIG.support.days} days free support</h4>
                     <p>
-                      Every launch includes {SITE_CONFIG.support.days} days free post-launch support, team walkthrough training, and official GST invoices.
+                      Every launch includes {SITE_CONFIG.support.days} days free post-launch support and team walkthrough training.
                     </p>
                   </div>
                 </div>
@@ -147,10 +147,10 @@ export const AboutPage: React.FC = () => {
 
           <div className="flex flex-wrap gap-3 pt-4">
             <Link
-              to="/pricing"
+              to="/portfolio"
               className="inline-flex items-center gap-2 bg-[#ffe600] text-[#131b2e] font-mono text-xs uppercase font-bold px-5 py-3 rounded-xl shadow-[3px_3px_0px_#131b2e]"
             >
-              <span>View Transparent Pricing</span>
+              <span>View Portfolio &amp; Demos</span>
               <ArrowUpRight size={15} />
             </Link>
             <Link

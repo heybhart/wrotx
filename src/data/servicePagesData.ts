@@ -47,7 +47,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     introParagraphs: [
       `When a customer in Mumbai hears about your business, the first thing they do is check Google or tap your link on WhatsApp. If your website takes five seconds to open on a 4G connection, shows broken alignment on a budget Android phone, or hides your phone number inside a tiny menu, that buyer closes the tab and calls your competitor instead.`,
       `At ${brandName}, we build custom business websites engineered specifically for how Indian customers browse and buy. Instead of bloating your site with heavy WordPress themes and twenty third-party plugins that break after every update, we write clean, lightweight code. Your pages load fast, your WhatsApp and direct call buttons stay easy to tap, and Google can index every service you offer without struggling through heavy JavaScript.`,
-      `You also keep complete control. Once we launch your site, we hand over the full source code, hosting access, and domain credentials. There are no monthly agency retainers just to change a headline, update a product price, or swap a photo. Plus, every build comes with official GST invoicing and ${support.label} while your team settles in.`,
+      `You also keep complete control. Once we launch your site, we hand over the full source code, hosting access, and domain credentials. There are no monthly agency retainers just to change a headline, update a product price, or swap a photo. Plus, every build comes with ${support.label} while your team settles in.`,
     ],
     whoItIsForTitle: 'Who this website service is built for',
     whoItIsFor: [
@@ -76,7 +76,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       'Zero monthly plugin fees: you own 100% of the code, design, and domain',
       'Easy content updates and staff walkthrough training upon handover',
       `Razorpay, UPI payment links, or Google Maps integration when required`,
-      `Official GST tax invoice and ${support.label}`,
+      `100% source code ownership and ${support.label}`,
     ],
     processTitle: 'How we take your website live',
     processSteps: [
@@ -131,9 +131,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
         description: 'Reply to website leads on WhatsApp automatically 24/7.',
       },
       {
-        label: 'Transparent Pricing',
-        to: '/pricing',
-        description: 'Compare website, software, and AI agent plans side by side.',
+        label: 'Portfolio & Live Demos',
+        to: '/portfolio',
+        description: 'Explore live website templates, AI voice agents, and custom software.',
       },
       {
         label: 'Custom Software Development',
@@ -271,9 +271,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
         description: 'Pair your AI assistant with a fast, conversion-ready website.',
       },
       {
-        label: 'Pricing & Timelines',
-        to: '/pricing',
-        description: 'See exact starting prices and delivery schedules.',
+        label: 'Portfolio & Live Demos',
+        to: '/portfolio',
+        description: 'Explore live website templates, AI voice agents, and custom software.',
       },
     ],
   },
@@ -536,9 +536,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
         description: 'Automatically follow up every AI phone call with a WhatsApp brochure.',
       },
       {
-        label: 'Pricing & Plans',
-        to: '/pricing',
-        description: 'View transparent starting prices across all WrotX services.',
+        label: 'Portfolio & Live Demos',
+        to: '/portfolio',
+        description: 'Explore live website templates, AI voice agents, and custom software.',
       },
       {
         label: 'Talk to Team',
@@ -563,7 +563,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     introParagraphs: [
       `Many growing Indian businesses end up running operations across five disconnected spreadsheets, WhatsApp groups, and expensive subscription software where 80% of the features sit untouched. Meanwhile, staff waste hours copying customer entries from one sheet into a GST billing tool and exporting CSVs back into Tally.`,
       `${brandName} builds custom software and web applications around how your team actually operates. Whether you need an internal CRM with role-based permissions, a GST-compliant invoice and quotation generator, a distributor order portal, or a custom operations dashboard, you pay once to build it and own the entire system forever.`,
-      `Because we build modern web-based software, your team can log in securely from office desktops, laptops, or phones on the road. You get clean Tally/Excel exports, automated payment status tracking, official GST invoicing for our work, and ${support.label} while your staff transitions off spreadsheets.`,
+      `Because we build modern web-based software, your team can log in securely from office desktops, laptops, or phones on the road. You get clean Tally/Excel exports, automated payment status tracking, and ${support.label} while your staff transitions off spreadsheets.`,
     ],
     whoItIsForTitle: 'Who custom software saves the most time and money',
     whoItIsFor: [
@@ -676,9 +676,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
         description: 'Trigger automated WhatsApp invoice and payment alerts from your software.',
       },
       {
-        label: 'Pricing & Timelines',
-        to: '/pricing',
-        description: 'Compare custom software and automation pricing clearly.',
+        label: 'Portfolio & Live Demos',
+        to: '/portfolio',
+        description: 'Explore live website templates, AI voice agents, and custom software.',
       },
     ],
   },
@@ -886,7 +886,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       'GST invoicing, fee tracking, and clean Excel/Tally exports for finance teams',
       'Clean audit trails showing who updated an application status and when',
       '100% source code & infrastructure ownership hosted on your own cloud account',
-      `Official GST tax invoice and ${support.label}`,
+      `100% source code ownership and ${support.label}`,
     ],
     processTitle: 'Our delivery process for finance teams',
     processSteps: [

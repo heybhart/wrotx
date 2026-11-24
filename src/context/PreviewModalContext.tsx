@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 
 interface PreviewModalContextType {
   isOpen: boolean;
-  openPreviewModal: () => void;
+  defaultType: 'website' | 'voice';
+  openPreviewModal: (type?: 'website' | 'voice') => void;
   closePreviewModal: () => void;
 }
 
@@ -10,8 +11,12 @@ const PreviewModalContext = createContext<PreviewModalContextType | undefined>(u
 
 export const PreviewModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [defaultType, setDefaultType] = useState<'website' | 'voice'>('website');
 
-  const openPreviewModal = useCallback(() => {
+  const openPreviewModal = useCallback((type?: 'website' | 'voice') => {
+    if (type) {
+      setDefaultType(type);
+    }
     setIsOpen(true);
   }, []);
 
@@ -30,7 +35,7 @@ export const PreviewModalProvider: React.FC<{ children: React.ReactNode }> = ({ 
   }, [isOpen]);
 
   return (
-    <PreviewModalContext.Provider value={{ isOpen, openPreviewModal, closePreviewModal }}>
+    <PreviewModalContext.Provider value={{ isOpen, defaultType, openPreviewModal, closePreviewModal }}>
       {children}
     </PreviewModalContext.Provider>
   );

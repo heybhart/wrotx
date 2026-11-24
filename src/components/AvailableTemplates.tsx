@@ -1,100 +1,361 @@
-import React from 'react';
-import { ArrowUpRight, Compass, Landmark, Building2, Home, Building, Plane } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { ArrowUpRight } from 'lucide-react';
 
-export interface TemplateItem {
-  title: string;
+export interface LaptopTemplateItem {
+  name: string;
   category: string;
+  gradient: string;
+  accent: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroCta: string;
+  cards: string[];
+  stats: string[];
   url: string;
-  icon: React.ElementType;
+  iframeUrl?: string;
 }
 
-export const AVAILABLE_TEMPLATES: TemplateItem[] = [
+export const TEMPLATES: LaptopTemplateItem[] = [
   {
-    title: 'Voyage - Luxury Travel',
-    category: 'Travel & Tour Agency',
+    name: 'Voyage - Luxury Travel',
+    category: 'Travel & tour agency',
+    gradient: 'linear-gradient(135deg, #0b3b44, #127a82)',
+    accent: '#e8b54a',
+    heroTitle: 'Escape the ordinary',
+    heroSubtitle: 'Hand-built journeys across India and beyond.',
+    heroCta: 'Plan my trip',
+    cards: ['Kerala', 'Rajasthan', 'Maldives'],
+    stats: ['120+ trips', '4.9 rating', '18 yrs'],
     url: 'https://voyage-travel-hub.vercel.app/',
-    icon: Compass,
+    iframeUrl: 'https://voyage-travel-hub.vercel.app/',
   },
   {
-    title: 'Banking & Finance',
-    category: 'Co-operative Bank & Finance Portal',
+    name: 'Banking & Finance',
+    category: 'Co-operative bank & finance portal',
+    gradient: 'linear-gradient(135deg, #0d2457, #2b5fd9)',
+    accent: '#34c38f',
+    heroTitle: 'Banking built on trust',
+    heroSubtitle: 'Loans, deposits and UPI in one secure portal.',
+    heroCta: 'Open account',
+    cards: ['Home loan', 'Savings', 'Gold loan'],
+    stats: ['₹240 Cr', '32 branches', '60k members'],
     url: 'https://bccb.vercel.app/',
-    icon: Landmark,
+    iframeUrl: 'https://bccb.vercel.app/',
   },
   {
-    title: 'E-state Enterprise',
-    category: 'Real Estate & Property Advisory',
+    name: 'E-state Enterprise',
+    category: 'Real estate & property advisory',
+    gradient: 'linear-gradient(135deg, #1c1f2b, #4a3b3a)',
+    accent: '#f0480f',
+    heroTitle: 'Properties that grow with you',
+    heroSubtitle: 'Verified listings, honest advice.',
+    heroCta: 'View listings',
+    cards: ['Flats', 'Plots', 'Offices'],
+    stats: ['800 sold', '12 cities', 'RERA'],
     url: 'https://bholenath-eight.vercel.app/',
-    icon: Building2,
+    iframeUrl: 'https://bholenath-eight.vercel.app/',
   },
   {
-    title: 'Saaranya Properties',
-    category: 'Premium Real Estate Showcase',
+    name: 'Saaranya Properties',
+    category: 'Premium real estate showcase',
+    gradient: 'linear-gradient(135deg, #2d4a34, #8a9a5b)',
+    accent: '#f2e3b3',
+    heroTitle: 'Live where it feels like home',
+    heroSubtitle: 'Boutique residences with room to breathe.',
+    heroCta: 'Book a visit',
+    cards: ['Villas', 'Towers', 'Gardens'],
+    stats: ['24 acres', '3 phases', 'Ready'],
     url: 'https://saaryana.vercel.app/',
-    icon: Home,
+    iframeUrl: 'https://saaryana.vercel.app/',
   },
   {
-    title: 'Real E-state',
-    category: 'Residential & Commercial Real Estate',
+    name: 'Real E-state (Meena Properties)',
+    category: 'Residential & commercial real estate',
+    gradient: 'linear-gradient(135deg, #0a0a0b, #1a1a24)',
+    accent: '#d4af37',
+    heroTitle: 'Architecture Beyond Imagination',
+    heroSubtitle: 'Luxury spaces crafted with vision, precision, and modern living.',
+    heroCta: 'Explore Residences',
+    cards: ['Penthouse', 'Sky Villa', 'Private Estate'],
+    stats: ['2,400 homes', 'Palm Jumeirah', '24/7'],
     url: 'https://rohankkw.github.io/meena-properties/',
-    icon: Building,
+    iframeUrl: 'https://rohankkw.github.io/meena-properties/',
   },
   {
-    title: 'Tour & Travels',
-    category: 'Holiday Packages & Discovery',
+    name: 'Tour & Travels',
+    category: 'Holiday packages & discovery',
+    gradient: 'linear-gradient(135deg, #ff6b4a, #ffb347)',
+    accent: '#0d3b66',
+    heroTitle: 'Holidays, sorted',
+    heroSubtitle: 'Packages that fit your budget and your calendar.',
+    heroCta: 'See packages',
+    cards: ['Goa', 'Himachal', 'Dubai'],
+    stats: ['500 tours', 'Group deals', 'Visa help'],
     url: 'https://triplio-topaz.vercel.app/',
-    icon: Plane,
+    iframeUrl: 'https://triplio-topaz.vercel.app/',
   },
 ];
 
-export const AvailableTemplates: React.FC = () => {
+const MiniSite: React.FC<{ template: LaptopTemplateItem }> = ({ template }) => {
   return (
-    <section className="space-y-4">
-      <div>
-        <div className="inline-flex items-center gap-2 font-mono text-xs uppercase font-bold text-[#006e27] dark:text-[#00fe66] mb-1">
-          <span className="w-2 h-2 rounded-full bg-[#00fe66] animate-pulse" />
-          Live Demos
-        </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-          Available Templates
-        </h2>
-        <p className="font-sans text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
-          Click any template to explore live interactive designs built for Indian businesses.
-        </p>
+    <div className="lap-site">
+      <div className="nav">
+        <i>{template.name.split(' ')[0]}</i>
+        <em>Home</em>
+        <em>About</em>
+        <em>Contact</em>
+        <u style={{ background: template.accent, color: '#111' }}>Enquire</u>
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
-        {AVAILABLE_TEMPLATES.map((tpl) => {
-          const Icon = tpl.icon;
+      <div className="hero" style={{ background: template.gradient }}>
+        <h4>{template.heroTitle}</h4>
+        <p>{template.heroSubtitle}</p>
+        <b style={{ background: template.accent, color: '#111' }}>{template.heroCta}</b>
+      </div>
+      <div className="row">
+        {template.cards.map((x, i) => (
+          <div
+            key={i}
+            style={{
+              background: template.gradient,
+              filter: `hue-rotate(${i * 18}deg)`,
+            }}
+          >
+            {x}
+          </div>
+        ))}
+      </div>
+      <div className="stats">
+        {template.stats.map((x, i) => {
+          const parts = x.split(' ');
           return (
-            <a
-              key={tpl.url}
-              href={tpl.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between gap-3 px-3.5 py-3 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-white/[0.04] hover:border-[#D9480F]/50 dark:hover:border-[#F97316]/50 hover:bg-white dark:hover:bg-white/[0.08] transition-all group shadow-sm hover:shadow"
-            >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="w-8 h-8 rounded-lg bg-orange-500/10 text-[#D9480F] dark:text-[#F97316] flex items-center justify-center shrink-0">
-                  <Icon size={16} />
-                </span>
-                <div className="min-w-0">
-                  <div className="font-display text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-[#D9480F] dark:group-hover:text-[#F97316] transition-colors">
-                    {tpl.title}
-                  </div>
-                  <div className="font-mono text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                    {tpl.category}
-                  </div>
-                </div>
-              </div>
-              <ArrowUpRight
-                size={15}
-                className="text-slate-400 group-hover:text-[#D9480F] dark:group-hover:text-[#F97316] shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
+            <span key={i}>
+              <b>{parts[0]}</b>
+              {parts.slice(1).join(' ')}
+            </span>
           );
         })}
       </div>
+      <div className="row">
+        {template.cards.map((x, i) => (
+          <div key={i} style={{ background: '#e6e9f2', color: '#1c2333' }}>
+            {x}
+          </div>
+        ))}
+      </div>
+      <div className="foot">
+        © {template.name} · Contact us · WhatsApp
+      </div>
+    </div>
+  );
+};
+
+const LaptopScreenContent: React.FC<{
+  template: LaptopTemplateItem;
+  isModal?: boolean;
+  isHovered?: boolean;
+}> = ({ template, isModal, isHovered = false }) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(isModal ? 0.625 : 0.26);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [hasHovered, setHasHovered] = useState(Boolean(isModal));
+
+  useEffect(() => {
+    if (isHovered || isModal) {
+      setHasHovered(true);
+    }
+  }, [isHovered, isModal]);
+
+  useEffect(() => {
+    if (!template.iframeUrl || !hasHovered) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateScale = () => {
+      const w = el.clientWidth || el.offsetWidth;
+      if (w > 0) {
+        setScale(w / 1280);
+      }
+    };
+
+    updateScale();
+    const ro = new ResizeObserver(updateScale);
+    ro.observe(el);
+    window.addEventListener('resize', updateScale);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', updateScale);
+    };
+  }, [template.iframeUrl, hasHovered]);
+
+  const showIframe = Boolean(isModal ? iframeLoaded : (isHovered && iframeLoaded));
+
+  return (
+    <div ref={containerRef} className="lap-screen-inner">
+      <div className={`lap-placeholder-wrap ${showIframe ? 'lap-hidden' : 'lap-visible'}`}>
+        <MiniSite template={template} />
+      </div>
+
+      {(hasHovered || isModal) && template.iframeUrl && (
+        <div className={`lap-iframe-container ${showIframe ? 'lap-visible' : 'lap-hidden'}`}>
+          <div
+            className="lap-iframe-scale"
+            style={{
+              transform: `scale(${scale})`,
+              transformOrigin: '0 0',
+            }}
+          >
+            <div className="lap-iframe-scroll">
+              <iframe
+                src={template.iframeUrl}
+                title={template.name}
+                className="lap-iframe"
+                loading={isModal ? 'eager' : 'lazy'}
+                onLoad={() => setIframeLoaded(true)}
+                tabIndex={-1}
+                scrolling="no"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const LaptopCard: React.FC<{
+  template: LaptopTemplateItem;
+  onSelect: () => void;
+}> = ({ template, onSelect }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      className="lap-card group text-center"
+      aria-label={`Preview ${template.name}`}
+    >
+      <div className="lap-glow" style={{ background: template.accent }} />
+      <div className="lap-device">
+        <div className="lap-lid">
+          <div className="lap-screen">
+            <LaptopScreenContent template={template} isHovered={isHovered} />
+            <div className="lap-hint">
+              <span>Click to preview</span>
+            </div>
+          </div>
+        </div>
+        <div className="lap-base" />
+      </div>
+      <div className="lap-meta">
+        <b>{template.name}</b>
+        <small>{template.category}</small>
+      </div>
+    </button>
+  );
+};
+
+export const AvailableTemplates: React.FC = () => {
+  const [selectedTemplate, setSelectedTemplate] = useState<LaptopTemplateItem | null>(null);
+
+  useEffect(() => {
+    if (!selectedTemplate) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedTemplate(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [selectedTemplate]);
+
+  return (
+    <section id="available-templates" className="space-y-8 sm:space-y-10 scroll-mt-24">
+      <div>
+        <div className="inline-flex items-center gap-2 font-mono text-xs uppercase font-bold text-[#006e27] dark:text-[#00fe66] mb-2">
+          <span className="w-2 h-2 rounded-full bg-[#00fe66] animate-pulse" />
+          Live Demos
+        </div>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
+          Available Templates
+        </h2>
+        <p className="font-sans text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-2 max-w-2xl leading-relaxed">
+          Pick a laptop, see the site. Click any template to explore live interactive designs built for Indian businesses.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 sm:gap-y-14">
+        {TEMPLATES.map((tpl) => (
+          <LaptopCard
+            key={tpl.name}
+            template={tpl}
+            onSelect={() => setSelectedTemplate(tpl)}
+          />
+        ))}
+      </div>
+
+      {/* Modal Preview */}
+      {selectedTemplate && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-150 overflow-y-auto"
+          onClick={() => setSelectedTemplate(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selectedTemplate.name} template preview`}
+        >
+          <div
+            className="relative w-full max-w-[840px] text-center text-white my-auto animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="lap-modal-device">
+              <div className="lap-lid">
+                <div className="lap-screen">
+                  <LaptopScreenContent template={selectedTemplate} isModal />
+                </div>
+              </div>
+              <div className="lap-base" />
+            </div>
+
+            <div className="mt-6 space-y-1.5">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white">
+                {selectedTemplate.name}
+              </h3>
+              <p className="font-sans text-sm sm:text-base text-slate-300">
+                {selectedTemplate.category}
+              </p>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={selectedTemplate.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lap-btn-demo inline-flex items-center gap-2 font-display font-bold text-sm px-6 py-3 rounded-xl transition-all cursor-pointer"
+              >
+                <span>Open live demo</span>
+                <ArrowUpRight size={16} strokeWidth={2.4} />
+              </a>
+              <button
+                type="button"
+                onClick={() => setSelectedTemplate(null)}
+                className="px-5 py-3 rounded-xl border border-white/30 text-white font-display font-bold text-sm hover:border-white hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };

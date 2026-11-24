@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { PreviewModalProvider } from './context/PreviewModalContext';
 import { PreviewModal } from './components/PreviewModal';
@@ -9,7 +9,7 @@ import { ServiceLandingPage } from './pages/ServiceLandingPage';
 import { WorkPage } from './pages/WorkPage';
 import { CaseStudyPage } from './pages/CaseStudyPage';
 import { AboutPage } from './pages/AboutPage';
-import { PricingPage } from './pages/PricingPage';
+import { PortfolioPage } from './pages/PortfolioPage';
 import { ContactPage } from './pages/ContactPage';
 import { BlogPage } from './pages/BlogPage';
 import { BlogPostPage } from './pages/BlogPostPage';
@@ -34,7 +34,8 @@ export default function App() {
             <Route path="/work" element={<WorkPage />} />
             <Route path="/work/:slug" element={<CaseStudyPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/pricing" element={<Navigate to="/portfolio" replace />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<BlogPage />} />
             {BLOG_POSTS.map((post) => (

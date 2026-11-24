@@ -97,7 +97,7 @@ async function main() {
         Fast Websites from ₹24,999 • Custom Software • AI Calling Agents &amp; WhatsApp Bots
       </text>
       <text x="80" y="420" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#94a3b8">
-        100% Code Handover • 60 Days Free Support • GST Tax Invoices
+        100% Code Handover • 60 Days Free Support • Dedicated Engineers
       </text>
 
       <!-- Footer Info -->

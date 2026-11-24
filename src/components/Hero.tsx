@@ -248,7 +248,7 @@ export const Hero: React.FC<HeroProps> = ({ onWorkClick }) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-mono text-xs font-bold text-slate-900 dark:text-white leading-tight">Mumbai Based</span>
-                  <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">GST Invoices Provided</span>
+                  <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Engineering Team</span>
                 </div>
               </div>
             </div>

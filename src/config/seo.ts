@@ -200,18 +200,20 @@ export const ABOUT_META: RouteSeoMeta = {
   ],
 };
 
-export const PRICING_META: RouteSeoMeta = {
-  path: '/pricing',
-  title: `Pricing & Timelines | ${SITE_CONFIG.brandName} Mumbai`,
-  description: `Websites from ${SITE_CONFIG.prices.websites.formatted}, software from ${SITE_CONFIG.prices.software.formatted}, WhatsApp AI from ${SITE_CONFIG.prices.aiAssistants.formatted}, calling agents from ${SITE_CONFIG.prices.aiCalling.formatted}.`,
+export const PORTFOLIO_META: RouteSeoMeta = {
+  path: '/portfolio',
+  title: `Portfolio & Live Demos | ${SITE_CONFIG.brandName} Mumbai`,
+  description: `Explore live website templates, AI voice calling agents, custom ERP software, and WhatsApp automations built for Indian businesses by ${SITE_CONFIG.brandName} in Mumbai.`,
   ogType: 'website',
   schemas: [
     getBreadcrumbSchema([
       { name: 'Home', path: '/' },
-      { name: 'Pricing', path: '/pricing' },
+      { name: 'Portfolio', path: '/portfolio' },
     ]),
   ],
 };
+
+export const PRICING_META: RouteSeoMeta = PORTFOLIO_META;
 
 export const CONTACT_META: RouteSeoMeta = {
   path: '/contact',

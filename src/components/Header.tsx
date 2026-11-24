@@ -96,9 +96,9 @@ const SERVICE_COLUMNS: ServiceColumn[] = [
         desc: 'Real client results and live systems',
       },
       {
-        label: 'Plans & Pricing',
-        href: '/pricing',
-        desc: 'Transparent fixed pricing and milestone UPI',
+        label: 'Portfolio & Demos',
+        href: '/portfolio',
+        desc: 'Websites, AI agents & custom apps',
       },
       {
         label: 'About WrotX',
@@ -148,7 +148,7 @@ export const Header: React.FC = () => {
   ].includes(pathname);
 
   const getActiveNavElement = () => {
-    const NAVBAR_ROUTES = ['/', '/work', '/pricing', '/about', '/contact'];
+    const NAVBAR_ROUTES = ['/', '/work', '/portfolio', '/about', '/contact'];
     if (NAVBAR_ROUTES.includes(pathname)) {
       return linksRef.current.get(pathname);
     }
@@ -370,18 +370,18 @@ export const Header: React.FC = () => {
             </button>
           </div>
 
-          {/* Pricing */}
+          {/* Portfolio */}
           <Link
-            to="/pricing"
+            to="/portfolio"
             ref={(el) => {
-              if (el) linksRef.current.set('/pricing', el);
-              else linksRef.current.delete('/pricing');
+              if (el) linksRef.current.set('/portfolio', el);
+              else linksRef.current.delete('/portfolio');
             }}
-            aria-current={pathname === '/pricing' ? 'page' : undefined}
+            aria-current={pathname === '/portfolio' ? 'page' : undefined}
             onMouseEnter={(e) => moveToLink(e.currentTarget)}
             onFocus={(e) => moveToLink(e.currentTarget)}
           >
-            Pricing
+            Portfolio
           </Link>
 
           {/* About */}
@@ -690,11 +690,11 @@ export const Header: React.FC = () => {
                   <ArrowUpRight size={13} strokeWidth={2.4} />
                 </Link>
                 <Link
-                  to="/pricing"
+                  to="/portfolio"
                   onClick={closeServices}
                   className="inline-flex items-center gap-1.5 text-slate-800 dark:text-slate-200 hover:text-[#D9480F] dark:hover:text-[#F97316] transition-colors"
                 >
-                  <span>Plans & pricing</span>
+                  <span>Portfolio &amp; demos</span>
                   <ArrowUpRight size={13} strokeWidth={2.4} />
                 </Link>
               </div>
@@ -781,8 +781,8 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          <Link to="/pricing" onClick={() => setIsMobileMenuOpen(false)}>
-            Pricing
+          <Link to="/portfolio" onClick={() => setIsMobileMenuOpen(false)}>
+            Portfolio
           </Link>
           <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
             About
