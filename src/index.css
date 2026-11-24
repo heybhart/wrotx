@@ -971,6 +971,56 @@ a, button {
   background: linear-gradient(145deg, var(--work-mint-a), var(--work-mint-b));
 }
 
+/* Liquid Glass Cards & Wells (Matches Our Work Section) */
+.liquid-glass-card {
+  --mx: 30%;
+  --my: 20%;
+  position: relative;
+  background: linear-gradient(145deg, var(--work-glass-a), var(--work-glass-b));
+  -webkit-backdrop-filter: blur(22px) saturate(1.8);
+  backdrop-filter: blur(22px) saturate(1.8);
+  border: 1px solid var(--work-rim);
+  box-shadow: inset 0 1.5px 0 var(--work-rim), inset 0 -1.5px 0 rgba(255, 255, 255, 0.35), inset 0 0 26px rgba(255, 255, 255, 0.4), 0 20px 38px -22px var(--work-drop);
+}
+
+.dark .liquid-glass-card {
+  box-shadow: inset 0 1.5px 0 var(--work-rim), inset 0 -1.5px 0 rgba(255, 255, 255, 0.1), inset 0 0 26px rgba(255, 255, 255, 0.15), 0 20px 38px -22px var(--work-drop);
+}
+
+.liquid-glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 30%) var(--my, 20%), rgba(255, 255, 255, 0.8), transparent 50%);
+  opacity: 0.55;
+  mix-blend-mode: soft-light;
+}
+
+.dark .liquid-glass-card::before {
+  background: radial-gradient(circle at var(--mx, 30%) var(--my, 20%), rgba(255, 255, 255, 0.45), transparent 50%);
+  opacity: 0.45;
+}
+
+.liquid-glass-card.highlight {
+  background: linear-gradient(145deg, var(--work-mint-a), var(--work-mint-b));
+  border-color: rgba(18, 196, 90, 0.55);
+}
+
+.liquid-glass-well {
+  position: relative;
+  background: var(--work-well);
+  border: 1px solid var(--work-rim);
+  box-shadow: inset 0 3px 8px var(--work-well-sh), inset 0 -1.5px 0 rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.dark .liquid-glass-well {
+  box-shadow: inset 0 3px 8px var(--work-well-sh), inset 0 -1.5px 0 rgba(255, 255, 255, 0.15);
+}
+
 .work-well {
   display: flex;
   gap: 30px;

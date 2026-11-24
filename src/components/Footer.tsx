@@ -119,8 +119,23 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/tour-travel-websites" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  Tour &amp; Travel Websites
+                </Link>
+              </li>
+              <li>
+                <Link to="/banking-finance-websites" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  Banking &amp; Finance Websites
+                </Link>
+              </li>
+              <li>
+                <Link to="/startup-websites" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
+                  Startup Websites
+                </Link>
+              </li>
+              <li>
                 <Link to="/banking-fintech-solutions" className="hover:text-[#D9480F] dark:hover:text-white transition-colors">
-                  Banking &amp; FinTech
+                  Banking &amp; FinTech Solutions
                 </Link>
               </li>
             </ul>

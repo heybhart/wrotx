@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, CheckCircle2, ChevronDown, MessageCircle, Phone, Clock, IndianRupee } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, ChevronDown, MessageCircle, Phone, Clock, IndianRupee, Monitor } from 'lucide-react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { ProcessStepsGrid } from '../components/HowItWorks';
 import { WebsiteWhoItIsFor } from '../components/WebsiteWhoItIsFor';
 import { AvailableTemplates } from '../components/AvailableTemplates';
+import { BankingFinanceLanding } from '../components/BankingFinanceLanding';
+import { StartupLanding } from '../components/StartupLanding';
+import { TourTravelLanding } from '../components/TourTravelLanding';
 import { PageHead } from '../components/PageHead';
 import { getServicePageMeta } from '../config/seo';
 import { SITE_CONFIG, getWhatsappUrl } from '../config/site';
@@ -18,9 +21,30 @@ const handleCardPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
 };
 
 export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }) => {
+  if (page.slug === '/banking-finance-websites') {
+    return <BankingFinanceLanding page={page} />;
+  }
+
+  if (page.slug === '/startup-websites') {
+    return <StartupLanding page={page} />;
+  }
+
+  if (page.slug === '/tour-travel-websites') {
+    return <TourTravelLanding page={page} />;
+  }
+
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const whatsappUrl = getWhatsappUrl(`Hi ${SITE_CONFIG.brandName}! I am interested in ${page.title}. Please share a quote.`);
   const meta = getServicePageMeta(page);
+
+  const isWebsiteTemplatePage = [
+    '/website-development-mumbai',
+    '/real-estate-websites',
+    '/tour-travel-websites',
+    '/banking-finance-websites',
+    '/banking-fintech-solutions',
+    '/startup-websites',
+  ].includes(page.slug);
 
   return (
     <>
@@ -82,13 +106,33 @@ export const ServiceLandingPage: React.FC<{ page: ServicePageData }> = ({ page }
                   <span>WhatsApp Us</span>
                   <ArrowUpRight size={15} strokeWidth={2} />
                 </a>
-                <a
-                  href={`tel:${SITE_CONFIG.phones[0].tel}`}
-                  className="inline-flex items-center gap-2 min-h-[46px] bg-[#ffe600] text-[#131b2e] font-mono text-xs sm:text-sm uppercase font-bold px-5 py-3 rounded-xl shadow-[3px_3px_0px_#131b2e] hover:translate-y-[-1px] transition-all"
-                >
-                  <Phone size={15} strokeWidth={2} />
-                  <span>Call {SITE_CONFIG.phones[0].display}</span>
-                </a>
+                {isWebsiteTemplatePage ? (
+                  <Link
+                    to="/website-development-mumbai#available-templates"
+                    onClick={(e) => {
+                      if (page.slug === '/website-development-mumbai') {
+                        e.preventDefault();
+                        const el = document.getElementById('available-templates');
+                        if (el) {
+                          const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset - 90;
+                          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                        }
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 min-h-[46px] bg-[#ffe600] text-[#131b2e] font-mono text-xs sm:text-sm uppercase font-bold px-5 py-3 rounded-xl shadow-[3px_3px_0px_#131b2e] hover:translate-y-[-1px] transition-all cursor-pointer"
+                  >
+                    <Monitor size={15} strokeWidth={2.2} />
+                    <span>View Templates</span>
+                  </Link>
+                ) : (
+                  <a
+                    href={`tel:${SITE_CONFIG.phones[0].tel}`}
+                    className="inline-flex items-center gap-2 min-h-[46px] bg-[#ffe600] text-[#131b2e] font-mono text-xs sm:text-sm uppercase font-bold px-5 py-3 rounded-xl shadow-[3px_3px_0px_#131b2e] hover:translate-y-[-1px] transition-all"
+                  >
+                    <Phone size={15} strokeWidth={2} />
+                    <span>Call {SITE_CONFIG.phones[0].display}</span>
+                  </a>
+                )}
               </div>
             </div>
           </header>

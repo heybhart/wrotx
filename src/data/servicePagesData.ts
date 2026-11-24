@@ -952,6 +952,411 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       },
     ],
   },
+
+  '/tour-travel-websites': {
+    slug: '/tour-travel-websites',
+    badge: 'TOUR & TRAVEL',
+    badgeBgClass: 'bg-[#ffe600] text-[#131b2e]',
+    title: 'Tour & Travel Agency Website Development Mumbai',
+    metaTitle: `Tour & Travel Websites Mumbai (${prices.websites.fromLabel}) | ${brandName}`,
+    metaDescription: `Tour & travel agency websites in Mumbai from ${prices.websites.formatted}. Holiday package catalogs, itinerary builders, instant WhatsApp lead routing in ${prices.websites.timeline}.`,
+    h1: 'Tour & Travel Agency Website Development in Mumbai',
+    lead: `High-converting travel agency websites and holiday package portals for tour operators, DMCs, and travel consultancies, starting from ${prices.websites.formatted}, delivered in ${prices.websites.timeline}.`,
+    priceFrom: prices.websites.fromLabel,
+    priceAmount: prices.websites.amount,
+    timeline: prices.websites.timelineLabel,
+    introParagraphs: [
+      `Travellers planning holidays in Kerala, Rajasthan, Himachal, Goa, or international trips to Dubai, Bali, and Europe search packages on their smartphones during lunch breaks or evenings. They want to see day-wise itineraries, inclusion/exclusion breakdowns, hotel standards, and transparent pricing in seconds. If your travel website takes six seconds to load, buries prices behind bulky PDF brochures, or has broken inquiry forms, travellers bounce straight to MakeMyTrip or another agency's WhatsApp.`,
+      `${brandName} builds fast, visually compelling travel agency websites and holiday package portals designed specifically for Indian tour operators and destination specialists. From interactive destination filters and day-by-day itinerary accordions to pre-filled WhatsApp inquiry triggers that automatically tag the exact package name, dates, and traveller count, your site turns curious visitors into booked travelers.`,
+      `You can test our live interactive luxury travel and holiday package templates directly in our portfolio. You own 100% of the source code, launch in ${prices.websites.timeline}, and get ${support.label}.`,
+    ],
+    whoItIsForTitle: 'Who we build travel websites for',
+    whoItIsFor: [
+      {
+        title: 'Domestic & International Tour Operators',
+        detail: 'Showcase curated fixed departures and customized private tour packages with transparent pricing, hotel categories, and day-wise itineraries.',
+        chipsLabel: 'Package catalog',
+        chips: [
+          { label: 'Day-wise itinerary' },
+          { label: 'Instant WhatsApp quote', variant: 'wa' },
+          { label: 'Zero aggregator commission', active: true },
+        ],
+      },
+      {
+        title: 'Destination Management Companies (DMCs)',
+        detail: 'B2B agent and direct traveller portals with localized destination knowledge, fleet options, and fast quotation requests.',
+        chipsLabel: 'DMC portal',
+        chips: [
+          { label: 'Multi-destination filters' },
+          { label: 'Fleet & hotel showcase' },
+          { label: 'Direct agent inquiries', active: true },
+        ],
+      },
+      {
+        title: 'Visa, Forex & Corporate Travel Desks',
+        detail: 'Clean service spec sheets for visa documentation, corporate flight/hotel bookings, and foreign exchange assistance.',
+        chipsLabel: 'Corporate desk',
+        chips: [
+          { label: 'Visa checklist download' },
+          { label: 'GST billing ready' },
+          { label: 'Priority corporate routing', active: true },
+        ],
+      },
+      {
+        title: 'Adventure, Trekking & Experiential Organizers',
+        detail: 'Batch calendars, difficulty levels, packing checklists, and token payment triggers for weekend treks and expeditions.',
+        chipsLabel: 'Adventure batch',
+        chips: [
+          { label: 'Batch date selector' },
+          { label: 'Gear checklist' },
+          { label: 'High mobile conversion', active: true },
+        ],
+      },
+    ],
+    whatYouGetTitle: 'Built-in features for travel agency websites',
+    whatYouGet: [
+      'Filterable holiday package directory by destination, duration, budget, and travel theme',
+      'Day-wise visual itinerary viewer with clear inclusion/exclusion tabs and hotel grade tags',
+      'One-tap WhatsApp inquiry buttons pre-filled with the exact package name, budget, and traveller count',
+      'Simple admin dashboard or Google Sheet sync so staff can update seasonal packages and prices without code',
+      'Sub-1.2 second mobile load times on 4G networks so high-resolution photos open instantly',
+      'Structured Local & Destination SEO markup for travel agencies and tour packages',
+      `Complete code ownership, zero monthly builder lock-in, and ${support.label}`,
+    ],
+    processTitle: 'How your travel website goes live',
+    processSteps: [
+      {
+        step: '01',
+        title: 'Destinations & Package Architecture',
+        detail: 'We organize your core destinations, package categories (family, honeymoon, group, corporate), and booking flow.',
+      },
+      {
+        step: '02',
+        title: 'Mobile Itinerary UX Preview',
+        detail: 'You review interactive package cards, photo galleries, and WhatsApp callback triggers on your smartphone.',
+      },
+      {
+        step: '03',
+        title: 'Lead Intake & Inquiry Routing',
+        detail: 'Every inquiry captures destination, travel month, and group size, forwarding instantly to your sales team.',
+      },
+      {
+        step: '04',
+        title: 'Speed Optimization & Launch',
+        detail: `Launched in ${prices.websites.timeline} with Google Search Console setup, image compression, and ${support.days} days support.`,
+      },
+    ],
+    faqs: [
+      {
+        question: 'How much does a tour and travel agency website cost in Mumbai?',
+        answer: `Travel agency websites with full package catalogs and WhatsApp lead routing start from ${prices.websites.formatted}. Custom portals with multi-agent booking management or online payment gateways start from ${prices.software.formatted}.`,
+      },
+      {
+        question: 'Can our staff add new holiday packages and change seasonal rates easily?',
+        answer: 'Yes. We configure the website so your team can add, update, or pause packages, itineraries, and pricing in minutes without touching any code.',
+      },
+      {
+        question: 'Can travellers pay online or do inquiries go to WhatsApp?',
+        answer: 'You can do both. Most Indian agencies prefer pre-filled WhatsApp lead routing to negotiate custom itineraries, but we can also integrate Razorpay, Cashfree, or UPI for instant token booking deposits.',
+      },
+      {
+        question: 'Where can I see live examples of travel websites you designed?',
+        answer: 'You can inspect our live interactive Voyage Luxury Travel and Tour & Travels holiday demos directly in our Portfolio.',
+      },
+    ],
+    relatedLinks: [
+      {
+        label: 'View Travel Demos in Portfolio',
+        to: '/portfolio',
+        description: 'Open live interactive previews for Voyage Luxury Travel and Tour & Travels.',
+      },
+      {
+        label: 'Website Development Mumbai',
+        to: '/website-development-mumbai',
+        description: 'Explore our core high-speed business website architecture and mobile standards.',
+      },
+      {
+        label: 'WhatsApp Automation for Travel Agencies',
+        to: '/whatsapp-automation',
+        description: 'Auto-reply with package PDFs and collect traveller dates 24/7 on WhatsApp.',
+      },
+      {
+        label: 'AI Calling Agents for Tour Inquiries',
+        to: '/ai-calling-agents',
+        description: 'Call back weekend Meta and Google travel ad leads within 30 seconds.',
+      },
+    ],
+  },
+
+  '/banking-finance-websites': {
+    slug: '/banking-finance-websites',
+    badge: 'BANKING & FINANCE',
+    badgeBgClass: 'bg-[#00f0ff] text-[#003840]',
+    title: 'Banking & Finance Website Development Mumbai',
+    metaTitle: `Banking & Finance Websites Mumbai (${prices.websites.fromLabel}) | ${brandName}`,
+    metaDescription: `Websites for co-operative banks, NBFCs, credit societies & finance advisors from ${prices.websites.formatted}. Loan calculators, rate charts & compliance in ${prices.websites.timeline}.`,
+    h1: 'Banking, NBFC & Finance Website Development in Mumbai',
+    lead: `Secure, compliant, and trustworthy websites for co-operative banks, credit societies, NBFCs, and financial consultancies, starting from ${prices.websites.formatted}, delivered in ${prices.websites.timeline}.`,
+    priceFrom: prices.websites.fromLabel,
+    priceAmount: prices.websites.amount,
+    timeline: prices.websites.timelineLabel,
+    introParagraphs: [
+      `In banking and financial services, trust is established before a client ever steps foot inside a branch. When depositors, business owners, or loan applicants visit your website, they look for clarity: current fixed deposit rates, transparent loan EMI calculators, branch contacts, regulatory disclosures, and clean navigation that works reliably on mobile. A slow, unsecure, or outdated website immediately drives depositors toward larger private banks.`,
+      `${brandName} builds modern, high-security websites for co-operative banks, credit societies (patpedhis), NBFCs, DSA loan consultancies, and wealth management firms across Maharashtra. We combine banking-grade UI standards, instant loan eligibility and EMI calculators, clean regulatory disclosure pages, and branch finders with strict cybersecurity practices: zero insecure plugins, zero data leakage, and lightning-fast load times.`,
+      `You can explore our live interactive Banking & Finance portal preview in our portfolio. You own 100% of the code, host on your preferred infrastructure, and receive ${support.label}.`,
+    ],
+    whoItIsForTitle: 'Who we build finance websites for',
+    whoItIsFor: [
+      {
+        title: 'Co-operative Banks & Credit Societies',
+        detail: 'Digital branch presence with daily deposit rate charts, loan scheme breakdowns, annual report downloads, and tender notices.',
+        chipsLabel: 'Bank portal',
+        chips: [
+          { label: 'Deposit rate tables' },
+          { label: 'Branch & ATM locator' },
+          { label: 'Statutory disclosure ready', active: true },
+        ],
+      },
+      {
+        title: 'NBFCs & Direct Selling Agents (DSAs)',
+        detail: 'High-converting loan intake funnels for home loans, business loans, and loan against property (LAP) with instant EMI tools.',
+        chipsLabel: 'Loan intake',
+        chips: [
+          { label: 'Interactive EMI calculator' },
+          { label: 'Pre-qualified lead intake' },
+          { label: 'Direct CRM handoff', active: true },
+        ],
+      },
+      {
+        title: 'Wealth Managers & Investment Advisors',
+        detail: 'Authoritative websites showcasing mutual fund advisory, portfolio management services (PMS), and retirement planning.',
+        chipsLabel: 'Wealth desk',
+        chips: [
+          { label: 'SIP & lumpsum calculators' },
+          { label: 'SEBI compliance disclaimers' },
+          { label: 'WhatsApp consultation booking', active: true },
+        ],
+      },
+      {
+        title: 'Chartered Accountants & Tax Consultants',
+        detail: 'Professional portals with GST/TDS calculators, audit service guides, and secure client document submission links.',
+        chipsLabel: 'CA firm site',
+        chips: [
+          { label: 'GST & tax calculation tools' },
+          { label: 'Direct consultation calendar' },
+          { label: 'Encrypted lead intake', active: true },
+        ],
+      },
+    ],
+    whatYouGetTitle: 'Built-in features for banking & finance websites',
+    whatYouGet: [
+      'Interactive loan EMI, SIP investment, and fixed deposit interest calculators',
+      'Mobile-responsive interest rate charts for FD, RD, gold loans, and home loans',
+      'Branch and ATM locator with Google Maps directions and direct branch phone extensions',
+      'Dedicated statutory disclosure sections for Citizen Charters, KYC guidelines, and annual audited financials',
+      'Bank-grade frontend security: strict Content Security Policy (CSP), HTTPS enforcement, and zero tracker bloat',
+      'Easy staff portal or sheet integration to update daily interest rates and notices without a web developer',
+      `Full source code handover and ${support.label}`,
+    ],
+    processTitle: 'How your banking website goes live',
+    processSteps: [
+      {
+        step: '01',
+        title: 'Scheme Architecture & Compliance Plan',
+        detail: 'We map out your deposit schemes, loan products, regulatory disclosures, and branch directory requirements.',
+      },
+      {
+        step: '02',
+        title: 'Interactive Calculator & Rate UX Preview',
+        detail: 'Your management tests loan calculators, rate tables, and inquiry flows on mobile before launch.',
+      },
+      {
+        step: '03',
+        title: 'Security Hardening & Routing',
+        detail: 'We configure SSL/TLS encryption, header security, and routing to ensure client submissions remain private.',
+      },
+      {
+        step: '04',
+        title: 'Launch & Training',
+        detail: `Delivered in ${prices.websites.timeline} with staff training on rate updates and ${support.days} days free support.`,
+      },
+    ],
+    faqs: [
+      {
+        question: 'How much does a banking or co-operative society website cost in Mumbai?',
+        answer: `Complete banking and credit society websites with interest rate tables, calculators, and branch directories start from ${prices.websites.formatted}. Advanced customer intake portals with loan document verification start from ${prices.software.formatted}.`,
+      },
+      {
+        question: 'Can our staff update daily gold loan or fixed deposit rates without coding?',
+        answer: 'Yes. We structure your rate tables so designated branch staff can update interest rates in seconds via a simple form or connected Google Sheet.',
+      },
+      {
+        question: 'Is the website compliant with banking security guidelines?',
+        answer: 'Yes. We enforce modern web security standards including strict CSP headers, HTTPS, clean form validation, and zero third-party data tracking.',
+      },
+      {
+        question: 'Where can I see an example of a financial portal you built?',
+        answer: 'You can test our live Banking & Finance interactive template directly on our Portfolio page.',
+      },
+    ],
+    relatedLinks: [
+      {
+        label: 'Banking & Fintech Solutions Software',
+        to: '/banking-fintech-solutions',
+        description: 'Explore custom internal tools, DSA loan workflows, and automated client onboarding.',
+      },
+      {
+        label: 'View Banking Demo in Portfolio',
+        to: '/portfolio',
+        description: 'Test the live interactive Banking & Finance portal built for Indian co-operative banks.',
+      },
+      {
+        label: 'Website Development Mumbai',
+        to: '/website-development-mumbai',
+        description: 'Inspect our core performance standards, speed benchmarks, and code ownership policies.',
+      },
+      {
+        label: 'Custom Software Development',
+        to: '/custom-software-development',
+        description: 'Custom loan management, GST billing, and internal operations portals.',
+      },
+    ],
+  },
+
+  '/startup-websites': {
+    slug: '/startup-websites',
+    badge: 'STARTUP WEBSITES',
+    badgeBgClass: 'bg-[#d9480f] text-white',
+    title: 'Startup Website & Landing Page Development Mumbai',
+    metaTitle: `Startup Websites & Landing Pages Mumbai (${prices.websites.fromLabel}) | ${brandName}`,
+    metaDescription: `High-conversion websites and SaaS landing pages for Indian startups from ${prices.websites.formatted}. Fast launch in ${prices.websites.timeline}, investor deck ready with full code ownership.`,
+    h1: 'Startup Website & High-Converting Landing Page Development',
+    lead: `Slick, sub-second landing pages for funded and bootstrapped startups in Mumbai and Bengaluru, starting from ${prices.websites.formatted}, launched in ${prices.websites.timeline}.`,
+    priceFrom: prices.websites.fromLabel,
+    priceAmount: prices.websites.amount,
+    timeline: prices.websites.timelineLabel,
+    introParagraphs: [
+      `Startups live or die by the speed of their execution and the credibility of their first impression. When venture capitalists, angel investors, press, and early adopters land on your website, you have fewer than five seconds to communicate your value proposition, show the product in action, and trigger a signup or demo booking. Bloated WordPress themes with generic stock photos and slow load times kill conversion rates and signal poor engineering standards.`,
+      `${brandName} builds razor-sharp, modern websites and SaaS landing pages engineered for Indian and global tech startups. We combine editorial typography, interactive product mockups, liquid-glass cards, and dark/light UI modes with pure React/Vite engineering that loads in under 800 milliseconds. Every page is wired with clean webhook integrations to HubSpot, Notion, Slack, or Google Sheets so you never lose a sign-up.`,
+      `You own 100% of the repository with clean, modern code you can extend into your actual application. Launch in ${prices.websites.timeline} with ${support.label}.`,
+    ],
+    whoItIsForTitle: 'Who we build startup websites for',
+    whoItIsFor: [
+      {
+        title: 'B2B SaaS & Tech Startups',
+        detail: 'Interactive feature bentos, product GIF/video tours, monthly/annual pricing toggles, and self-serve trial signup flows.',
+        chipsLabel: 'SaaS landing page',
+        chips: [
+          { label: 'Interactive bento grid' },
+          { label: 'Pricing tier switcher' },
+          { label: 'Sub-800ms load speed', active: true },
+        ],
+      },
+      {
+        title: 'Seed & Series A Funded Startups',
+        detail: 'Polished digital presence with investor story, product architecture, press kit, and talent hiring portal.',
+        chipsLabel: 'Funded brand',
+        chips: [
+          { label: 'Investor pitch alignment' },
+          { label: 'Career board sync' },
+          { label: 'High visual authority', active: true },
+        ],
+      },
+      {
+        title: 'Pre-Launch Startups Building Waitlists',
+        detail: 'Viral referral waitlist pages with queue positions, social share rewards, and instant automated WhatsApp/email onboarding.',
+        chipsLabel: 'Waitlist funnel',
+        chips: [
+          { label: 'Waitlist position tracker' },
+          { label: 'Webhook to Slack/Notion' },
+          { label: 'Instant welcome sequence', active: true },
+        ],
+      },
+      {
+        title: 'AI Startups & Developer Tools',
+        detail: 'Interactive code syntax playgrounds, benchmark comparisons, API documentation layouts, and dark mode-first aesthetics.',
+        chipsLabel: 'AI/DevTool page',
+        chips: [
+          { label: 'Interactive terminal/code' },
+          { label: 'Model latency benchmarks' },
+          { label: 'Dark mode native', active: true },
+        ],
+      },
+    ],
+    whatYouGetTitle: 'Built-in features for startup landing pages',
+    whatYouGet: [
+      'Sub-800ms page load speeds scoring 98+ on Google PageSpeed Insights on mobile and desktop',
+      'Modern tech aesthetic featuring liquid-glass panels, bento feature grids, and dark/light mode toggle',
+      'Interactive pricing table with monthly vs annual billing calculation and feature checklist',
+      'Direct webhook integrations sending leads and signups directly to HubSpot, Notion, Slack, or CRM',
+      'Clean analytics tracking setup (PostHog, Google Analytics 4, Meta Pixel) with zero cookie performance penalty',
+      'SEO metadata, OpenGraph cards for Twitter/LinkedIn social sharing, and automated sitemap generation',
+      `100% source code ownership in React, Vite, and Tailwind with zero builder subscriptions and ${support.label}`,
+    ],
+    processTitle: 'How your startup site goes live',
+    processSteps: [
+      {
+        step: '01',
+        title: 'Positioning & Messaging Teardown',
+        detail: 'We dissect your product value proposition, target customer personas, and key conversion hooks.',
+      },
+      {
+        step: '02',
+        title: 'Interactive UI & Bento Preview',
+        detail: 'You review high-fidelity product cards, interactive widgets, and mobile layouts directly on your phone.',
+      },
+      {
+        step: '03',
+        title: 'Webhooks & Funnel Wiring',
+        detail: 'We connect your signup and demo forms to your CRM, Slack notifications, or email marketing automation.',
+      },
+      {
+        step: '04',
+        title: 'Speed Audit & Launch',
+        detail: `Delivered in ${prices.websites.timeline} with performance benchmarks, custom domain DNS setup, and ${support.days} days support.`,
+      },
+    ],
+    faqs: [
+      {
+        question: 'How fast can you launch our startup landing page?',
+        answer: `Our typical turnaround for a startup landing page is ${prices.websites.timeline}. If you have an upcoming investor pitch, Product Hunt launch, or funding announcement, we can fast-track the delivery.`,
+      },
+      {
+        question: 'What tech stack do you use for startup websites?',
+        answer: 'We build with modern React, Vite, Tailwind CSS, and TypeScript. No WordPress bloat, no fragile page builders. It is lightweight, blazingly fast, and can be maintained directly by your engineering team.',
+      },
+      {
+        question: 'Do we get complete ownership of the code and design files?',
+        answer: 'Yes. You receive full ownership of the Git repository and design assets with zero ongoing licensing fees or platform lock-in.',
+      },
+      {
+        question: 'Can you wire sign-up forms to Notion, Slack, or HubSpot?',
+        answer: 'Yes. We set up automated webhooks so every lead or waitlist registration lands in your Slack channel, Notion database, or CRM within seconds.',
+      },
+    ],
+    relatedLinks: [
+      {
+        label: 'Custom Software Development',
+        to: '/custom-software-development',
+        description: 'Build your MVP, client portal, or internal admin dashboard with our Mumbai engineering team.',
+      },
+      {
+        label: 'AI Agent Development',
+        to: '/ai-agent-development',
+        description: 'Integrate LLMs, AI agents, and automated voice workflows into your startup operations.',
+      },
+      {
+        label: 'View Portfolio & Live Demos',
+        to: '/portfolio',
+        description: 'Explore live software, web templates, and mobile app interactions built for Indian startups.',
+      },
+      {
+        label: 'Website Development Mumbai',
+        to: '/website-development-mumbai',
+        description: 'Review our complete agency standards, milestone pricing, and engineering guarantees.',
+      },
+    ],
+  },
 };
 
 export const SERVICE_PAGE_LIST = Object.values(SERVICE_PAGES);

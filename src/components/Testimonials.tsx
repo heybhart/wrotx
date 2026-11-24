@@ -1,63 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { SITE_CONFIG } from '../config/site';
 
-const WAVEFORM_HEIGHTS = [
-  30, 55, 40, 75, 50, 90, 60, 35, 80, 45, 70, 95, 55, 40, 85, 60, 30, 65,
-  90, 50, 35, 75, 55, 45, 80, 60, 40, 70, 30, 55, 85, 45, 65, 35, 50, 25,
-];
-
 export const Testimonials: React.FC = () => {
-  const [isPlayingVoice, setIsPlayingVoice] = useState(false);
-  const [voiceProgress, setVoiceProgress] = useState(0);
-  const voiceTimerRef = useRef<number | null>(null);
-
-  const toggleVoiceNote = () => {
-    setIsPlayingVoice((prev) => {
-      const next = !prev;
-      if (next && voiceProgress >= 1) {
-        setVoiceProgress(0);
-      }
-      return next;
-    });
-  };
-
-  useEffect(() => {
-    if (isPlayingVoice) {
-      const durationMs = 27000;
-      const stepMs = 120;
-      const stepRatio = stepMs / durationMs;
-
-      voiceTimerRef.current = window.setInterval(() => {
-        setVoiceProgress((prev) => {
-          const next = prev + stepRatio;
-          if (next >= 1) {
-            setIsPlayingVoice(false);
-            return 1;
-          }
-          return next;
-        });
-      }, stepMs);
-    } else {
-      if (voiceTimerRef.current) {
-        clearInterval(voiceTimerRef.current);
-        voiceTimerRef.current = null;
-      }
-    }
-
-    return () => {
-      if (voiceTimerRef.current) {
-        clearInterval(voiceTimerRef.current);
-      }
-    };
-  }, [isPlayingVoice]);
-
-  const activeBarIndex = Math.floor(voiceProgress * WAVEFORM_HEIGHTS.length);
-  const currentSeconds = Math.floor(voiceProgress * 27);
-  const formattedTime =
-    isPlayingVoice || voiceProgress > 0
-      ? `0:${String(currentSeconds).padStart(2, '0')}`
-      : '0:27';
-
   return (
     <section className="wt hairline-b" id="reviews" aria-labelledby="wt-h">
       <div className="wt-in">
@@ -121,7 +65,7 @@ export const Testimonials: React.FC = () => {
               <div className="rc-pj">Real estate website · live in 6 days</div>
             </article>
 
-            {/* Voice Note Card */}
+            {/* Client Review Card */}
             <article className="rc-card">
               <div className="rc-who">
                 <div
@@ -137,38 +81,13 @@ export const Testimonials: React.FC = () => {
                 </div>
               </div>
 
-              <div className={`rc-vn ${isPlayingVoice ? 'on' : ''}`}>
-                <div className="rc-pl">
-                  <button
-                    type="button"
-                    className="rc-play"
-                    onClick={toggleVoiceNote}
-                    aria-label={isPlayingVoice ? 'Pause voice note' : 'Play voice note'}
-                  />
-                  <div className="rc-wv" aria-hidden="true">
-                    {WAVEFORM_HEIGHTS.map((h, i) => (
-                      <i
-                        key={i}
-                        style={{ height: `${h}%` }}
-                        className={
-                          i <= activeBarIndex && (isPlayingVoice || voiceProgress > 0)
-                            ? 'p'
-                            : ''
-                        }
-                      />
-                    ))}
-                  </div>
-                  <span className="font-mono text-xs text-slate-500 dark:text-slate-400 select-none">
-                    {formattedTime}
-                  </span>
-                </div>
-
-                <p className="rc-tr">
+              <div className="rc-vn">
+                <p className="rc-tr !mt-0">
                   "Pehle receptionist din bhar phone uthati thi, ab appointment seedha calendar mein aa jaata hai. Ek-do baar agent ne naam galat bola, woh bas theek kar do."
                 </p>
               </div>
 
-              <div className="rc-pj">AI calling agent · voice note</div>
+              <div className="rc-pj">AI calling agent</div>
             </article>
           </div>
 

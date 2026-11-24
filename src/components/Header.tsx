@@ -31,7 +31,7 @@ interface ServiceColumn {
 const SERVICE_COLUMNS: ServiceColumn[] = [
   {
     title: 'Websites & Digital',
-    subtitle: 'Business sites and real estate portals',
+    subtitle: 'Business sites, portals and SaaS pages',
     icon: Monitor,
     links: [
       {
@@ -43,6 +43,21 @@ const SERVICE_COLUMNS: ServiceColumn[] = [
         label: 'Real Estate Websites',
         href: '/real-estate-websites',
         desc: 'Project showcases, floorplans and lead forms',
+      },
+      {
+        label: 'Tour & Travel Websites',
+        href: '/tour-travel-websites',
+        desc: 'Holiday packages, itinerary builders and booking',
+      },
+      {
+        label: 'Banking & Finance Websites',
+        href: '/banking-finance-websites',
+        desc: 'Co-operative banks, loan calculators and portals',
+      },
+      {
+        label: 'Startup Websites',
+        href: '/startup-websites',
+        desc: 'SaaS landing pages, waitlists and product tours',
       },
     ],
   },
@@ -145,6 +160,9 @@ export const Header: React.FC = () => {
     '/ai-calling-agents',
     '/real-estate-websites',
     '/banking-fintech-solutions',
+    '/tour-travel-websites',
+    '/banking-finance-websites',
+    '/startup-websites',
   ].includes(pathname);
 
   const getActiveNavElement = () => {
@@ -741,6 +759,27 @@ export const Header: React.FC = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Real Estate Websites
+                </Link>
+                <Link
+                  to="/tour-travel-websites"
+                  className="block text-xs py-1 text-slate-600 dark:text-slate-400 hover:text-[#D9480F]"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Tour & Travel Websites
+                </Link>
+                <Link
+                  to="/banking-finance-websites"
+                  className="block text-xs py-1 text-slate-600 dark:text-slate-400 hover:text-[#D9480F]"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Banking & Finance Websites
+                </Link>
+                <Link
+                  to="/startup-websites"
+                  className="block text-xs py-1 text-slate-600 dark:text-slate-400 hover:text-[#D9480F]"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Startup Websites
                 </Link>
                 <Link
                   to="/custom-software-development"
