@@ -1934,11 +1934,19 @@ a, button {
   left: 0;
   right: 0;
   top: calc(100% + 10px);
-  padding: 14px;
+  padding: 14px 14px 22px;
+  max-height: calc(100dvh - 104px);
+  max-height: calc(100vh - 104px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.2) transparent;
   border-radius: 22px;
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  backdrop-filter: blur(22px) saturate(180%);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--wx-rim);
   box-shadow: 0 24px 50px -20px var(--wx-sh);
   opacity: 0;
@@ -1948,10 +1956,28 @@ a, button {
   display: none;
 }
 
+.wx-mp::-webkit-scrollbar {
+  width: 5px;
+}
+
+.wx-mp::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wx-mp::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: 99px;
+}
+
 .dark .wx-mp {
-  background: linear-gradient(140deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8));
+  background: linear-gradient(140deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.9));
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.8);
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.dark .wx-mp::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .wx-mp a {
