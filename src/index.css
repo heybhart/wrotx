@@ -5340,6 +5340,10 @@ a, button {
 }
 
 /* Apps section */
+#apps {
+  overflow: hidden;
+}
+
 .pf-apps {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -5821,6 +5825,22 @@ a, button {
   .pf-slipw {
     transform: none;
   }
+  .pf-apps {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .pf-ph {
+    margin: 16px auto 0;
+    max-width: 100%;
+  }
+  .pf-ph::before {
+    inset: 12px -16px -12px 16px;
+    transform: rotate(4deg);
+  }
+  .pf-page h1,
+  .pf-page h2 {
+    max-width: 100%;
+  }
   .pf-flow {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -5850,6 +5870,19 @@ a, button {
   }
   .pf-page section {
     padding: 64px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .pf-apps {
+    gap: 36px;
+  }
+  .pf-ph {
+    width: min(272px, 100%);
+  }
+  .pf-ph::before {
+    inset: 10px -10px -10px 10px;
+    transform: rotate(3deg);
   }
 }
 
