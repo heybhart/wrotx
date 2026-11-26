@@ -88,6 +88,17 @@ const TEMPLATES: TemplateItem[] = [
     k: ['Goa', 'Himachal', 'Dubai'],
     u: 'https://triplio-topaz.vercel.app/',
   },
+  {
+    n: 'Priti Travels Hub',
+    c: 'Bespoke Indian tours & concierge agency',
+    g: 'linear-gradient(135deg, #0b1220, #1a2744)',
+    a: '#ff9933',
+    h: 'Discover Incredible India',
+    p: 'Cinema-grade domestic journeys with 24x7 concierge care.',
+    b: 'Explore tours',
+    k: ['Rajasthan', 'Kerala', 'Ladakh'],
+    u: 'https://priti-mu.vercel.app/',
+  },
 ];
 
 interface CallSlip {

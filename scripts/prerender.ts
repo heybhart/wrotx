@@ -145,7 +145,8 @@ ${INDEXABLE_ROUTES.map(
 </urlset>
 `;
   fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf-8');
-  console.log(`✓ Generated dist/sitemap.xml (${INDEXABLE_ROUTES.length} URLs)`);
+  fs.writeFileSync(path.join(rootDir, 'public', 'sitemap.xml'), sitemapXml, 'utf-8');
+  console.log(`✓ Generated dist/sitemap.xml and public/sitemap.xml (${INDEXABLE_ROUTES.length} URLs)`);
 
   // 6. Cleanup temporary SSR build folder
   try {

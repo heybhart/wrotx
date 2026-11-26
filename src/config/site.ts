@@ -1,5 +1,5 @@
 export const SITE_CONFIG = {
-  domain: 'https://wrotx.in',
+  domain: 'https://www.wrotx.in',
   brandName: 'WrotX',
   // [TODO: Replace with registered legal/trade name if applicable, otherwise keep "WrotX"]
   legalName: 'WrotX',

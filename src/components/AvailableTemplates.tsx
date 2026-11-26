@@ -93,6 +93,19 @@ export const TEMPLATES: LaptopTemplateItem[] = [
     url: 'https://triplio-topaz.vercel.app/',
     iframeUrl: 'https://triplio-topaz.vercel.app/',
   },
+  {
+    name: 'Priti Travels Hub',
+    category: 'Bespoke Indian tours & concierge agency',
+    gradient: 'linear-gradient(135deg, #0b1220, #1a2744)',
+    accent: '#ff9933',
+    heroTitle: 'Discover Incredible India',
+    heroSubtitle: 'Cinema-grade domestic journeys with 24x7 concierge care.',
+    heroCta: 'Explore tours',
+    cards: ['Rajasthan', 'Kerala', 'Ladakh'],
+    stats: ['24x7 care', '40+ circuits', '4.9 rating'],
+    url: 'https://priti-mu.vercel.app/',
+    iframeUrl: 'https://priti-mu.vercel.app/',
+  },
 ];
 
 const MiniSite: React.FC<{ template: LaptopTemplateItem }> = ({ template }) => {

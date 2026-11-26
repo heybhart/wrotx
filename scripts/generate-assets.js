@@ -104,7 +104,7 @@ async function main() {
       <line x1="80" y1="480" x2="1120" y2="480" stroke="#334155" stroke-width="1.5"/>
 
       <text x="80" y="535" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#00f0ff">
-        https://wrotx.in
+        https://www.wrotx.in
       </text>
       <text x="320" y="535" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="500" fill="#94a3b8">
         |   Mumbai, Maharashtra, India   |   work@wrotx.in
