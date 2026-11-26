@@ -1,0 +1,21 @@
+{
+  "name": "WrotX | Website, Software & AI Agent Development",
+  "short_name": "WrotX",
+  "description": "Mumbai studio building websites, custom software & AI agents for Indian businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
